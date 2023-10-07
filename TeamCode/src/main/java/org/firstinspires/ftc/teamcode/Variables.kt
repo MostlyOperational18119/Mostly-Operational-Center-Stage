@@ -21,13 +21,8 @@ object Variables {
     var motorBL: DcMotor? = null
     var motorFR: DcMotor? = null
     var motorBR: DcMotor? = null
-    var slideGate: Servo? = null
-    var rMotorR: DcMotor? = null;
-    var rMotorL: DcMotor? = null;
-    var touchyR: TouchSensor? = null
-    var touchyL: TouchSensor? = null
-    var motorSlideRotate: DcMotor? = null
-
+    var motorSlideLeft: DcMotor? = null
+    var motorSlideRight: DcMotor? = null
 
     var blinkinLedDriver: RevBlinkinLedDriver? = null
     var pattern: BlinkinPattern? = null
