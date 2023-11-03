@@ -28,6 +28,7 @@ import org.firstinspires.ftc.teamcode.Variables.touchyL
 import org.firstinspires.ftc.teamcode.Variables.touchyR
 import org.firstinspires.ftc.teamcode.Variables.x
 import org.firstinspires.ftc.teamcode.Variables.y
+import org.firstinspires.ftc.teamcode.Variables.t
 import org.firstinspires.ftc.vision.VisionPortal
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
@@ -346,7 +347,7 @@ open class DriveMethods: LinearOpMode() {
 
         // Set camera controls unless we are stopping.
         if (!isStopRequested) {
-            val exposureControl = visionPortal!!.getCameraControl(
+            val exposureControl = visionPortal.getCameraControl(
                 ExposureControl::class.java
             )
             if (exposureControl.mode != ExposureControl.Mode.Manual) {
@@ -355,7 +356,7 @@ open class DriveMethods: LinearOpMode() {
             }
             exposureControl.setExposure(exposureMS.toLong(), TimeUnit.MILLISECONDS)
             sleep(20)
-            val gainControl = visionPortal!!.getCameraControl(
+            val gainControl = visionPortal.getCameraControl(
                 GainControl::class.java
             )
             gainControl.gain = gain
@@ -377,11 +378,15 @@ open class DriveMethods: LinearOpMode() {
     }
 
     fun linearSlideCalc() {
-        x =  abs(Variables.slideToBoard) - Variables.clawToBoard + .5* Variables.t;
-        y = sqrt(3.0) /2 * Variables.t;
-        slideLength = sqrt(x.pow(2.0) + y.pow(2.0));
-        slideAngle = atan(y/x);
-        clawAngle = 60 - slideAngle;
+        x =  Variables.slideToBoard - Variables.clawToBoard + .5* t
+        y = sqrt(3.0) /2 * t
+        slideLength = sqrt(x.pow(2.0) + y.pow(2.0))
+        slideAngle = atan(y/x)
+        x =  abs(Variables.slideToBoard) - Variables.clawToBoard + .5* t
+        y = sqrt(3.0) /2 * t
+        slideLength = sqrt(x.pow(2.0) + y.pow(2.0))
+        slideAngle = atan(y/x)
+        clawAngle = 60 - slideAngle
     }
 
 
