@@ -55,6 +55,11 @@ public abstract class MeepMeepBoilerplate {
 
     public abstract TrajectorySequence getTrajectorySequence(Detection detection, DriveShim drive);
 
+    public void print(Object o) {
+        System.out.println(o);
+    }
+    
+    /*
     public TrajectorySequence mergeSequences(ArrayList<TrajectorySequence> trajectorySequences) {
         TrajectorySequence[] trajectorySequencesArr = new TrajectorySequence[trajectorySequences.size()];
         trajectorySequencesArr = trajectorySequences.toArray(trajectorySequencesArr);
@@ -73,6 +78,7 @@ public abstract class MeepMeepBoilerplate {
 
         return new TrajectorySequence(trajectorySegments);
     }
+    */
 
     public TrajectorySequence getCurrentTrajectorySequence(DriveShim drive) {
          if (sequences.size() == 0) {
@@ -92,9 +98,6 @@ public abstract class MeepMeepBoilerplate {
         }
     }
 
-    //    private static void followTrajectorySequence(TrajectorySequence trajectorySequence) {
-//        sequences.add(trajectorySequence);
-//    }
     public void followTrajectorySequence(TrajectorySequence trajectorySequence) {
 //        if (!opModeIsActive()) waitForStart();
         sequences.add(trajectorySequence);
