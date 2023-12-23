@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.Teleop
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.DriveMethods
+import org.firstinspires.ftc.teamcode.Variables
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_CLOSE
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_LAUNCH
 import org.firstinspires.ftc.teamcode.Variables.bottom
+import org.firstinspires.ftc.teamcode.Variables.intakeServo
 import org.firstinspires.ftc.teamcode.Variables.lMax
 import org.firstinspires.ftc.teamcode.Variables.lMin
 import org.firstinspires.ftc.teamcode.Variables.lPower
@@ -92,7 +95,7 @@ class TeleopFromHell: DriveMethods() {
         var targetHeight = 0
         var slidePos = 0
         var slideRotPos = 0
-        var speedDiv = 3.0
+        var speedDiv = 1.5
         var slideDeg = 0.0
         var angleFromSlideToClaw = 0.0
         var slideRottarget = 25.0
@@ -104,6 +107,7 @@ class TeleopFromHell: DriveMethods() {
         //var motorBeingTested = hardwareMap.get<DcMotor>(DcMotor::class.java, "slideRotationMotor")
         val motorBeingTested = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
         val secondmotorBeingTested = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
+        val actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
         var holdingpower = 0.001
         var toggle1 = false
         var toggle2 = false
@@ -286,7 +290,14 @@ class TeleopFromHell: DriveMethods() {
             else if (!toggle1){
                 motorBeingTested.power = 0.0
             }
-
+            if (gamepad2.dpad_down){
+                actualintakeServo?.power = -10.0
+                sleep(500)
+            }
+            if (gamepad2.dpad_up){
+                actualintakeServo?.power = 0.0
+                sleep(500)
+            }
             if (gamepad2.left_bumper){
                 toggle2=true
                 secondmotorBeingTested.targetPosition = 0
@@ -339,15 +350,19 @@ class TeleopFromHell: DriveMethods() {
                 clawClamp = !clawClamp
                 sleep(200)
             }
-            telemetry.addData("Claw Clamped: ", clawClamp)
-            telemetry.addData("Right rack: ", rMotorR?.currentPosition)
-            telemetry.addData("Left rack: ", rMotorL?.currentPosition)
-            telemetry.addData("Magic num: ", magicHoldNumber)
-            telemetry.addData("Rotate Motor Value: ", motorBeingTested.currentPosition)
-            telemetry.addData("Slide Motor Value: ", secondmotorBeingTested.currentPosition)
-            telemetry.addData("Holding Power: ", holdingpower)
-            telemetry.addData("Toggle1: ", toggle1)
-            telemetry.addData("Toggle2: ", toggle2)
+//            telemetry.addData("Claw Clamped: ", clawClamp)
+//            telemetry.addData("Right rack: ", rMotorR?.currentPosition)
+//            telemetry.addData("Left rack: ", rMotorL?.currentPosition)
+//            telemetry.addData("Magic num: ", magicHoldNumber)
+//            telemetry.addData("Rotate Motor Value: ", motorBeingTested.currentPosition)
+//            telemetry.addData("Slide Motor Value: ", secondmotorBeingTested.currentPosition)
+//            telemetry.addData("Holding Power: ", holdingpower)
+//            telemetry.addData("Toggle1: ", toggle1)
+//            telemetry.addData("Toggle2: ", toggle2)
+            telemetry.addData("FR: ", motorFR?.power)
+            telemetry.addData("FL: ", motorFL?.power)
+            telemetry.addData("BR: ", motorBR?.power)
+            telemetry.addData("BL: ", motorBL?.power)
             telemetry.update()
         }
         aeroplaneLauncherServo.position = AEROPLANE_CLOSE
