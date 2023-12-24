@@ -28,6 +28,7 @@ import org.firstinspires.ftc.teamcode.Variables.rPower
 import org.firstinspires.ftc.teamcode.Variables.rPowerSlow
 import org.firstinspires.ftc.teamcode.Variables.rSpeedMax
 import org.firstinspires.ftc.teamcode.Variables.rSpeedMin
+import kotlin.math.abs
 
 @TeleOp(name = "TeleopFromHell", group = "TeleopFinal")
 class TeleopFromHell: DriveMethods() {
@@ -108,9 +109,12 @@ class TeleopFromHell: DriveMethods() {
         val motorBeingTested = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
         val secondmotorBeingTested = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
         val actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
+        val boxServo = hardwareMap.get(Servo::class.java, "boxServo")
         var holdingpower = 0.001
         var toggle1 = false
         var toggle2 = false
+        var toggle3 = 2
+        var toggle4 = 2
         var rotatePower = -.5
 
         motorBeingTested!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
@@ -265,47 +269,73 @@ class TeleopFromHell: DriveMethods() {
                 magicHoldNumber = 0
             }
 
-            if (secondmotorBeingTested.currentPosition<500){
+            if (abs(secondmotorBeingTested.currentPosition)<500){
                 holdingpower =0.0
             }
-            else {
+            else if (secondmotorBeingTested.currentPosition >500){
                 holdingpower = .001
+            }
+            else if (secondmotorBeingTested.currentPosition <-500){
+                holdingpower = -.001
             }
             if (motorBeingTested.currentPosition>=(motorBeingTested.targetPosition-20) && motorBeingTested.targetPosition == 1850){
                 toggle1=false
             }
-            if (secondmotorBeingTested.currentPosition<=50 && secondmotorBeingTested.targetPosition == 0){
+            if (abs(secondmotorBeingTested.currentPosition)<=50 && secondmotorBeingTested.targetPosition == 0){
                 toggle2=false
             }
-            if (gamepad2.b){
-                toggle1= true
-                motorBeingTested.targetPosition = 1850
-                motorBeingTested.power = 0.3
-                sleep(500)
-            }
-            else if (gamepad2.left_stick_y.toDouble() !=0.0) {
+//            if (gamepad2.b){
+//                toggle1= true
+//                motorBeingTested.targetPosition = 1850
+//                motorBeingTested.power = 0.3
+//                sleep(500)
+//            }
+            /*else*/if (gamepad2.left_stick_y.toDouble() !=0.0) {
                 motorBeingTested.power = 1.0*gamepad2.left_stick_y
                 //motorBeingTested.power = .05
             }
             else if (!toggle1){
                 motorBeingTested.power = 0.0
             }
-            if (gamepad2.dpad_down){
+            if (gamepad2.dpad_down && (toggle3 % 2 ==0)){
                 actualintakeServo?.power = -10.0
+                toggle3+=1
                 sleep(500)
             }
-            if (gamepad2.dpad_up){
+            else if (gamepad2.dpad_down && (toggle3 % 2 ==1)){
                 actualintakeServo?.power = 0.0
+                toggle3+=1
                 sleep(500)
+            }
+            if (gamepad2.dpad_up && (toggle4 % 2 ==0)){
+                actualintakeServo?.power = 10.0
+                toggle4+=1
+                sleep(500)
+            }
+            else if (gamepad2.dpad_up && (toggle4 % 2 ==1)){
+                actualintakeServo?.power = 0.0
+                toggle4+=1
+                sleep(500)
+            }
+            if (gamepad2.dpad_left){
+                boxServo.position = .62
+            }
+            if (gamepad2.dpad_right){
+                boxServo.position = .52
             }
             if (gamepad2.left_bumper){
                 toggle2=true
                 secondmotorBeingTested.targetPosition = 0
-                secondmotorBeingTested.power = -0.3
+                if (secondmotorBeingTested.currentPosition >50){
+                    secondmotorBeingTested.power = -0.3
+                }
+                else if (secondmotorBeingTested.currentPosition <50){
+                    secondmotorBeingTested.power = 0.3
+                }
                 sleep(500)
             }
             else if (gamepad2.right_stick_y.toDouble() != 0.0) {
-                secondmotorBeingTested.power = -1.0*gamepad2.right_stick_y
+                secondmotorBeingTested.power = -1.0 * gamepad2.right_stick_y
                 //motorBeingTested.power = .05
             }
             else if (!toggle2){
@@ -350,19 +380,19 @@ class TeleopFromHell: DriveMethods() {
                 clawClamp = !clawClamp
                 sleep(200)
             }
-//            telemetry.addData("Claw Clamped: ", clawClamp)
-//            telemetry.addData("Right rack: ", rMotorR?.currentPosition)
-//            telemetry.addData("Left rack: ", rMotorL?.currentPosition)
-//            telemetry.addData("Magic num: ", magicHoldNumber)
-//            telemetry.addData("Rotate Motor Value: ", motorBeingTested.currentPosition)
-//            telemetry.addData("Slide Motor Value: ", secondmotorBeingTested.currentPosition)
-//            telemetry.addData("Holding Power: ", holdingpower)
-//            telemetry.addData("Toggle1: ", toggle1)
-//            telemetry.addData("Toggle2: ", toggle2)
-            telemetry.addData("FR: ", motorFR?.power)
-            telemetry.addData("FL: ", motorFL?.power)
-            telemetry.addData("BR: ", motorBR?.power)
-            telemetry.addData("BL: ", motorBL?.power)
+            telemetry.addData("Claw Clamped: ", clawClamp)
+            telemetry.addData("Right rack: ", rMotorR?.currentPosition)
+            telemetry.addData("Left rack: ", rMotorL?.currentPosition)
+            telemetry.addData("Magic num: ", magicHoldNumber)
+            telemetry.addData("Rotate Motor Value: ", motorBeingTested.currentPosition)
+            telemetry.addData("Slide Motor Value: ", secondmotorBeingTested.currentPosition)
+            telemetry.addData("Holding Power: ", holdingpower)
+            telemetry.addData("Toggle1: ", toggle1)
+            telemetry.addData("Toggle2: ", toggle2)
+//            telemetry.addData("FR: ", motorFR?.power)
+//            telemetry.addData("FL: ", motorFL?.power)
+//            telemetry.addData("BR: ", motorBR?.power)
+//            telemetry.addData("BL: ", motorBL?.power)
             telemetry.update()
         }
         aeroplaneLauncherServo.position = AEROPLANE_CLOSE
