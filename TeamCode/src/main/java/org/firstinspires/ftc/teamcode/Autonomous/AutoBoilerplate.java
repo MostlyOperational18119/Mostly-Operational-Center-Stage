@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.DriveMethods;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.sequencesegment.SequenceSegment;
+import org.firstinspires.ftc.teamcode.Variables;
 
 import java.util.ArrayList;
 
@@ -18,13 +19,6 @@ enum Detection {
 public abstract class AutoBoilerplate extends DriveMethods {
     @Override
     public void runOpMode() {
-        initMotorsSecondBot();
-
-        telemetry.addLine("Motors were ignited (same as inited)");
-        telemetry.update();
-
-        waitForStart();
-
         drive(new Pose2d());
     }
     SampleMecanumDrive drive;
@@ -34,10 +28,19 @@ public abstract class AutoBoilerplate extends DriveMethods {
     public ArrayList<TrajectorySequence> sequences = new ArrayList<TrajectorySequence>();
 
     public void drive(Pose2d startingPos) {
+        initMotorsSecondBot();
+        initVision(Variables.VisionProcessors.TFOD);
+
+        telemetry.addLine("Motors and TFOD were ignited (same as inited)");
+        telemetry.update();
+
+        Detection detection = detect();
+
+        while (opModeIsActive()) detection = detect();
         STARTING_POSE = startingPos;
         drive = new SampleMecanumDrive(hardwareMap);
 
-        
+        drive.followTrajectorySequence(getTrajectorySequence(detection, drive));
     }
 
     public Detection detect() {
