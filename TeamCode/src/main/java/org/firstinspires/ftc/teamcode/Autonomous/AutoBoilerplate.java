@@ -1,14 +1,13 @@
-package com.example.meepmeeptesting;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.noahbres.meepmeep.MeepMeep;
-import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
-import com.noahbres.meepmeep.roadrunner.DriveShim;
-import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
-import com.noahbres.meepmeep.roadrunner.trajectorysequence.TrajectorySequence;
-import com.noahbres.meepmeep.roadrunner.trajectorysequence.sequencesegment.SequenceSegment;
+import org.firstinspires.ftc.teamcode.DriveMethods;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.sequencesegment.SequenceSegment;
 
 import java.util.ArrayList;
+
 
 enum Detection {
     LEFT,
@@ -16,49 +15,41 @@ enum Detection {
     RIGHT
 }
 
-public abstract class MeepMeepBoilerplate {
-    DriveShim drive;
+public abstract class AutoBoilerplate extends DriveMethods {
+    @Override
+    public void runOpMode() {
+        initMotorsSecondBot();
+
+        telemetry.addLine("Motors were ignited (same as inited)");
+        telemetry.update();
+
+        waitForStart();
+
+        drive(new Pose2d());
+    }
+    SampleMecanumDrive drive;
 
     public Pose2d STARTING_POSE = new Pose2d(-36, 61.5, Math.toRadians(-90));
-
-    private MeepMeep meepMeep;
 
     public ArrayList<TrajectorySequence> sequences = new ArrayList<TrajectorySequence>();
 
     public void drive(Pose2d startingPos) {
         STARTING_POSE = startingPos;
-        System.setProperty("sun.java2d.opengl", "true");
-        MeepMeep meepMeep = new MeepMeep(800);
+        drive = new SampleMecanumDrive(hardwareMap);
 
-        RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .build();
-
-        drive = myBot.getDrive();
-
-        Detection detection = detect();
-
-        TrajectorySequence trajectorySequence = getTrajectorySequence(detection, drive);
-
-        myBot.followTrajectorySequence(trajectorySequence);
-
-        meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
-                .setDarkMode(true)
-                .setBackgroundAlpha(0.95f)
-                .addEntity(myBot)
-                .start();
+        
     }
 
     public Detection detect() {
         return Detection.RIGHT;
     }
 
-    public abstract TrajectorySequence getTrajectorySequence(Detection detection, DriveShim drive);
+    public abstract TrajectorySequence getTrajectorySequence(Detection detection, SampleMecanumDrive drive);
 
     public void print(Object o) {
         System.out.println(o);
     }
-    
+
     /*
     public TrajectorySequence mergeSequences(ArrayList<TrajectorySequence> trajectorySequences) {
         TrajectorySequence[] trajectorySequencesArr = new TrajectorySequence[trajectorySequences.size()];
@@ -80,7 +71,7 @@ public abstract class MeepMeepBoilerplate {
     }
     */
 
-    public TrajectorySequence getCurrentTrajectorySequence(DriveShim drive) {
+    public TrajectorySequence getCurrentTrajectorySequence(SampleMecanumDrive drive) {
          if (sequences.size() == 0) {
              return drive.trajectorySequenceBuilder(STARTING_POSE)
                     .forward(0.0)
@@ -90,7 +81,7 @@ public abstract class MeepMeepBoilerplate {
         }
     }
 
-    public Pose2d getCurrentPosition(DriveShim drive) {
+    public Pose2d getCurrentPosition(SampleMecanumDrive drive) {
         if (sequences.size() == 0) {
             return STARTING_POSE;
         } else {
