@@ -91,14 +91,14 @@ open class DriveMethods: LinearOpMode() {
 
         // Convert it to a Position (real)
         if (includesCup(recognitions)) {
-            val cup = getCup(recognitions) ?: return Variables.Detection.CENTER
+            val cup = getCup(recognitions) ?: return Variables.Detection.LEFT
 
-            return if (cup.right < 260) Variables.Detection.LEFT
-            else if (cup.right > 260) Variables.Detection.CENTER
+            return if (cup.right < 260) Variables.Detection.CENTER
+            else if (cup.right > 260) Variables.Detection.RIGHT
 //            else if (cup.right > 428) Variables.Detection.RIGHT
-            else Variables.Detection.CENTER
+            else Variables.Detection.LEFT
         } else {
-            return Variables.Detection.RIGHT
+            return Variables.Detection.LEFT
         }
     }
 
