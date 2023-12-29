@@ -83,7 +83,7 @@ open class DriveMethods: LinearOpMode() {
         val webcam = hardwareMap.get(WebcamName::class.java, "Webcam 1")
         // Ensure the Webcam is correct
 //        if (visionPortal.activeCamera != webcam) visionPortal.activeCamera = webcam
-        tfod.setZoom(1.3);
+        tfod.setZoom(1.15);
         // Wait for recognitions
         sleep(3000)
 
