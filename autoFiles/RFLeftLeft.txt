@@ -1,0 +1,8 @@
+autoServoSetPosition:0.78
+back:28.0
+turn:90
+back:6
+waitSeconds:1
+passiveServoSetPosition:0.1
+waitSeconds:1
+forward:4

@@ -45,7 +45,7 @@ public class BCOutRight extends MeepMeepBoilerplate{
                //autoServoSetPosition:parameter
 
                 //Skip line if it is a comment
-                if (line.indexOf("//")<0){
+                if (line.indexOf("//")>=0){
                     continue;
                 }
                 String[] elements = line.split(":");
