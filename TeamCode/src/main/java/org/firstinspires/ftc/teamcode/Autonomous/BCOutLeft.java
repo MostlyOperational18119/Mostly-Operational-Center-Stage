@@ -39,7 +39,8 @@ public class BCOutLeft extends MeepMeepBoilerplate{
 
         ));
         while (opModeInInit()) {
-            detection = getDetectionsSingleTFOD();
+            detection = getDetectionsSingleTFOD(400
+            );
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
@@ -49,7 +50,7 @@ public class BCOutLeft extends MeepMeepBoilerplate{
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .back(2.0)
                             .waitSeconds(.25)
-                            .strafeRight(9)
+                            .strafeRight(11)
                             .back(21)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
@@ -58,7 +59,7 @@ public class BCOutLeft extends MeepMeepBoilerplate{
                             .waitSeconds(.25)
                             .strafeRight(10)
                             .waitSeconds(.25)
-                            .turn(Math.toRadians(-90))
+                            .turn(Math.toRadians(-270))
                             .waitSeconds(.25)
                             .back(18.5)
                             .waitSeconds(.5)
@@ -67,7 +68,7 @@ public class BCOutLeft extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.5)
                             .forward(2)
-                            .strafeRight(16)
+                            .strafeRight(15)
                             .back(10)
                             .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.73))
@@ -83,17 +84,17 @@ public class BCOutLeft extends MeepMeepBoilerplate{
                             .forward(9)
                             .turn(Math.toRadians(90))
                             .waitSeconds(.1)
-                            .back(41.5)
+                            .back(39)
                             .waitSeconds(.1)
                             .strafeRight(2)
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(1x)
+                            .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.5)
                             .forward(2)
                             .strafeRight(19.5)
-                            .back(9)
+                            .back(10)
                             .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.73))
                             .waitSeconds(1)
