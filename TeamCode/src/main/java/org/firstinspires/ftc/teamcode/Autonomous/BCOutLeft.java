@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
@@ -22,6 +23,8 @@ public class BCOutLeft extends MeepMeepBoilerplate{
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         Servo passiveServo = hardwareMap.get(Servo.class, "passiveServo");
         Servo autoServo = hardwareMap.get(Servo.class, "autoServo");
+        DcMotor rotateMotor = hardwareMap.get(DcMotor.class, "motorSlideRotate");
+
         initVision(VisionProcessors.TFOD);
         Detection detection = Detection.UNKNOWN;
         TrajectoryVelocityConstraint slowConstraint = new MinVelocityConstraint(Arrays.asList(
@@ -45,6 +48,12 @@ public class BCOutLeft extends MeepMeepBoilerplate{
             telemetry.update();
         }
         autoServo.setPosition(0.73);
+
+        rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rotateMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        rotateMotor.setPower(0.0);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
