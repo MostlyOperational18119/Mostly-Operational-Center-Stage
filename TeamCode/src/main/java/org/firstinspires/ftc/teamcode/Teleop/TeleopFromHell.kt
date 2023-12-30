@@ -5,11 +5,9 @@ import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.DriveMethods
-import org.firstinspires.ftc.teamcode.Variables
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_CLOSE
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_LAUNCH
 import org.firstinspires.ftc.teamcode.Variables.bottom
-import org.firstinspires.ftc.teamcode.Variables.intakeServo
 import org.firstinspires.ftc.teamcode.Variables.lMax
 import org.firstinspires.ftc.teamcode.Variables.lMin
 import org.firstinspires.ftc.teamcode.Variables.lPower
@@ -106,8 +104,8 @@ class TeleopFromHell: DriveMethods() {
         val aeroplaneLauncherServo = hardwareMap.get(Servo::class.java, "PLANE!")
         var aeroplaneHasBeenLaunched = false
         //var motorBeingTested = hardwareMap.get<DcMotor>(DcMotor::class.java, "slideRotationMotor")
-        val motorBeingTested = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
-        val secondmotorBeingTested = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
+        val rotateMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
+        val slideMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
         val actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
         val boxServo = hardwareMap.get(Servo::class.java, "boxServo")
         var holdingpower = 0.001
@@ -117,13 +115,13 @@ class TeleopFromHell: DriveMethods() {
         var toggle4 = 2
         var rotatePower = -.5
 
-        motorBeingTested!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        motorBeingTested.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        motorBeingTested.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        rotateMotor!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        rotateMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        rotateMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
 
-        secondmotorBeingTested!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        secondmotorBeingTested.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        secondmotorBeingTested.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        slideMotor!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        slideMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        slideMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
 
         while (opModeIsActive()) {
             //set gamepad inputs
@@ -269,19 +267,19 @@ class TeleopFromHell: DriveMethods() {
                 magicHoldNumber = 0
             }
 
-            if (abs(secondmotorBeingTested.currentPosition)<500){
+            if (abs(slideMotor.currentPosition)<500){
                 holdingpower =0.0
             }
-            else if (secondmotorBeingTested.currentPosition >500){
+            else if (slideMotor.currentPosition >500){
                 holdingpower = .001
             }
-            else if (secondmotorBeingTested.currentPosition <-500){
+            else if (slideMotor.currentPosition <-500){
                 holdingpower = -.001
             }
-            if (motorBeingTested.currentPosition>=(motorBeingTested.targetPosition-20) && motorBeingTested.targetPosition == 1850){
+            if (rotateMotor.currentPosition>=(rotateMotor.targetPosition-20) && rotateMotor.targetPosition == 1850){
                 toggle1=false
             }
-            if (abs(secondmotorBeingTested.currentPosition)<=50 && secondmotorBeingTested.targetPosition == 0){
+            if (abs(slideMotor.currentPosition)<=50 && slideMotor.targetPosition == 0){
                 toggle2=false
             }
 //            if (gamepad2.b){
@@ -291,11 +289,11 @@ class TeleopFromHell: DriveMethods() {
 //                sleep(500)
 //            }
             /*else*/if (gamepad2.left_stick_y.toDouble() !=0.0) {
-                motorBeingTested.power = 1.0*gamepad2.left_stick_y
+                rotateMotor.power = 1.0*gamepad2.left_stick_y
                 //motorBeingTested.power = .05
             }
             else if (!toggle1){
-                motorBeingTested.power = 0.0
+                rotateMotor.power = 0.0
             }
             if (gamepad2.dpad_down && (toggle3 % 2 ==0)){
                 actualintakeServo?.power = -10.0
@@ -325,21 +323,21 @@ class TeleopFromHell: DriveMethods() {
             }
             if (gamepad2.left_bumper){
                 toggle2=true
-                secondmotorBeingTested.targetPosition = 0
-                if (secondmotorBeingTested.currentPosition >50){
-                    secondmotorBeingTested.power = -0.3
+                slideMotor.targetPosition = 0
+                if (slideMotor.currentPosition >50){
+                    slideMotor.power = -0.3
                 }
-                else if (secondmotorBeingTested.currentPosition <50){
-                    secondmotorBeingTested.power = 0.3
+                else if (slideMotor.currentPosition <50){
+                    slideMotor.power = 0.3
                 }
                 sleep(500)
             }
             else if (gamepad2.right_stick_y.toDouble() != 0.0) {
-                secondmotorBeingTested.power = -1.0 * gamepad2.right_stick_y
+                slideMotor.power = -1.0 * gamepad2.right_stick_y
                 //motorBeingTested.power = .05
             }
             else if (!toggle2){
-                secondmotorBeingTested.power = holdingpower
+                slideMotor.power = holdingpower
             }
             //claw stuff
            // if (gamepad2.y) {
@@ -384,8 +382,8 @@ class TeleopFromHell: DriveMethods() {
             telemetry.addData("Right rack: ", rMotorR?.currentPosition)
             telemetry.addData("Left rack: ", rMotorL?.currentPosition)
             telemetry.addData("Magic num: ", magicHoldNumber)
-            telemetry.addData("Rotate Motor Value: ", motorBeingTested.currentPosition)
-            telemetry.addData("Slide Motor Value: ", secondmotorBeingTested.currentPosition)
+            telemetry.addData("Rotate Motor Value: ", rotateMotor.currentPosition)
+            telemetry.addData("Slide Motor Value: ", slideMotor.currentPosition)
             telemetry.addData("Holding Power: ", holdingpower)
             telemetry.addData("Toggle1: ", toggle1)
             telemetry.addData("Toggle2: ", toggle2)
