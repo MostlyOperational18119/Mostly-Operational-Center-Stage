@@ -24,9 +24,9 @@ public class RCInLeft extends MeepMeepBoilerplate{
         Servo autoServo = hardwareMap.get(Servo.class, "autoServo");
         initVision(VisionProcessors.TFOD);
         Detection detection = Detection.UNKNOWN;
-        TrajectoryVelocityConstraint slowConstraint = new MinVelocityConstraint(Arrays.asList(
+        TrajectoryVelocityConstraint fastConstraint = new MinVelocityConstraint(Arrays.asList(
 
-                new TranslationalVelocityConstraint(20),
+                new TranslationalVelocityConstraint(50),
 
                 new AngularVelocityConstraint(1)
 
@@ -36,14 +36,14 @@ public class RCInLeft extends MeepMeepBoilerplate{
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
-        autoServo.setPosition(0.35);
+        autoServo.setPosition(0.78);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .back(28.0)
-                            .turn(Math.toRadians(-90))
+                            .turn(Math.toRadians(90))
                             .back(8)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.1))
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.25)
                             .forward(32)
                             .waitSeconds(.25)
@@ -54,14 +54,14 @@ public class RCInLeft extends MeepMeepBoilerplate{
                             .back(12.5)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.8))
                             .waitSeconds(.5)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
+                            .waitSeconds(.25)
                             .forward(3)
                             .strafeRight(14)
                             .back(10)
                             .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.6))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
                             .waitSeconds(1)
                             .build()
             );
@@ -69,25 +69,25 @@ public class RCInLeft extends MeepMeepBoilerplate{
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .back(31.5)
                             .waitSeconds(.25)
-                            .addDisplacementMarker(() -> passiveServo.setPosition(0.1))
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.25)
-                            .forward(12)
+                            .forward(10)
                             .waitSeconds(.25)
-                            .turn(Math.toRadians(90))
+                            .turn(Math.toRadians(-90))
                             .waitSeconds(.25)
                             .back(12)
-                            .strafeRight(11)
+                            .strafeRight(9)
                             .back(24.5)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.8))
                             .waitSeconds(.5)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
+                            .waitSeconds(.25)
                             .forward(3)
                             .strafeRight(20)
                             .back(11)
                             .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.6))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
                             .waitSeconds(1)
                             .build());
             }
@@ -98,27 +98,27 @@ public class RCInLeft extends MeepMeepBoilerplate{
                             .strafeLeft(8)
                             .back(21)
                             .waitSeconds(.25)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.1))
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.25)
                             .forward(9.5)
                             .waitSeconds(.25)
-                            .turn(Math.toRadians(90))
+                            .turn(Math.toRadians(-90))
                             .waitSeconds(.25)
                             .back(12.5)
                             .waitSeconds(.25)
-                            .strafeRight(13)
+                            .strafeRight(12)
                             .waitSeconds(.25)
                             .back(15.5)
-                            .waitSeconds(.5)
+                            .waitSeconds(.25)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(1.5)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.5)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
+                            .waitSeconds(.25)
                             .forward(3)
                             .strafeRight(26)
                             .back(10)
                             .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.6))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
                             .waitSeconds(1)
                             .build()
             );
