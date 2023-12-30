@@ -82,7 +82,7 @@ open class DriveMethods: LinearOpMode() {
         return getDetectionsSingleTFOD(260)
     }
 
-    fun getDetectionsSingleTFOD(compNumber: Int = 260): Variables.Detection {
+    fun getDetectionsSingleTFOD(compNumber: Int = 350): Variables.Detection {
         val webcam = hardwareMap.get(WebcamName::class.java, "Webcam 1")
         // Ensure the Webcam is correct
 //        if (visionPortal.activeCamera != webcam) visionPortal.activeCamera = webcam
