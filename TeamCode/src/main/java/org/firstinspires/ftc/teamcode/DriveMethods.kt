@@ -78,8 +78,11 @@ open class DriveMethods: LinearOpMode() {
     fun initVision(processorType: VisionProcessors, zoom: Double) {
         initVision(processorType, zoom, "/sdcard/FIRST/models/ssd_mobilenet_v2_320x320_coco17_tpu_8.tflite", readLabels("/sdcard/FIRST/models/ssd_mobilenet_v2_label_map.txt"))
     }
-
     fun getDetectionsSingleTFOD(): Variables.Detection {
+        return getDetectionsSingleTFOD(260)
+    }
+
+    fun getDetectionsSingleTFOD(compNumber: Int = 350): Variables.Detection {
         val webcam = hardwareMap.get(WebcamName::class.java, "Webcam 1")
         // Ensure the Webcam is correct
 //        if (visionPortal.activeCamera != webcam) visionPortal.activeCamera = webcam
@@ -92,9 +95,10 @@ open class DriveMethods: LinearOpMode() {
         // Convert it to a Position (real)
         if (includesCup(recognitions)) {
             val cup = getCup(recognitions) ?: return Variables.Detection.LEFT
+            telemetry.addData("Bullshit number", cup.right)
 
-            return if (cup.right < 260) Variables.Detection.CENTER
-            else if (cup.right > 260) Variables.Detection.RIGHT
+            return if (cup.right < compNumber) Variables.Detection.CENTER
+            else if (cup.right > compNumber) Variables.Detection.RIGHT
 //            else if (cup.right > 428) Variables.Detection.RIGHT
             else Variables.Detection.LEFT
         } else {
@@ -141,7 +145,7 @@ open class DriveMethods: LinearOpMode() {
 
     fun getCup(recognitions: List<Recognition>): Recognition? {
         for (recognition in recognitions) {
-            if (recognition.label == "cup" || recognition.label == "parking meter"||recognition.label == "suitcase"||recognition.label == "fire hydrant") return recognition
+            if (recognition.label == "cup" || recognition.label == "parking meter"||recognition.label == "suitcase"||recognition.label == "fire hydrant"||recognition.label == "vase") return recognition
         }
         return null
     }
