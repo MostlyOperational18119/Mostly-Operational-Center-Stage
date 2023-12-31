@@ -27,7 +27,7 @@ import java.util.Arrays;
 public class RFLeft extends MeepMeepBoilerplate{
 
     TrajectorySequence generate_sequence(BufferedReader reader, SampleMecanumDrive drive, Servo passiveServo, Servo autoServo){
-
+        autoServo.setPosition(0.78);
         TrajectorySequenceBuilder sequence = drive.trajectorySequenceBuilder(getCurrentPosition(drive));
         for (String line: reader.lines().toArray(String[]::new)) {
 
@@ -112,7 +112,7 @@ public class RFLeft extends MeepMeepBoilerplate{
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
-        autoServo.setPosition(0.35);
+//        autoServo.setPosition(0.35);
         switch (detection) {
             case LEFT ->{
 
@@ -121,6 +121,7 @@ public class RFLeft extends MeepMeepBoilerplate{
                     reader = new BufferedReader(new FileReader("/sdcard/FIRST/training/RFLeftLeft.txt"));
                     drive.followTrajectorySequence(generate_sequence(reader,drive, passiveServo, autoServo));
                 } catch (FileNotFoundException e) {
+                    //Fallback --- Will not run if file exists. Change RFLeftLeft.txt on the robots sd card to change behavior.
                     drive.followTrajectorySequence(
                             drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .back(28.0)
