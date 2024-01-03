@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Teleop
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.DriveMethods
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_CLOSE
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_LAUNCH
+import org.firstinspires.ftc.teamcode.Variables.blinkinWorks
 import org.firstinspires.ftc.teamcode.Variables.bottom
 import org.firstinspires.ftc.teamcode.Variables.lMax
 import org.firstinspires.ftc.teamcode.Variables.lMin
@@ -167,6 +169,8 @@ class TeleopFromHell: DriveMethods() {
                 }
             }
 
+            if (!blinkinWorks) telemetry.addLine("Blinkin is not currently working")
+
             //raise/lower slide
             //if (gamepad2.left_trigger >= 0.8) {
             //    if (targetHeight < 3) {
@@ -323,10 +327,12 @@ class TeleopFromHell: DriveMethods() {
             }
             if (gamepad2.x) {
                 if (!toggle5) {
+                    setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.GREEN) // Green means that it's open
                     boxServo.position = .48
                     toggle5 = true
                     sleep(500)
                 } else {
+                    setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.RED) // Red means that it's closed
                     boxServo.position = .62
                     toggle5 = false
                     sleep(500)
