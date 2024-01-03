@@ -113,6 +113,7 @@ class TeleopFromHell: DriveMethods() {
         var toggle2 = false
         var toggle3 = 2
         var toggle4 = 2
+        var toggle5 = false
         var rotatePower = -.5
 
         rotateMotor!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
@@ -151,7 +152,7 @@ class TeleopFromHell: DriveMethods() {
                 motorBR?.power = -1.0/speedDiv
             }
 
-            if (gamepad1.right_bumper) {
+            if (gamepad1.left_bumper) {
                 motorFL?.power = -1.0/speedDiv
                 motorBL?.power = 1.0/speedDiv
                 motorFR?.power = -1.0/speedDiv
@@ -196,7 +197,7 @@ class TeleopFromHell: DriveMethods() {
             //motorSlideLeft?.power = -((2 / (1 + (exp((-(slideTarget - slidePos) / speed).toDouble())))) - 1)
 
             //rack & pinion control
-            if (gamepad2.right_bumper) {
+            if (gamepad1.left_trigger >= 0.5) {
                 if (upOrDown) {
                     if (rMotorL?.currentPosition!! <= lMax) {
                         if (rMotorL?.currentPosition!! in lSpeedMin..lSpeedMax) {
@@ -219,7 +220,7 @@ class TeleopFromHell: DriveMethods() {
             } else {
                 rMotorL!!.power = 0.0
             }
-            if (gamepad2.right_trigger >= 0.5) {
+            if (gamepad1.right_trigger >= 0.5) {
                // telemetry.addLine("edrgthgj")
                 if (upOrDown) {
                     if (rMotorR?.currentPosition!! >= rMax) {
@@ -243,7 +244,7 @@ class TeleopFromHell: DriveMethods() {
             } else {
                 rMotorR!!.power = 0.0
             }
-            if (gamepad2.x) {
+            if (gamepad1.x) {
                 telemetry.addData("upOrDown", upOrDown)
                 upOrDown = !upOrDown
                 sleep(500)
@@ -288,39 +289,56 @@ class TeleopFromHell: DriveMethods() {
 //                motorBeingTested.power = 0.3
 //                sleep(500)
 //            }
-            /*else*/if (gamepad2.left_stick_y.toDouble() !=0.0) {
+            /*else*/if (gamepad2.left_stick_y.toDouble() >0.0) {
                 rotateMotor.power = 1.0*gamepad2.left_stick_y
                 //motorBeingTested.power = .05
+            }
+            else if (gamepad2.left_stick_y.toDouble() <0.0 && rotateMotor.currentPosition >0){
+                rotateMotor.power = 1.0*gamepad2.left_stick_y
             }
             else if (!toggle1){
                 rotateMotor.power = 0.0
             }
-            if (gamepad2.dpad_down && (toggle3 % 2 ==0)){
+            if (gamepad2.right_bumper  && (toggle3 % 2 ==0)){
                 actualintakeServo?.power = -10.0
-                toggle3+=1
+                toggle3=1
                 sleep(500)
             }
-            else if (gamepad2.dpad_down && (toggle3 % 2 ==1)){
+            else if (gamepad2.right_bumper  && (toggle3 % 2 ==1)){
                 actualintakeServo?.power = 0.0
-                toggle3+=1
+                toggle3=2
+                toggle4=2
                 sleep(500)
             }
-            if (gamepad2.dpad_up && (toggle4 % 2 ==0)){
+            if (gamepad2.right_trigger >= 0.5 && (toggle4 % 2 ==0)){
                 actualintakeServo?.power = 10.0
-                toggle4+=1
+                toggle4=1
                 sleep(500)
             }
-            else if (gamepad2.dpad_up && (toggle4 % 2 ==1)){
+            else if (gamepad2.right_trigger >= 0.5 && (toggle4 % 2 ==1)){
                 actualintakeServo?.power = 0.0
-                toggle4+=1
+                toggle4=2
+                toggle3=2
                 sleep(500)
             }
-            if (gamepad2.dpad_left){
-                boxServo.position = .62
+            if (gamepad2.x) {
+                if (!toggle5) {
+                    boxServo.position = .48
+                    toggle5 = true
+                    sleep(500)
+                } else {
+                    boxServo.position = .62
+                    toggle5 = false
+                    sleep(500)
+                }
             }
-            if (gamepad2.dpad_right){
-                boxServo.position = .52
-            }
+//            if (gamepad2.dpad_left){
+//                boxServo.position = .62
+//            }
+//            if (gamepad2.dpad_right){
+//                boxServo.position = .48
+//            }
+            telemetry.addData("Gamepad2 Right Y", gamepad2.right_stick_y)
             if (gamepad2.left_bumper){
                 toggle2=true
                 slideMotor.targetPosition = 0
@@ -332,7 +350,11 @@ class TeleopFromHell: DriveMethods() {
                 }
                 sleep(500)
             }
-            else if (gamepad2.right_stick_y.toDouble() != 0.0) {
+            else if (gamepad2.right_stick_y.toDouble() > 0.0 && slideMotor.currentPosition >-1100) {
+                slideMotor.power = -1.0 * gamepad2.right_stick_y
+                //motorBeingTested.power = .05
+            }
+            else if (gamepad2.right_stick_y.toDouble() < 0.0 && slideMotor.currentPosition<1100) {
                 slideMotor.power = -1.0 * gamepad2.right_stick_y
                 //motorBeingTested.power = .05
             }
@@ -370,7 +392,7 @@ class TeleopFromHell: DriveMethods() {
 
             if(gamepad2.a) {
                 if (clawClamp) {
-                    passiveServo.position = 0.1;
+                    passiveServo.position = 0.2;
                 }
                 else {
                     passiveServo.position = .37
