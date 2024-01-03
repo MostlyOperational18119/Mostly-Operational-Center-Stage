@@ -41,6 +41,7 @@ object Variables {
     var rMotorL: DcMotor? = null;
     var touchyR: TouchSensor? = null
     var touchyL: TouchSensor? = null
+
     var slideRotationMotor: DcMotor? = null
     var motorSlideRotate: DcMotor? = null
     var motorSlideLeft: DcMotor? = null
@@ -76,6 +77,7 @@ object Variables {
     var degree2Click = encoders/360
     var blinkinLedDriver: RevBlinkinLedDriver? = null
     var pattern: BlinkinPattern? = null
+    var blinkinWorks = true
 
     var desiredTag: AprilTagDetection? = null
     var targetFound = false
