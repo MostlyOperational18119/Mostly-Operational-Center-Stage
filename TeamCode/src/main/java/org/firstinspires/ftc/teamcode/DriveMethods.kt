@@ -100,6 +100,7 @@ open class DriveMethods: LinearOpMode() {
         // Convert it to a Position (real)
         if (includesCup(recognitions)) {
             val cup = getCup(recognitions) ?: return Variables.Detection.LEFT
+            telemetry.addData("Cup right position (for debugging, you monster)", cup.right)
 
             return if (cup.right < compNumber) Variables.Detection.CENTER
             else if (cup.right > compNumber) Variables.Detection.RIGHT
