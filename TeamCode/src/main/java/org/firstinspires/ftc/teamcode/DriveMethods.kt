@@ -5,16 +5,21 @@ import com.google.blocks.ftcrobotcontroller.util.CurrentGame
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver.BlinkinPattern
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.TouchSensor
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition
 import org.firstinspires.ftc.teamcode.Variables.VisionProcessors
+import org.firstinspires.ftc.teamcode.Variables.actualintakeServo
+import org.firstinspires.ftc.teamcode.Variables.aeroplaneLauncherServo
 import org.firstinspires.ftc.teamcode.Variables.blinkinLedDriver
 import org.firstinspires.ftc.teamcode.Variables.blinkinWorks
+import org.firstinspires.ftc.teamcode.Variables.boxServo
 import org.firstinspires.ftc.teamcode.Variables.clawAngle
 import org.firstinspires.ftc.teamcode.Variables.desiredTag
 import org.firstinspires.ftc.teamcode.Variables.leftX
@@ -28,12 +33,15 @@ import org.firstinspires.ftc.teamcode.Variables.motorFLPower
 import org.firstinspires.ftc.teamcode.Variables.motorFR
 import org.firstinspires.ftc.teamcode.Variables.motorFRPower
 import org.firstinspires.ftc.teamcode.Variables.motorSlideLeft
+import org.firstinspires.ftc.teamcode.Variables.passiveServo
 import org.firstinspires.ftc.teamcode.Variables.pattern
 import org.firstinspires.ftc.teamcode.Variables.rMotorL
 import org.firstinspires.ftc.teamcode.Variables.rMotorR
 import org.firstinspires.ftc.teamcode.Variables.rightX
+import org.firstinspires.ftc.teamcode.Variables.rotateMotor
 import org.firstinspires.ftc.teamcode.Variables.slideAngle
 import org.firstinspires.ftc.teamcode.Variables.slideLength
+import org.firstinspires.ftc.teamcode.Variables.slideMotor
 import org.firstinspires.ftc.teamcode.Variables.speedDiv
 import org.firstinspires.ftc.teamcode.Variables.t
 import org.firstinspires.ftc.teamcode.Variables.targetFound
@@ -375,6 +383,12 @@ open class DriveMethods: LinearOpMode() {
         motorBL = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBL")
         motorFR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorFR")
         motorBR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBR")
+        passiveServo = hardwareMap.get(Servo::class.java, "passiveServo")
+        aeroplaneLauncherServo = hardwareMap.get(Servo::class.java, "PLANE!")
+        rotateMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
+        slideMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
+        actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
+        boxServo = hardwareMap.get(Servo::class.java, "boxServo")
         motorFL!!.direction = DcMotorSimple.Direction.REVERSE
         motorBL!!.direction = DcMotorSimple.Direction.REVERSE
         leftY = (-gamepad1.left_stick_y).toDouble()

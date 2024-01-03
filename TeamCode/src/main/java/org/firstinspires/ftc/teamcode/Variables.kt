@@ -35,13 +35,17 @@ object Variables {
     var pomPomServo: CRServo? = null
     var leftFlyWheel: CRServo? = null
     var intakeServo: CRServo? = null
-    var boxServo: CRServo? = null
     var rightFlyWheel: CRServo? = null
     var rMotorR: DcMotor? = null;
     var rMotorL: DcMotor? = null;
     var touchyR: TouchSensor? = null
     var touchyL: TouchSensor? = null
-
+    var passiveServo: Servo? = null
+    var aeroplaneLauncherServo: Servo? = null
+    var rotateMotor: DcMotor? = null
+    var slideMotor: DcMotor? = null
+    var actualintakeServo: CRServo? = null
+    var boxServo: Servo? = null
     var slideRotationMotor: DcMotor? = null
     var motorSlideRotate: DcMotor? = null
     var motorSlideLeft: DcMotor? = null
