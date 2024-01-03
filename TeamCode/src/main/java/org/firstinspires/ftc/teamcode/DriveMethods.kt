@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode
 
 import android.util.Size
 import com.google.blocks.ftcrobotcontroller.util.CurrentGame
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver.BlinkinPattern
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
@@ -11,6 +13,8 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.Exposur
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition
 import org.firstinspires.ftc.teamcode.Variables.VisionProcessors
+import org.firstinspires.ftc.teamcode.Variables.blinkinLedDriver
+import org.firstinspires.ftc.teamcode.Variables.blinkinWorks
 import org.firstinspires.ftc.teamcode.Variables.clawAngle
 import org.firstinspires.ftc.teamcode.Variables.desiredTag
 import org.firstinspires.ftc.teamcode.Variables.leftX
@@ -24,6 +28,7 @@ import org.firstinspires.ftc.teamcode.Variables.motorFLPower
 import org.firstinspires.ftc.teamcode.Variables.motorFR
 import org.firstinspires.ftc.teamcode.Variables.motorFRPower
 import org.firstinspires.ftc.teamcode.Variables.motorSlideLeft
+import org.firstinspires.ftc.teamcode.Variables.pattern
 import org.firstinspires.ftc.teamcode.Variables.rMotorL
 import org.firstinspires.ftc.teamcode.Variables.rMotorR
 import org.firstinspires.ftc.teamcode.Variables.rightX
@@ -348,6 +353,13 @@ open class DriveMethods: LinearOpMode() {
         rMotorL = hardwareMap.get<DcMotor>(DcMotor::class.java, "rMotorL")
         touchyR = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyR")
         touchyL = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyL")
+
+        try {
+            initBlinkin()
+        } catch (e: Exception) {
+            telemetry.addLine("Failed to init blinkin with error: ${e.localizedMessage}")
+            blinkinWorks = false
+        }
     }
 
     open fun initOnlyRackAndPain() {
@@ -457,5 +469,15 @@ open class DriveMethods: LinearOpMode() {
         motorBRPower = (leftY - leftX + rightX) / speedDiv
 
         setMotorPowers(motorFLPower, motorFRPower, motorBLPower, motorBRPower)
+    }
+
+    fun initBlinkin() {
+        blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver::class.java, "blinkin")
+        pattern = RevBlinkinLedDriver.BlinkinPattern.RED
+    }
+
+    fun setBlinkinColour(pattern: BlinkinPattern) {
+        Variables.pattern = pattern
+        if (blinkinWorks) blinkinLedDriver!!.setPattern(pattern)
     }
 }
