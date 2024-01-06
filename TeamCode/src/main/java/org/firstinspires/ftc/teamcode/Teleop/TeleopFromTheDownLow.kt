@@ -1,6 +1,7 @@
 
 package org.firstinspires.ftc.teamcode.Teleop
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.DriveMethods
@@ -28,6 +29,7 @@ import java.io.FileWriter
 
 
 @TeleOp(name = "TeleopFromTheDownLow", group = "TeleopFinal")
+@Disabled
 class TeleopFromTheDownLow: DriveMethods() {
     override fun runOpMode() {
         //perfectly record everything at the exact perfectness that is needed

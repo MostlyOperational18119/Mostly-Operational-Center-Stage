@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "RCOutLeft", group = "Linear OpMode")
+@Autonomous(name = "RCOutLeft(actual)", group = "Linear OpMode")
 public class RCOutLeft extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {

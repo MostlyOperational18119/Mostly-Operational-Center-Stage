@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Teleop
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.DriveMethods
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.teamcode.Variables.targetFound
 import org.firstinspires.ftc.teamcode.Variables.turn
 
 @TeleOp(name = "Teleop-1", group = "AprilTag")
+@Disabled
 class Teleop9999: DriveMethods() {
     override fun runOpMode() {
         //init
