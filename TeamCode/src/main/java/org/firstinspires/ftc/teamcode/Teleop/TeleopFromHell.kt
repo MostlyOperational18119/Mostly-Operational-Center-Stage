@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Teleop
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.DriveMethods
@@ -80,7 +79,7 @@ class TeleopFromHell: DriveMethods() {
         telemetry.update()
 
         //slideGate?.position = 0.59
-
+        aeroplaneLauncherServo!!.position = AEROPLANE_CLOSE
         waitForStart()
         //slideGate?.position = 0.55
         //set claw position into bounds
@@ -93,6 +92,7 @@ class TeleopFromHell: DriveMethods() {
         //slideRotationMotor!!.mode = DcMotor.RunMode.RUN_USING_ENCODER;
         //set up variables
         var leftY: Double
+        val autoServo = hardwareMap.get(Servo::class.java, "autoServo")
         var leftYGPadTwo: Double
         var leftX: Double
         var rightX: Double
@@ -153,7 +153,7 @@ class TeleopFromHell: DriveMethods() {
                 motorBR?.power = -1.0/speedDiv
             }
 
-            if (gamepad1.left_bumper) {
+            if (gamepad1.right_bumper) {
                 motorFL?.power = -1.0/speedDiv
                 motorBL?.power = 1.0/speedDiv
                 motorFR?.power = -1.0/speedDiv
@@ -166,6 +166,10 @@ class TeleopFromHell: DriveMethods() {
                 } else {
                     3.0
                 }
+            }
+
+            if (gamepad1.y) {
+                autoServo.position = 0.65
             }
 
             if (!blinkinWorks) telemetry.addLine("Blinkin is not currently working")
@@ -327,7 +331,7 @@ class TeleopFromHell: DriveMethods() {
             if (gamepad2.x) {
                 if (!toggle5) {
                     setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.GREEN) // Green means that it's open
-                    boxServo!!.position = .48
+                    boxServo!!.position = .45
                     toggle5 = true
                     sleep(500)
                 } else {
