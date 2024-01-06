@@ -15,9 +15,8 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 
 import java.util.Arrays;
 
-@Disabled
 @Config
-@Autonomous(name = "BBRight", group = "Linear OpMode")
+@Autonomous(name = "BFRight(actual)", group = "Linear OpMode")
 public class BFRight extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
@@ -38,62 +37,36 @@ public class BFRight extends MeepMeepBoilerplate{
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
-        autoServo.setPosition(0.35);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .forward(26.0)
+                            .back(28.0)
                             .turn(Math.toRadians(90))
-                            .forward(8)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.1))
-                            .waitSeconds(.25)
                             .back(8)
-                            .strafeRight(25)
-                            .waitSeconds(.5)
-                            .forward(18)
-                            .setVelConstraint(slowConstraint)
-                            .waitSeconds(.25)
-                            .forward(63)
-                            .waitSeconds(.25)
-                            .turn(Math.toRadians(90))
-                            .waitSeconds(.25)
-                            .forward(23)
-                            .waitSeconds(.25)
-                            .strafeLeft(4)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
+                            .waitSeconds(4)
+                            .forward(5)
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .forward(30)
-                            .addDisplacementMarker(() -> passiveServo.setPosition(0.1))
+                            .back(31.5)
+                            .waitSeconds(.25)
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
+                            .waitSeconds(4)
+                            .forward(5)
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .forward(28.0)
-                            .turn(Math.toRadians(-90))
-                            .forward(2)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.1))
+                            .back(2.0)
                             .waitSeconds(.25)
-                            .back(5)
-                            .strafeLeft(22)
-                            .waitSeconds(.5)
-                            .back(18)
-                            .setVelConstraint(slowConstraint)
+                            .strafeLeft(8)
+                            .back(21)
                             .waitSeconds(.25)
-                            .back(63)
-                            .waitSeconds(.25)
-                            .turn(Math.toRadians(90))
-                            .waitSeconds(.25)
-                            .back(20)
-                            .waitSeconds(.25)
-                            .strafeLeft(4)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
+                            .waitSeconds(4)
+                            .forward(5)
                             .build()
             );
             default -> {
@@ -102,7 +75,6 @@ public class BFRight extends MeepMeepBoilerplate{
                 sleep(3000);
             }
         }
-
 
 
 //        drive.followTrajectorySequence(mergeSequences(sequences));
