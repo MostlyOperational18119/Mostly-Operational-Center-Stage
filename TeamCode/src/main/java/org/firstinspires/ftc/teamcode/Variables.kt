@@ -97,8 +97,8 @@ object Variables {
     var drive = 0.0 //x
     var strafe = 0.0 //y
     var turn = 0.0 //yaw
-    val AEROPLANE_LAUNCH = 0.32
-    val AEROPLANE_CLOSE = 0.6
+    val AEROPLANE_LAUNCH = 0.9
+    val AEROPLANE_CLOSE = 0.65
 
     enum class Direction {
         FORWARD, BACKWARD, RIGHT, LEFT, ROTATE_LEFT, ROTATE_RIGHT, ROTATE

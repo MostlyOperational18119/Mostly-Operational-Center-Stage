@@ -354,13 +354,23 @@ open class DriveMethods: LinearOpMode() {
     }
     open fun initMotorsSecondBot() {
         motorFL = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorFL")
+        motorFL?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         motorBL = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBL")
+        motorBL?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         motorFR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorFR")
+        motorFR?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         motorBR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBR")
+        motorBR?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         rMotorR = hardwareMap.get<DcMotor>(DcMotor::class.java, "rMotorR")
         rMotorL = hardwareMap.get<DcMotor>(DcMotor::class.java, "rMotorL")
         touchyR = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyR")
         touchyL = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyL")
+        passiveServo = hardwareMap.get(Servo::class.java, "passiveServo")
+        aeroplaneLauncherServo = hardwareMap.get(Servo::class.java, "PLANE!")
+        rotateMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
+        slideMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
+        actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
+        boxServo = hardwareMap.get(Servo::class.java, "boxServo")
 
         try {
             initBlinkin()
@@ -383,12 +393,6 @@ open class DriveMethods: LinearOpMode() {
         motorBL = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBL")
         motorFR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorFR")
         motorBR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBR")
-        passiveServo = hardwareMap.get(Servo::class.java, "passiveServo")
-        aeroplaneLauncherServo = hardwareMap.get(Servo::class.java, "PLANE!")
-        rotateMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
-        slideMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
-        actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
-        boxServo = hardwareMap.get(Servo::class.java, "boxServo")
         motorFL!!.direction = DcMotorSimple.Direction.REVERSE
         motorBL!!.direction = DcMotorSimple.Direction.REVERSE
         leftY = (-gamepad1.left_stick_y).toDouble()
@@ -451,6 +455,24 @@ open class DriveMethods: LinearOpMode() {
             VisionProcessors.BOTH -> tfod.setZoom(zoom)
             else -> telemetry.addLine("Zoom not updated")
         }
+    }
+
+    fun goDownAuto(){
+        rotateMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
+        rotateMotor!!.targetPosition = 1550
+        while (rotateMotor!!.currentPosition<1500){
+            rotateMotor!!.power = .3
+        }
+        rotateMotor!!.power = 0.0
+    }
+
+    fun goUpAuto(){
+        rotateMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
+        rotateMotor!!.targetPosition = 0
+        while (rotateMotor!!.currentPosition>0){
+            rotateMotor!!.power = -.3
+        }
+        rotateMotor!!.power = 0.0
     }
 
     fun linearSlideCalc() {
