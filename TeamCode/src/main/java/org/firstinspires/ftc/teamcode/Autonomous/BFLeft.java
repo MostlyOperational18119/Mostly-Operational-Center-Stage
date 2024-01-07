@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
@@ -59,39 +61,20 @@ public class BFLeft extends MeepMeepBoilerplate{
         rotateMotor.setPower(0.0);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(28.0)
-                            .turn(Math.toRadians(90))
-                            .back(8)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(270.00)))
+                            .splineTo(new Vector2d(-50.17, 42.51), Math.toRadians(314.49))
                             .waitSeconds(.25)
-                            .forward(8)
-                            .strafeRight(26)
-                            .waitSeconds(.5)
-                            .setVelConstraint(slowConstraint)
-                            .addTemporalMarker(() -> rotateMotor.setTargetPosition(1550))
-                            .addTemporalMarker(() -> rotateMotor.setPower(.3))
-                            .waitSeconds(5)
-                            .back(50)
-                            .waitSeconds(1)
-                            .resetVelConstraint()
-                            .addTemporalMarker(() -> rotateMotor.setTargetPosition(0))
-                            .addTemporalMarker(() -> rotateMotor.setPower(-.3))
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(4)
-                            .back(30)
-                            .strafeLeft(5)
-                            .waitSeconds(.5)
-                            .back(18)
-                            .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
-                            .waitSeconds(1)
-                            .forward(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.78))
-                            .build()
-            );
+                            .splineToLinearHeading(new Pose2d(-33.23, 33.80, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .setReversed(true)
+                            .splineTo(new Vector2d(-41.63, 13.75), Math.toRadians(344.02))
+                            .splineTo(new Vector2d(30.37, 11.46), Math.toRadians(360.00))
+                            .lineTo(new Vector2d(50.80, 38.20))
+                            .lineTo(new Vector2d(42.36, 61.17))
+                            .build());
             case CENTER -> { drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(270.00)))
                             .back(31.5)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .forward(28)
@@ -120,7 +103,7 @@ public class BFLeft extends MeepMeepBoilerplate{
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(270.00)))
                             .back(28.0)
                             .turn(Math.toRadians(-90))
                             .back(3)

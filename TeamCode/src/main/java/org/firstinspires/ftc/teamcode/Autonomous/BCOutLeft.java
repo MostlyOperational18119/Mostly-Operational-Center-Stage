@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
+import static org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive.ACCEL_CONSTRAINT;
+import static org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive.VEL_CONSTRAINT;
+
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
@@ -38,9 +42,10 @@ public class BCOutLeft extends MeepMeepBoilerplate{
 
                 new TranslationalVelocityConstraint(50),
 
-                new AngularVelocityConstraint(1)
+                new AngularVelocityConstraint(3)
 
         ));
+
         while (opModeInInit()) {
             detection = getDetectionsSingleTFOD(400
             );
@@ -57,6 +62,7 @@ public class BCOutLeft extends MeepMeepBoilerplate{
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
+                            .splineToConstantHeading(new Vector2d(15,35),2,VEL_CONSTRAINT,ACCEL_CONSTRAINT)
                             .back(2.0)
                             .waitSeconds(.1)
                             .strafeRight(11)
@@ -95,7 +101,7 @@ public class BCOutLeft extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .back(39)
                             .waitSeconds(.1)
-                            .strafeRight(2)
+                            .strafeLeft(1)
                             .waitSeconds(.1)
                             .back(1.5)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
