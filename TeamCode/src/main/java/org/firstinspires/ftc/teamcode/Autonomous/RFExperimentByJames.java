@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "RFJamesStuff", group = "LinearOpmode")
+@Autonomous(name = "RFJamesEXPERIMENT", group = "LinearOpmode")
 public class RFExperimentByJames extends MeepMeepBoilerplate {
 
     @Override
@@ -45,23 +45,23 @@ public class RFExperimentByJames extends MeepMeepBoilerplate {
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(90)))
-                            .back(2.0)
-                            .waitSeconds(.1)
-                            .strafeRight(11)
-                            .back(21)
-                            .waitSeconds(.1)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(4)
-                            .forward(5)
+                            .splineToLinearHeading(new Pose2d(-47.49, -38.18, Math.toRadians(-90.00)), Math.toRadians(90.00))
+                            .splineTo(new Vector2d(-49.77, -54.52), Math.toRadians(-14.42))
+                            .splineTo(new Vector2d(-17.29, -59.46), Math.toRadians(356.04))
+                            .splineToSplineHeading(new Pose2d(22.04, -59.65, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineTo(new Vector2d(50.72, -36.09))
+                            .setReversed(true)
+                            .lineTo(new Vector2d(42.93, -61.93))
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(90)))
-                            .back(31)
-                            .waitSeconds(.25)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(4)
-                            .forward(5)
+                            .splineToSplineHeading(new Pose2d(-35.91, -25.08, Math.toRadians(-90.00)), Math.toRadians(90.00))
+                            .splineToSplineHeading(new Pose2d(-29.26, -60.03, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToSplineHeading(new Pose2d(22.04, -59.65, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineTo(new Vector2d(50.72, -36.09))
+                            .setReversed(true)
+                            .lineTo(new Vector2d(42.93, -61.93))
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(

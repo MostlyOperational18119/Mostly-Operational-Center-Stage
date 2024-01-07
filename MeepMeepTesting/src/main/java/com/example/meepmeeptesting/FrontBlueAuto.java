@@ -18,7 +18,7 @@ public class FrontBlueAuto {
         RIGHT
     }
 
-    private static final Pose2d STARTING_POSE = new Pose2d(-36.67, -63, Math.toRadians(90));
+    private static final Pose2d STARTING_POSE = new Pose2d(15.01, -62.69, Math.toRadians(90.00));
 
     private static ArrayList<TrajectorySequence> sequences = new ArrayList<TrajectorySequence>();
 
@@ -92,11 +92,12 @@ public class FrontBlueAuto {
             case RIGHT:
                 followTrajectorySequence(
                         driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
-                                .splineTo(new Vector2d(-36.85, -23.56), Math.toRadians(90.00))
-                                .splineTo(new Vector2d(9.31, -13.30), Math.toRadians(0.00))
+                                .splineTo(new Vector2d(9.57, -34.47), Math.toRadians(180.00))
                                 .setReversed(true)
-                                .lineTo(new Vector2d(50.72, -36.09))
-                                .lineTo(new Vector2d(42.93, -61.93))
+                                .splineTo(new Vector2d(30.83, -34.28), Math.toRadians(0.00))
+                                .lineTo(new Vector2d(50.36, -29.49))
+                                .lineTo(new Vector2d(42.70, -62.23))
+                                .setReversed(false)
                                 .build());
                 break;
         }
