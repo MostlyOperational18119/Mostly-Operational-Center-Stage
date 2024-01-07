@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
+import static org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive.ACCEL_CONSTRAINT;
+import static org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive.VEL_CONSTRAINT;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -8,7 +11,6 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -19,9 +21,8 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Disabled
-@Autonomous(name = "BFLeftEXPERIMENT", group = "Linear OpMode")
-public class BFLeft extends MeepMeepBoilerplate{
+@Autonomous(name = "RCOutLeft(EXPERIMENT)", group = "Linear OpMode")
+public class RCOutLeftEXPERIMENT extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -38,21 +39,21 @@ public class BFLeft extends MeepMeepBoilerplate{
                 new AngularVelocityConstraint(1)
 
         ));
-
         TrajectoryVelocityConstraint fastConstraint = new MinVelocityConstraint(Arrays.asList(
 
-                new TranslationalVelocityConstraint(55),
+                new TranslationalVelocityConstraint(50),
 
                 new AngularVelocityConstraint(3)
 
         ));
+
         while (opModeInInit()) {
-            detection = getDetectionsSingleTFOD();
+            detection = getDetectionsSingleTFOD(400
+            );
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
-
-        autoServo.setPosition(0.78);
+        autoServo.setPosition(0.73);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -61,39 +62,30 @@ public class BFLeft extends MeepMeepBoilerplate{
         rotateMotor.setPower(0.0);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(270.00)))
-                            .splineTo(new Vector2d(-50.17, 42.51), Math.toRadians(314.49))
-                            .waitSeconds(.25)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(4)
-                            .splineToLinearHeading(new Pose2d(-33.23, 33.80, Math.toRadians(360.00)), Math.toRadians(360.00))
+                    drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(90.00)))
+                            .splineTo(new Vector2d(9.57, -34.47), Math.toRadians(180.00))
                             .setReversed(true)
-                            .splineTo(new Vector2d(-41.63, 13.75), Math.toRadians(344.02))
-                            .splineTo(new Vector2d(30.37, 11.46), Math.toRadians(360.00))
-                            .lineTo(new Vector2d(50.80, 38.20))
-                            .lineTo(new Vector2d(42.36, 61.17))
+                            .splineTo(new Vector2d(30.83, -34.28), Math.toRadians(0.00))
+                            .lineTo(new Vector2d(50.36, -29.49))
+                            .lineTo(new Vector2d(42.70, -62.23))
+                            .setReversed(false)
                             .build());
-            case CENTER -> { drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(270.00)))
-                            .splineToConstantHeading(new Vector2d(-37.23, 35.34), Math.toRadians(270.00))
-                            .splineToSplineHeading(new Pose2d(-30.02, 58.70, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .splineToSplineHeading(new Pose2d(22.04, 59.65, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .lineTo(new Vector2d(50.72, 36.09))
+            case CENTER -> drive.followTrajectorySequence(
+                    drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(90.00)))
+                            .splineToLinearHeading(new Pose2d(12.73, -34.20, Math.toRadians(-90.00)), Math.toRadians(90.00))
+                            .splineTo(new Vector2d(31.54, -45.02), Math.toRadians(0.00))
+                            .lineTo(new Vector2d(50.72, -36.09))
                             .setReversed(true)
-                            .lineTo(new Vector2d(42.93, 61.93))
+                            .lineTo(new Vector2d(42.93, -61.93))
                             .build());
-            }
             case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(270.00)))
-                            .splineToLinearHeading(new Pose2d(-47.49, 38.18, Math.toRadians(450.00)), Math.toRadians(270.00))
-                            .splineTo(new Vector2d(-51.29, 54.71), Math.toRadians(-1.03))
-                            .splineTo(new Vector2d(-17.29, 59.46), Math.toRadians(3.96))
-                            .splineToSplineHeading(new Pose2d(22.04, 59.65, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .lineTo(new Vector2d(50.72, 36.09))
+                    drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(90.00)))
+                            .splineToLinearHeading(new Pose2d(23.37, -39.51, Math.toRadians(-90.00)), Math.toRadians(90.00))
+                            .splineTo(new Vector2d(36.47, -47.87), Math.toRadians(0.00))
+                            .lineTo(new Vector2d(50.72, -36.09))
                             .setReversed(true)
-                            .lineTo(new Vector2d(42.93, 61.93))
-                            .build()
-            );
+                            .lineTo(new Vector2d(42.74, -61.93))
+                            .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
                 telemetry.update();
