@@ -76,7 +76,7 @@ public class BCInLeft extends MeepMeepBoilerplate{
                             .waitSeconds(1)
                             .build()
             );
-            case CENTER -> { drive.followTrajectorySequence(
+            case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .back(31)
                             .waitSeconds(.25)
@@ -98,7 +98,6 @@ public class BCInLeft extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> autoServo.setPosition(0.6))
                             .waitSeconds(1)
                             .build());
-            }
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .back(28.0)

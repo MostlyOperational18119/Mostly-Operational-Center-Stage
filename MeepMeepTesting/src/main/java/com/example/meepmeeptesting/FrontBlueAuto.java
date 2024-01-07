@@ -1,6 +1,7 @@
 package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.DriveShim;
@@ -17,7 +18,7 @@ public class FrontBlueAuto {
         RIGHT
     }
 
-    private static final Pose2d STARTING_POSE = new Pose2d(12, 61.5, Math.toRadians(-90));
+    private static final Pose2d STARTING_POSE = new Pose2d(-36.67, -63, Math.toRadians(90));
 
     private static ArrayList<TrajectorySequence> sequences = new ArrayList<TrajectorySequence>();
 
@@ -69,18 +70,18 @@ public class FrontBlueAuto {
 
         driveShim = myBot.getDrive();
 
-        followTrajectorySequence(
-                driveShim.trajectorySequenceBuilder(STARTING_POSE)
-                        .forward(28.0)
-                        .build()
-        );
+//        followTrajectorySequence(
+//                driveShim.trajectorySequenceBuilder(STARTING_POSE)
+////                        .forward(28.0)
+//                        .build()
+//        );
 
         assert getCurrentTrajectorySequence(driveShim) != null; // Null Pointer Protection
 
         switch (detection) {
             case LEFT:
                 followTrajectorySequence(
-                        driveShim.trajectorySequenceBuilder(getCurrentTrajectorySequence(driveShim).end())
+                        driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
                                 .turn(Math.toRadians(90))
                                 .forward(2)
                                 .build()
@@ -90,11 +91,13 @@ public class FrontBlueAuto {
                 break;
             case RIGHT:
                 followTrajectorySequence(
-                        driveShim.trajectorySequenceBuilder(getCurrentTrajectorySequence(driveShim).end())
-                                .turn(Math.toRadians(-90))
-                                .forward(2)
-                                .build()
-                );
+                        driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
+                                .splineTo(new Vector2d(-36.85, -23.56), Math.toRadians(90.00))
+                                .splineTo(new Vector2d(9.31, -13.30), Math.toRadians(0.00))
+                                .setReversed(true)
+                                .lineTo(new Vector2d(50.72, -36.09))
+                                .lineTo(new Vector2d(42.93, -61.93))
+                                .build());
                 break;
         }
 
