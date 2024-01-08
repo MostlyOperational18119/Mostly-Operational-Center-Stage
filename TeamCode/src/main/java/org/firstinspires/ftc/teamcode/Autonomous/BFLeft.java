@@ -61,30 +61,26 @@ public class BFLeft extends MeepMeepBoilerplate{
         rotateMotor.setPower(0.0);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(270.00)))
-                            .splineTo(new Vector2d(-50.17, 42.51), Math.toRadians(314.49))
-                            .waitSeconds(.25)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(4)
-                            .splineToLinearHeading(new Pose2d(-33.23, 33.80, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .setReversed(true)
-                            .splineTo(new Vector2d(-41.63, 13.75), Math.toRadians(344.02))
-                            .splineTo(new Vector2d(30.37, 11.46), Math.toRadians(360.00))
-                            .lineTo(new Vector2d(50.80, 38.20))
-                            .lineTo(new Vector2d(42.36, 61.17))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
+                            .back(28.0)
+                            .turn(Math.toRadians(90))
+                            .back(8)
+                            .splineToLinearHeading(new Pose2d(-36.09, 58.89, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(50.91, 35.72, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
                             .build());
             case CENTER -> { drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(270.00)))
-                            .splineToConstantHeading(new Vector2d(-37.23, 35.34), Math.toRadians(270.00))
-                            .splineToSplineHeading(new Pose2d(-30.02, 58.70, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .splineToSplineHeading(new Pose2d(22.04, 59.65, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .lineTo(new Vector2d(50.72, 36.09))
-                            .setReversed(true)
-                            .lineTo(new Vector2d(42.93, 61.93))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
+                            .lineToConstantHeading(new Vector2d(-35.34, 33.82))
+                            .splineToLinearHeading(new Pose2d(-35.91, 59.46, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(51.29, 39.89, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(270.00)))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
                             .splineToLinearHeading(new Pose2d(-47.49, 38.18, Math.toRadians(450.00)), Math.toRadians(270.00))
                             .splineTo(new Vector2d(-51.29, 54.71), Math.toRadians(-1.03))
                             .splineTo(new Vector2d(-17.29, 59.46), Math.toRadians(3.96))
