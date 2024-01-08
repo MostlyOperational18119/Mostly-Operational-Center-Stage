@@ -103,9 +103,9 @@ public class BackRedAuto {
             case RIGHT:
                 followTrajectorySequence(
                         driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
-                                .back(28.0)
-                                .turn(Math.toRadians(-90))
-                                .back(4)
+                                .setReversed(true)
+                                .splineToLinearHeading(new Pose2d(-31.32, -32.85, Math.toRadians(180.00)), Math.toRadians(0))
+                                .setReversed(false)
                                 .splineToLinearHeading(new Pose2d(-36.09, -58.89, Math.toRadians(360.00)), Math.toRadians(360.00))
                                 .splineToLinearHeading(new Pose2d(26.37, -58.82, Math.toRadians(0.00)), Math.toRadians(0.00))
                                 .splineToLinearHeading(new Pose2d(51.31, -37.72, Math.toRadians(0.00)), Math.toRadians(0.00))
