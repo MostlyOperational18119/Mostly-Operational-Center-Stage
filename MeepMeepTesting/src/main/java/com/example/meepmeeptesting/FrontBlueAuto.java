@@ -99,9 +99,10 @@ public class FrontBlueAuto {
             case RIGHT:
                 followTrajectorySequence(
                         driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
-                                .back(28.0)
-                                .turn(Math.toRadians(-90))
-                                .back(4)
+                                .setReversed(true)
+                                .splineToLinearHeading(new Pose2d(15.75, 45.61, Math.toRadians(90.00)), Math.toRadians(-90.00))
+                                .splineToLinearHeading(new Pose2d(6.95, 35.39, Math.toRadians(360.00)), Math.toRadians(180.00))
+                                .setReversed(false)
                                 .lineToConstantHeading(new Vector2d(51.29, 32.49))
                                 .lineToConstantHeading(new Vector2d(44.45, 62.69))
                                 .build());
