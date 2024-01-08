@@ -62,9 +62,9 @@ public class BFLeft extends MeepMeepBoilerplate{
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
-                            .back(28.0)
-                            .turn(Math.toRadians(90))
-                            .back(8)
+                            .setReversed(true)
+                            .splineToLinearHeading(new Pose2d(-31.70, 34.77, Math.toRadians(180.00)), Math.toRadians(293.11))
+                            .setReversed(false)
                             .splineToLinearHeading(new Pose2d(-36.09, 58.89, Math.toRadians(0.00)), Math.toRadians(0.00))
                             .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
                             .splineToLinearHeading(new Pose2d(50.91, 35.72, Math.toRadians(360.00)), Math.toRadians(360.00))

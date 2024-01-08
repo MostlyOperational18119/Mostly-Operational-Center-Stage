@@ -63,11 +63,13 @@ public class RCOutLeftEXPERIMENT extends MeepMeepBoilerplate{
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(270.00)))
-                            .back(28.0)
-                            .turn(Math.toRadians(90))
-                            .back(8)
-                            .lineToConstantHeading(new Vector2d(51.29, -26.60))
-                            .lineToConstantHeading(new Vector2d(44.45, -62.69))
+                            .setReversed(true)
+                            .splineToLinearHeading(new Pose2d(-31.32, -32.85, Math.toRadians(180.00)), Math.toRadians(0))
+                            .setReversed(false)
+                            .splineToLinearHeading(new Pose2d(-36.09, -58.89, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(26.37, -58.82, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(51.31, -37.72, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineToConstantHeading(new Vector2d(42.93, -62.69))
                             .build());
             case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(270.00)))
