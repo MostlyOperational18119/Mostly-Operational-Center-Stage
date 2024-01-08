@@ -44,35 +44,32 @@ public class RFExperimentByJames extends MeepMeepBoilerplate {
 
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(90)))
-                            .splineToLinearHeading(new Pose2d(-47.49, -38.18, Math.toRadians(-90.00)), Math.toRadians(90.00))
-                            .splineTo(new Vector2d(-49.77, -54.52), Math.toRadians(-14.42))
-                            .splineTo(new Vector2d(-17.29, -59.46), Math.toRadians(356.04))
-                            .splineToSplineHeading(new Pose2d(22.04, -59.65, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .lineTo(new Vector2d(50.72, -36.09))
-                            .setReversed(true)
-                            .lineTo(new Vector2d(42.93, -61.93))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(-90)))
+                            .lineToConstantHeading(new Vector2d(-47.30, -40.08))
+                            .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(50.91, -26.41, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineToConstantHeading(new Vector2d(42.93, -62.69))
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(90)))
-                            .splineToSplineHeading(new Pose2d(-35.91, -25.08, Math.toRadians(-90.00)), Math.toRadians(90.00))
-                            .splineToSplineHeading(new Pose2d(-29.26, -60.03, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .splineToSplineHeading(new Pose2d(22.04, -59.65, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .lineTo(new Vector2d(50.72, -36.09))
-                            .setReversed(true)
-                            .lineTo(new Vector2d(42.93, -61.93))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(-90)))
+                            .lineToConstantHeading(new Vector2d(-35.34, -33.82))
+                            .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(51.29, -32.11, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .lineToConstantHeading(new Vector2d(42.93, -62.69))
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(90)))
-                            .splineTo(new Vector2d(-50.17, -42.51), Math.toRadians(45.51))
-                            .splineToLinearHeading(new Pose2d(-33.23, -33.80, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .setReversed(true)
-                            .splineTo(new Vector2d(-41.63, -13.75), Math.toRadians(15.98))
-                            .splineTo(new Vector2d(30.37, -11.46), Math.toRadians(0.00))
-                            .lineTo(new Vector2d(50.80, -38.20))
-                            .lineTo(new Vector2d(50.23, -61.11))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(-90)))
+                            .back(28.0)
+                            .turn(Math.toRadians(-90))
+                            .back(4)
+                            .splineToLinearHeading(new Pose2d(-36.09, -58.89, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(26.37, -58.82, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(51.31, -37.72, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineToConstantHeading(new Vector2d(42.93, -62.69))
                             .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
