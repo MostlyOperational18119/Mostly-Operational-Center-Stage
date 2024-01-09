@@ -60,7 +60,7 @@ public class FrontBlueAuto {
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
         MeepMeep meepMeep = new MeepMeep(800);
-        Detection detection = Detection.RIGHT;
+        Detection detection = Detection.LEFT;
         RoadRunnerBotEntity myBot;
         DriveShim driveShim;
 
@@ -82,8 +82,8 @@ public class FrontBlueAuto {
             case LEFT:
                 followTrajectorySequence(
                         driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
-                                .lineToConstantHeading(new Vector2d(23.18, 36.85))
-                                .splineToLinearHeading(new Pose2d(50.91, 43.69, Math.toRadians(0.00)), Math.toRadians(0.00))
+                                .lineToConstantHeading(new Vector2d(27.18, 36.85))
+                                .splineToLinearHeading(new Pose2d(57.18, 45.07, Math.toRadians(180.00)), Math.toRadians(0.0))
                                 .lineToConstantHeading(new Vector2d(41.41, 62.31))
                                 .build()
                 );
