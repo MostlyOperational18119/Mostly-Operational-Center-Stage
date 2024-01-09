@@ -60,7 +60,7 @@ public class FrontRedAuto {
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
         MeepMeep meepMeep = new MeepMeep(800);
-        Detection detection = Detection.LEFT;
+        Detection detection = Detection.RIGHT;
         RoadRunnerBotEntity myBot;
         DriveShim driveShim;
 
