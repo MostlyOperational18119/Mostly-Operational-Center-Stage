@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
@@ -18,8 +19,8 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "RFRight(Actual)", group = "LinearOpmode")
-public class RFRight extends MeepMeepBoilerplate {
+@Autonomous(name = "RFJamesEXPERIMENT", group = "LinearOpmode")
+public class RFExperimentByJames extends MeepMeepBoilerplate {
 
     @Override
     public void runOpMode() {
@@ -43,36 +44,33 @@ public class RFRight extends MeepMeepBoilerplate {
 
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(2.0)
-                            .waitSeconds(.1)
-                            .strafeRight(11)
-                            .back(21)
-                            .waitSeconds(.1)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(4)
-                            .forward(5)
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(-90)))
+                            .lineToConstantHeading(new Vector2d(-47.30, -40.08))
+                            .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(50.91, -26.41, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineToConstantHeading(new Vector2d(42.93, -62.69))
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(31)
-                            .waitSeconds(.25)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(4)
-                            .forward(5)
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(-90)))
+                            .lineToConstantHeading(new Vector2d(-35.34, -33.82))
+                            .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(51.29, -32.11, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .lineToConstantHeading(new Vector2d(42.93, -62.69))
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, -63, Math.toRadians(-90)))
                             .back(28.0)
                             .turn(Math.toRadians(-90))
                             .back(4)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(4)
-                            .forward(5)
-                            .build()
-            );
+                            .splineToLinearHeading(new Pose2d(-36.09, -58.89, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(26.37, -58.82, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(51.31, -37.72, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineToConstantHeading(new Vector2d(42.93, -62.69))
+                            .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
                 telemetry.update();
@@ -83,3 +81,4 @@ public class RFRight extends MeepMeepBoilerplate {
 //        drive.followTrajectorySequence(mergeSequences(sequences));
     }
 }
+

@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
+@Disabled
 @Autonomous(name = "BCInLeft", group = "Linear OpMode")
 public class BCInLeft extends MeepMeepBoilerplate{
     @Override
@@ -74,7 +76,7 @@ public class BCInLeft extends MeepMeepBoilerplate{
                             .waitSeconds(1)
                             .build()
             );
-            case CENTER -> { drive.followTrajectorySequence(
+            case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .back(31)
                             .waitSeconds(.25)
@@ -96,7 +98,6 @@ public class BCInLeft extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> autoServo.setPosition(0.6))
                             .waitSeconds(1)
                             .build());
-            }
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .back(28.0)

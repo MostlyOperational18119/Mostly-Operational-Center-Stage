@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -16,7 +19,8 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "BackBlueLeft(Actual)", group = "Linear OpMode")
+@Disabled
+@Autonomous(name = "BFLeftEXPERIMENT", group = "Linear OpMode")
 public class BFLeft extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
@@ -57,92 +61,33 @@ public class BFLeft extends MeepMeepBoilerplate{
         rotateMotor.setPower(0.0);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(28.0)
-                            .turn(Math.toRadians(90))
-                            .back(8)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(.25)
-                            .forward(8)
-                            .strafeRight(26)
-                            .waitSeconds(.5)
-                            .setVelConstraint(slowConstraint)
-                            .addTemporalMarker(() -> rotateMotor.setTargetPosition(1550))
-                            .addTemporalMarker(() -> rotateMotor.setPower(.3))
-                            .waitSeconds(5)
-                            .back(50)
-                            .waitSeconds(1)
-                            .resetVelConstraint()
-                            .addTemporalMarker(() -> rotateMotor.setTargetPosition(0))
-                            .addTemporalMarker(() -> rotateMotor.setPower(-.3))
-                            .waitSeconds(4)
-                            .back(30)
-                            .strafeLeft(5)
-                            .waitSeconds(.5)
-                            .back(18)
-                            .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
-                            .waitSeconds(1)
-                            .forward(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.78))
-                            .build()
-            );
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
+                            .setReversed(true)
+                            .splineToLinearHeading(new Pose2d(-31.70, 34.77, Math.toRadians(180.00)), Math.toRadians(293.11))
+                            .setReversed(false)
+                            .splineToLinearHeading(new Pose2d(-36.09, 58.89, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(50.91, 35.72, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
+                            .build());
             case CENTER -> { drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(31.5)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .forward(28)
-                            .turn(Math.toRadians(90))
-                            .setVelConstraint(slowConstraint)
-                            .addTemporalMarker(() -> rotateMotor.setTargetPosition(1850))
-                            .addTemporalMarker(() -> rotateMotor.setPower(.3))
-                            .waitSeconds(5)
-                            .back(50)
-                            .waitSeconds(1)
-                            .resetVelConstraint()
-                            .addTemporalMarker(() -> rotateMotor.setTargetPosition(0))
-                            .addTemporalMarker(() -> rotateMotor.setPower(-.3))
-                            .waitSeconds(4)
-                            .back(33)
-                            .waitSeconds(.25)
-                            .strafeLeft(20)
-                            .waitSeconds(.25)
-                            .back(18)
-                            .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
-                            .forward(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.78))
-                            .waitSeconds(1)
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
+                            .lineToConstantHeading(new Vector2d(-35.34, 33.82))
+                            .splineToLinearHeading(new Pose2d(-35.91, 59.46, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(51.29, 39.89, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(28.0)
-                            .turn(Math.toRadians(-90))
-                            .back(3)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(.25)
-                            .forward(3)
-                            .strafeLeft(26)
-                            .turn(Math.toRadians(180))
-                            .setVelConstraint(slowConstraint)
-                            .addTemporalMarker(() -> goDownAuto())
-                            .waitSeconds(5)
-                            .back(50)
-                            .waitSeconds(.5)
-                            .resetVelConstraint()
-                            .addTemporalMarker(() -> goUpAuto())
-                            .waitSeconds(4)
-                            .back(33)
-                            .strafeLeft(12)
-                            .back(4)
-                            .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(.9))
-                            .forward(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(.78))
+                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
+                            .splineToLinearHeading(new Pose2d(-47.49, 38.18, Math.toRadians(450.00)), Math.toRadians(270.00))
+                            .splineTo(new Vector2d(-51.29, 54.71), Math.toRadians(-1.03))
+                            .splineTo(new Vector2d(-17.29, 59.46), Math.toRadians(3.96))
+                            .splineToSplineHeading(new Pose2d(22.04, 59.65, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .lineTo(new Vector2d(50.72, 36.09))
+                            .setReversed(true)
+                            .lineTo(new Vector2d(42.93, 61.93))
                             .build()
             );
             default -> {

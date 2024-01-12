@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import static org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive.ACCEL_CONSTRAINT;
-import static org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive.VEL_CONSTRAINT;
-
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
@@ -20,8 +18,8 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "BCOutLeft(actual)", group = "Linear OpMode")
-public class BCOutLeft extends MeepMeepBoilerplate{
+@Autonomous(name = "BCOutLeftEXPERIMENT", group = "Linear OpMode")
+public class BCOutRightSplines extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -58,87 +56,58 @@ public class BCOutLeft extends MeepMeepBoilerplate{
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rotateMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        drive.setPoseEstimate(new Pose2d(15.01, 62.69, Math.toRadians(90.00)));
+
         rotateMotor.setPower(0.0);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToConstantHeading(new Vector2d(15,35),2,VEL_CONSTRAINT,ACCEL_CONSTRAINT)
-                            .back(2.0)
-                            .waitSeconds(.1)
-                            .strafeRight(11)
-                            .back(21)
+                    drive.trajectorySequenceBuilder(new Pose2d(15.01, 62.69, Math.toRadians(90.00)))
+                            .lineToConstantHeading(new Vector2d(27.18, 36.85))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.1)
-                            .forward(8)
-                            .waitSeconds(.1)
-                            .strafeRight(10)
-                            .waitSeconds(.1)
-                            .turn(Math.toRadians(90))
-                            .waitSeconds(.1)
-                            .back(20)
+                            .splineToLinearHeading(new Pose2d(57.18, 45.07, Math.toRadians(180.00)), Math.toRadians(0.0))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
                             .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.1)
-                            .forward(2)
-                            .strafeRight(13)
-                            .back(6)
-                            .waitSeconds(1)
+                            .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .addTemporalMarker(() -> autoServo.setPosition(0.65))
-                            .waitSeconds(1)
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(31)
-                            .waitSeconds(.25)
+                    drive.trajectorySequenceBuilder(new Pose2d(15.01, 62.69, Math.toRadians(90.00)))
+                            .lineToConstantHeading(new Vector2d(16.35, 30))
+                            .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(.25)
-                            .forward(9)
-                            .turn(Math.toRadians(90))
                             .waitSeconds(.1)
-                            .back(39)
+                            .splineToLinearHeading(new Pose2d(54.91, 39.46, Math.toRadians(180.00)), Math.toRadians(0.00))
                             .waitSeconds(.1)
-                            .strafeLeft(1)
-                            .waitSeconds(.1)
-                            .back(1.5)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
                             .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.9))
-                            .waitSeconds(.25)
-                            .forward(2)
-                            .strafeRight(19.5)
-                            .back(6)
-                            .waitSeconds(1)
+                            .waitSeconds(.1)
+                            .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .addTemporalMarker(() -> autoServo.setPosition(0.65))
-                            .waitSeconds(1)
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(28.0)
-                            .turn(Math.toRadians(-90))
-                            .back(4)
+                    drive.trajectorySequenceBuilder(new Pose2d(15.01, 62.69, Math.toRadians(90.00)))
+                            .setReversed(true)
+                            .splineToLinearHeading(new Pose2d(15.75, 45.61, Math.toRadians(90.00)), Math.toRadians(-90.00))
+                            .splineToLinearHeading(new Pose2d(10.95, 35.39, Math.toRadians(0.00)), Math.toRadians(180.00))
+                            .setReversed(false)
+                            .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(.25)
-                            .forward(32)
-                            .waitSeconds(.25)
-                            .turn(Math.toRadians(180))
-                            .waitSeconds(.25)
-                            .back(13)
-                            .waitSeconds(.25)
+                            .waitSeconds(.1)
+                            .lineToLinearHeading(new Pose2d(55.29, 32.49, Math.toRadians(180.00)))
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.5)
-                            .forward(2)
-                            .strafeRight(26)
-                            .back(6)
-                            .waitSeconds(1)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
+                            .waitSeconds(.1)
+                            .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .addTemporalMarker(() -> autoServo.setPosition(0.65))
-                            .waitSeconds(1)
                             .build()
             );
             default -> {

@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "RCInLeft", group = "Linear OpMode")
+@Autonomous(name = "RCInLeft (Testing Down)", group = "Linear OpMode")
 public class RCInLeft extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
@@ -40,29 +41,7 @@ public class RCInLeft extends MeepMeepBoilerplate{
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(28.0)
-                            .turn(Math.toRadians(90))
-                            .back(8)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(.25)
-                            .forward(32)
-                            .waitSeconds(.25)
-                            .turn(Math.toRadians(180))
-                            .waitSeconds(.25)
-                            .strafeRight(11.5)
-                            .waitSeconds(.25)
-                            .back(12.5)
-                            .waitSeconds(.25)
-                            .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(.5)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
-                            .waitSeconds(.25)
-                            .forward(3)
-                            .strafeRight(14)
-                            .back(10)
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
-                            .waitSeconds(1)
+                            .addTemporalMarker(() -> goDownAuto())
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(

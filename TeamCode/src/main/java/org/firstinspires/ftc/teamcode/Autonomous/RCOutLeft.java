@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "RCOutLeft", group = "Linear OpMode")
+@Autonomous(name = "RCOutLeft(actual)", group = "Linear OpMode")
 public class RCOutLeft extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
@@ -69,7 +69,7 @@ public class RCOutLeft extends MeepMeepBoilerplate{
                             .back(12.5)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(.5)
+                            .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.25)
                             .forward(3)
@@ -95,7 +95,7 @@ public class RCOutLeft extends MeepMeepBoilerplate{
                             .back(24.5)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(.5)
+                            .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.25)
                             .forward(3)
@@ -126,7 +126,7 @@ public class RCOutLeft extends MeepMeepBoilerplate{
                             .back(15.5)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(.5)
+                            .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.25)
                             .forward(3)
