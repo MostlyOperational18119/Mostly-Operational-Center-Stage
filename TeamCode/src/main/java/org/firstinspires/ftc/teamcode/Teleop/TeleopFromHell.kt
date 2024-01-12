@@ -204,6 +204,8 @@ class TeleopFromHell: DriveMethods() {
             //motorSlideLeft?.power = -((2 / (1 + (exp((-(slideTarget - slidePos) / speed).toDouble())))) - 1)
 
             //rack & pinion control
+            telemetry.addData("Left Motor:", rMotorR?.currentPosition)
+            telemetry.addData("Right Motor:", rMotorL?.currentPosition)
             if (gamepad1.left_trigger >= 0.5) {
                 if (upOrDown) {
                     if (rMotorL?.currentPosition!! <= lMax) {
