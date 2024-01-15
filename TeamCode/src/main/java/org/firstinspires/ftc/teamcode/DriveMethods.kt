@@ -33,7 +33,6 @@ import org.firstinspires.ftc.teamcode.Variables.motorFL
 import org.firstinspires.ftc.teamcode.Variables.motorFLPower
 import org.firstinspires.ftc.teamcode.Variables.motorFR
 import org.firstinspires.ftc.teamcode.Variables.motorFRPower
-import org.firstinspires.ftc.teamcode.Variables.motorSlideLeft
 import org.firstinspires.ftc.teamcode.Variables.passiveServo
 import org.firstinspires.ftc.teamcode.Variables.pattern
 import org.firstinspires.ftc.teamcode.Variables.rMotorL
