@@ -52,6 +52,7 @@ object Variables {
     var motorSlideRight: DcMotor? = null
     var clawRotation: Servo? = null
     var clawMotor: Servo? = null
+    var autoServo: Servo? = null
 
     var closedClaw = 0.87
     var openClaw = 0.8

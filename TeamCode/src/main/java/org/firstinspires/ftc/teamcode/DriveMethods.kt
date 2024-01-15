@@ -17,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition
 import org.firstinspires.ftc.teamcode.Variables.VisionProcessors
 import org.firstinspires.ftc.teamcode.Variables.actualintakeServo
 import org.firstinspires.ftc.teamcode.Variables.aeroplaneLauncherServo
+import org.firstinspires.ftc.teamcode.Variables.autoServo
 import org.firstinspires.ftc.teamcode.Variables.blinkinLedDriver
 import org.firstinspires.ftc.teamcode.Variables.blinkinWorks
 import org.firstinspires.ftc.teamcode.Variables.boxServo
@@ -371,6 +372,9 @@ open class DriveMethods: LinearOpMode() {
         slideMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
         actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
         boxServo = hardwareMap.get(Servo::class.java, "boxServo")
+        autoServo = hardwareMap.get(Servo::class.java, "autoServo")
+        // Odometry motorFR-Right, motorFL-Left, MotorBR-Center
+
 
         try {
             initBlinkin()
