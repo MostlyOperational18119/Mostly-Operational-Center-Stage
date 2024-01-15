@@ -179,7 +179,7 @@ class TeleopFromHell: DriveMethods() {
                 }
             }
 
-            if (gamepad1.y) {
+            if (gamepad1.dpad_down) {
                 autoServo!!.position = 0.65
             }
 
