@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_CLOSE
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_LAUNCH
 import org.firstinspires.ftc.teamcode.Variables.actualintakeServo
 import org.firstinspires.ftc.teamcode.Variables.aeroplaneLauncherServo
+import org.firstinspires.ftc.teamcode.Variables.autoServo
 import org.firstinspires.ftc.teamcode.Variables.blinkinWorks
 import org.firstinspires.ftc.teamcode.Variables.bottom
 import org.firstinspires.ftc.teamcode.Variables.boxServo
@@ -39,7 +40,6 @@ import kotlin.math.abs
 class TeleopFromHell: DriveMethods() {
     override fun runOpMode() {
         initMotorsSecondBot() //init rack and pinion & wheel motors
-        initSlideMotors() //init claw/slide motors
 
         telemetry.addLine(when ((0..33).random()) {
             1 -> "good luck buddy"
@@ -92,7 +92,6 @@ class TeleopFromHell: DriveMethods() {
         //slideRotationMotor!!.mode = DcMotor.RunMode.RUN_USING_ENCODER;
         //set up variables
         var leftY: Double
-        val autoServo = hardwareMap.get(Servo::class.java, "autoServo")
         var leftYGPadTwo: Double
         var leftX: Double
         var rightX: Double
@@ -169,7 +168,7 @@ class TeleopFromHell: DriveMethods() {
             }
 
             if (gamepad1.y) {
-                autoServo.position = 0.65
+                autoServo!!.position = 0.65
             }
 
             if (!blinkinWorks) telemetry.addLine("Blinkin is not currently working")
