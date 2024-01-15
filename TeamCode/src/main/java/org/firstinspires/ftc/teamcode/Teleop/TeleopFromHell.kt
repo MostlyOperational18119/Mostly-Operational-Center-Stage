@@ -110,11 +110,11 @@ class TeleopFromHell: DriveMethods() {
         var clawClamp = false
         var aeroplaneHasBeenLaunched = false
         var holdingpower = 0.001
-        var toggle1 = false
-        var toggle2 = false
-        var toggle3 = 2
-        var toggle4 = 2
-        var toggle5 = false
+        var rackAndPainNotAtTopToggle = false
+        var rackAndPainNotAtBottomToggle = false
+        var moveTheServoNuggetAtTheTopToggle = true
+        var intakeServoOffToggle = true
+        var pixelDropperToggle = false
         var rotatePower = -.5
         var reverseToggle = false
         var reverseThing = 1
@@ -326,7 +326,6 @@ class TeleopFromHell: DriveMethods() {
                     magicHoldNumber = 0
                     aeroplaneHasBeenLaunched = true
                    // sleep(1000)
-
                } else {
                     magicHoldNumber++
                     sleep(25)
@@ -338,69 +337,62 @@ class TeleopFromHell: DriveMethods() {
                 magicHoldNumber = 0
             }
 
-            if (abs(slideMotor!!.currentPosition)<500){
-                holdingpower =0.0
+            if (abs(slideMotor!!.currentPosition) < 500){
+                holdingpower = 0.0
             }
-            else if (slideMotor!!.currentPosition >500){
+            else if (slideMotor!!.currentPosition > 500){
                 holdingpower = .001
             }
-            else if (slideMotor!!.currentPosition <-500){
+            else if (slideMotor!!.currentPosition < -500){
                 holdingpower = -.001
             }
-            if (rotateMotor!!.currentPosition>=(rotateMotor!!.targetPosition-20) && rotateMotor!!.targetPosition == 1850){
-                toggle1=false
+            if (rotateMotor!!.currentPosition >= (rotateMotor!!.targetPosition - 20) && rotateMotor!!.targetPosition == 1850){
+                rackAndPainNotAtTopToggle = false
             }
             if (abs(slideMotor!!.currentPosition)<=50 && slideMotor!!.targetPosition == 0){
-                toggle2=false
+                rackAndPainNotAtBottomToggle = false
             }
-//            if (gamepad2.b){
-//                toggle1= true
-//                motorBeingTested.targetPosition = 1850
-//                motorBeingTested.power = 0.3
-//                sleep(500)
-//            }
-            /*else*/if (gamepad2.left_stick_y.toDouble() >0.0) {
-                rotateMotor!!.power = 1.0*gamepad2.left_stick_y
-                //motorBeingTested.power = .05
+            if (gamepad2.left_stick_y.toDouble() >0.0) {
+                rotateMotor!!.power = -leftY
             }
-            else if (gamepad2.left_stick_y.toDouble() <0.0 && rotateMotor!!.currentPosition >0){
+            else if (gamepad2.left_stick_y.toDouble() < 0.0 && rotateMotor!!.currentPosition >0){
                 rotateMotor!!.power = 1.0*gamepad2.left_stick_y
             }
-            else if (!toggle1){
+            else if (!rackAndPainNotAtTopToggle){
                 rotateMotor!!.power = 0.0
             }
-            if (gamepad2.right_bumper  && (toggle3 % 2 ==0)){
+            if (gamepad2.right_bumper  && moveTheServoNuggetAtTheTopToggle){
                 actualintakeServo?.power = -10.0
-                toggle3=1
+                moveTheServoNuggetAtTheTopToggle = false
                 sleep(500)
             }
-            else if (gamepad2.right_bumper  && (toggle3 % 2 ==1)){
+            else if (gamepad2.right_bumper  && !moveTheServoNuggetAtTheTopToggle){
                 actualintakeServo?.power = 0.0
-                toggle3=2
-                toggle4=2
+                moveTheServoNuggetAtTheTopToggle = true
+                intakeServoOffToggle = true
                 sleep(500)
             }
-            if (gamepad2.right_trigger >= 0.5 && (toggle4 % 2 ==0)){
+            if (gamepad2.right_trigger >= 0.5 && intakeServoOffToggle){
                 actualintakeServo?.power = 10.0
-                toggle4=1
+                intakeServoOffToggle = false
                 sleep(500)
             }
-            else if (gamepad2.right_trigger >= 0.5 && (toggle4 % 2 ==1)){
+            else if (gamepad2.right_trigger >= 0.5 && !intakeServoOffToggle){
                 actualintakeServo?.power = 0.0
-                toggle4=2
-                toggle3=2
+                intakeServoOffToggle = true
+                moveTheServoNuggetAtTheTopToggle = true
                 sleep(500)
             }
             if (gamepad2.x) {
-                if (!toggle5) {
+                if (!pixelDropperToggle) {
                     setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.GREEN) // Green means that it's open
                     boxServo!!.position = .45
-                    toggle5 = true
+                    pixelDropperToggle = true
                     sleep(500)
                 } else {
                     setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.RED) // Red means that it's closed
                     boxServo!!.position = .62
-                    toggle5 = false
+                    pixelDropperToggle = false
                     sleep(500)
                 }
             }
@@ -412,7 +404,7 @@ class TeleopFromHell: DriveMethods() {
 //            }
             telemetry.addData("Gamepad2 Right Y", gamepad2.right_stick_y)
             if (gamepad2.left_bumper){
-                toggle2=true
+                rackAndPainNotAtBottomToggle=true
                 slideMotor!!.targetPosition = 0
                 if (slideMotor!!.currentPosition >50){
                     slideMotor!!.power = -0.3
@@ -430,7 +422,7 @@ class TeleopFromHell: DriveMethods() {
                 slideMotor!!.power = -1.0 * gamepad2.right_stick_y
                 //motorBeingTested.power = .05
             }
-            else if (!toggle2){
+            else if (!rackAndPainNotAtBottomToggle){
                 slideMotor!!.power = holdingpower
             }
             //claw stuff
@@ -480,8 +472,8 @@ class TeleopFromHell: DriveMethods() {
             telemetry.addData("Rotate Motor Value: ", rotateMotor!!.currentPosition)
             telemetry.addData("Slide Motor Value: ", slideMotor!!.currentPosition)
             telemetry.addData("Holding Power: ", holdingpower)
-            telemetry.addData("Toggle1: ", toggle1)
-            telemetry.addData("Toggle2: ", toggle2)
+            telemetry.addData("Toggle1: ", rackAndPainNotAtTopToggle)
+            telemetry.addData("Toggle2: ", rackAndPainNotAtBottomToggle)
 //            telemetry.addData("FR: ", motorFR?.power)
 //            telemetry.addData("FL: ", motorFL?.power)
 //            telemetry.addData("BR: ", motorBR?.power)
