@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Teleop
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.DriveMethods
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_CLOSE
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_LAUNCH
@@ -34,6 +33,8 @@ import org.firstinspires.ftc.teamcode.Variables.rSpeedMax
 import org.firstinspires.ftc.teamcode.Variables.rSpeedMin
 import org.firstinspires.ftc.teamcode.Variables.rotateMotor
 import org.firstinspires.ftc.teamcode.Variables.slideMotor
+import org.firstinspires.ftc.teamcode.Variables.touchyL
+import org.firstinspires.ftc.teamcode.Variables.touchyR
 import kotlin.math.abs
 
 @TeleOp(name = "TeleopFromHell", group = "TeleopFinal")
@@ -115,6 +116,12 @@ class TeleopFromHell: DriveMethods() {
         var toggle4 = 2
         var toggle5 = false
         var rotatePower = -.5
+        var reverseToggle = false
+        var reverseThing = 1
+        var rackAndPainUpRightToggle = false
+        var rackAndPainUpLeftToggle = false
+        var touchSensorLeftHit = false
+        var touchSensorRightHit = false
 
         //rotateMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         rotateMotor?.mode = DcMotor.RunMode.RUN_USING_ENCODER
@@ -132,10 +139,11 @@ class TeleopFromHell: DriveMethods() {
             rightX = -gamepad1.right_stick_x.toDouble()
 
             //set motor speeds
-            motorFL?.power = -(leftY - leftX - rightX) / speedDiv
-            motorBL?.power = -(leftY + leftX - rightX) / speedDiv
-            motorFR?.power = (leftY + leftX + rightX) / speedDiv
-            motorBR?.power = (leftY - leftX + rightX) / speedDiv
+
+            motorFL?.power = -(leftY - leftX - rightX) / speedDiv * reverseThing
+            motorBL?.power = -(leftY + leftX - rightX) / speedDiv * reverseThing
+            motorFR?.power = (leftY + leftX + rightX) / speedDiv * reverseThing
+            motorBR?.power = (leftY - leftX + rightX) / speedDiv * reverseThing
             /*
             //open/close claw
             if (gamepad2.b) {
@@ -160,10 +168,14 @@ class TeleopFromHell: DriveMethods() {
             }
 
             if (gamepad1.a) {
-                speedDiv = if (speedDiv == 3.0) {
-                    1.5
-                } else {
-                    3.0
+                sleep(500)
+                if (reverseToggle) {
+                    reverseThing = 1
+                    reverseToggle = false
+                }
+                else {
+                    reverseThing = -1
+                    reverseToggle = true
                 }
             }
 
@@ -205,7 +217,40 @@ class TeleopFromHell: DriveMethods() {
             //rack & pinion control
             telemetry.addData("Left Motor:", rMotorR?.currentPosition)
             telemetry.addData("Right Motor:", rMotorL?.currentPosition)
-            if (gamepad1.left_trigger >= 0.5) {
+
+            if (rackAndPainUpLeftToggle && (rMotorL?.currentPosition!!>9000)){
+                rMotorL!!.power = 0.0
+                rackAndPainUpLeftToggle = false
+            }
+            if (!rackAndPainUpLeftToggle && (rMotorL?.currentPosition!!>9700)){
+                rMotorL!!.power = 0.0
+                rackAndPainUpLeftToggle = true
+            }
+            if (rackAndPainUpRightToggle && (rMotorR?.currentPosition!!<-9000)){
+                rMotorR!!.power = 0.0
+                rackAndPainUpRightToggle = false
+            }
+            if (!rackAndPainUpRightToggle && (rMotorR?.currentPosition!!<-9700)){
+                rMotorR!!.power = 0.0
+                rackAndPainUpRightToggle = true
+            }
+
+            if (touchyL!!.isPressed){
+                rMotorL!!.power = 0.0
+            }
+            else if (gamepad1.y){
+                sleep(1000)
+                if (rackAndPainUpLeftToggle){
+                    rMotorL!!.power = lPower
+                }
+                else {
+                    rMotorL!!.power = lPowerSlow
+                }
+            }
+            else if (gamepad1.b){
+                rMotorL!!.power = -.4
+            }
+            else if (gamepad1.left_trigger >= 0.5) {
                 if (upOrDown) {
                     if (rMotorL?.currentPosition!! <= lMax) {
                         if (rMotorL?.currentPosition!! in lSpeedMin..lSpeedMax) {
@@ -228,7 +273,24 @@ class TeleopFromHell: DriveMethods() {
             } else {
                 rMotorL!!.power = 0.0
             }
-            if (gamepad1.right_trigger >= 0.5) {
+            //Start Stuff
+            if (touchyR!!.isPressed){
+                rMotorR!!.power = 0.0
+            }
+            else if (gamepad1.y){
+                sleep(1000)
+                if (rackAndPainUpRightToggle){
+                    rMotorR!!.power = rPower
+                }
+                else {
+                    rMotorR!!.power = rPowerSlow
+                }
+            }
+            else if (gamepad1.b){
+                rMotorR!!.power = .4
+            }
+            //End Stuff
+            else if (gamepad1.right_trigger >= 0.5) {
                // telemetry.addLine("edrgthgj")
                 if (upOrDown) {
                     if (rMotorR?.currentPosition!! >= rMax) {
@@ -410,6 +472,7 @@ class TeleopFromHell: DriveMethods() {
                 clawClamp = !clawClamp
                 sleep(200)
             }
+
             telemetry.addData("Claw Clamped: ", clawClamp)
             telemetry.addData("Right rack: ", rMotorR?.currentPosition)
             telemetry.addData("Left rack: ", rMotorL?.currentPosition)
@@ -428,3 +491,5 @@ class TeleopFromHell: DriveMethods() {
         aeroplaneLauncherServo!!.position = AEROPLANE_CLOSE
     }
 }
+
+
