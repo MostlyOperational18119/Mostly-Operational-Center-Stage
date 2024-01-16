@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.Teleop
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.DriveMethods
-import org.firstinspires.ftc.teamcode.Variables
-import org.firstinspires.ftc.teamcode.Variables.slideRotationMotor
 
 @TeleOp(name = "RotationMotor", group = "Testing")
 class RotationTest: DriveMethods() {
