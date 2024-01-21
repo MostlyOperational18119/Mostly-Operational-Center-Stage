@@ -53,6 +53,7 @@ object Variables {
     var clawRotation: Servo? = null
     var clawMotor: Servo? = null
     var autoServo: Servo? = null
+    var slideTouch: TouchSensor? = null
 
     var closedClaw = 0.87
     var openClaw = 0.8
