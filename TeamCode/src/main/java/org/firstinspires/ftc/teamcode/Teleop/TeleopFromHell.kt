@@ -114,9 +114,9 @@ class TeleopFromHell: DriveMethods() {
         var magicHoldNumber = 0
         var clawClamp = false
         var aeroplaneHasBeenLaunched = false
-        var holdingpower = 0.001
-        var rackAndPainNotAtTopToggle = false
-        var rackAndPainNotAtBottomToggle = false
+        var slideHoldingPower = 0.001
+        var rotateNotAtBottomToggle = false
+        var slideNotAtBottomToggle = false
         var moveTheServoNuggetAtTheTopToggle = true
         var intakeServoOffToggle = true
         var pixelDropperToggle = false
@@ -175,6 +175,8 @@ class TeleopFromHell: DriveMethods() {
                 motorFR?.power = -1.0/speedDiv
                 motorBR?.power = 1.0/speedDiv
             }
+
+            //Making a variable for the toggles so that you can use y in multiple locations.
             if (gamepad1.y){
                 gamepadYToggle = true
             }
@@ -235,6 +237,11 @@ class TeleopFromHell: DriveMethods() {
             //motorSlideLeft?.power = -((2 / (1 + (exp((-(slideTarget - slidePos) / speed).toDouble())))) - 1)
 
             //rack & pinion control
+            //RACK AND PINION
+            //First Part is resetting the Toggles after the rack and pinion finishes its auto
+            //There are 2 sections after. One for right and one for left
+            //
+
             telemetry.addData("Left Motor:", rMotorR?.currentPosition)
             telemetry.addData("Right Motor:", rMotorL?.currentPosition)
 
@@ -258,7 +265,6 @@ class TeleopFromHell: DriveMethods() {
                 rackAndPainUpRightToggle = true
                 rackAndPainAutoRightToggle = false
             }
-
 
 
             if (gamepadYToggle){
@@ -305,7 +311,6 @@ class TeleopFromHell: DriveMethods() {
             }
 
 
-
             if (gamepadYToggle){
                 rackAndPainAutoRightToggle = true
                 sleep(1000)
@@ -350,12 +355,15 @@ class TeleopFromHell: DriveMethods() {
                 rMotorR!!.power = 0.0
             }
 
-
             if (gamepad1.x) {
                 telemetry.addData("upOrDown", upOrDown)
                 upOrDown = !upOrDown
                 sleep(500)
             }
+
+
+            //AIRPLANE
+            //Basically a long code so that you have to press and hold y to shoot paper airplane
             if (gamepad2.y && !aeroplaneHasBeenLaunched)  {
                 if (magicHoldNumber >= 25) {
                     // Launch Aeroplane
@@ -374,30 +382,66 @@ class TeleopFromHell: DriveMethods() {
                 magicHoldNumber = 0
             }
 
+            //SLIDE
+            //First part is holding power.
+            //Second Part is making sure that the slide is functional after the auto movement
+            //Third Part is Auto Slide
+            //Fourth Part is Manual Movement
             if (abs(slideMotor!!.currentPosition) < 500){
-                holdingpower = 0.0
+                slideHoldingPower = 0.0
             }
             else if (slideMotor!!.currentPosition > 500){
-                holdingpower = .001
+                slideHoldingPower = .001
             }
             else if (slideMotor!!.currentPosition < -500){
-                holdingpower = -.001
-            }
-            if (rotateMotor!!.currentPosition >= (rotateMotor!!.targetPosition - 20) && rotateMotor!!.targetPosition == 1850){
-                rackAndPainNotAtTopToggle = false
+                slideHoldingPower = -.001
             }
             if (abs(slideMotor!!.currentPosition)<=50 && slideMotor!!.targetPosition == 0){
-                rackAndPainNotAtBottomToggle = false
+                slideNotAtBottomToggle = false
             }
-            if (gamepad2.left_stick_y.toDouble() >0.0) {
-                rotateMotor!!.power = -gamepad2.left_stick_y.toDouble()
+
+            telemetry.addData("Gamepad2 Right Y", gamepad2.right_stick_y)
+            if (gamepad2.left_bumper){
+                slideNotAtBottomToggle=true
+                slideMotor!!.targetPosition = 0
+                if (slideMotor!!.currentPosition >50){
+                    slideMotor!!.power = -0.3
+                }
+                else if (slideMotor!!.currentPosition <50){
+                    slideMotor!!.power = 0.3
+                }
+                sleep(500)
             }
-            else if (gamepad2.left_stick_y.toDouble() < 0.0 && rotateMotor!!.currentPosition >0){
+            else if (gamepad2.right_stick_y.toDouble() < 0.0 && slideMotor!!.currentPosition >-1100) {
+                slideMotor!!.power = -1.0 * gamepad2.right_stick_y
+                //motorBeingTested.power = .05
+            }
+            else if (gamepad2.right_stick_y.toDouble() > 0.0 && slideMotor!!.currentPosition<1100) {
+                slideMotor!!.power = -1.0 * gamepad2.right_stick_y
+                //motorBeingTested.power = .05
+            }
+            else if (!slideNotAtBottomToggle){
+                slideMotor!!.power = slideHoldingPower
+            }
+
+
+            //ROTATE
+            //Currently the Toggle Does nothing but keep it in case we need it in the future
+            if (rotateMotor!!.currentPosition >= (rotateMotor!!.targetPosition - 20) && rotateMotor!!.targetPosition == 1850){
+                rotateNotAtBottomToggle = false
+            }
+            if (gamepad2.left_stick_y.toDouble() <0.0) {
                 rotateMotor!!.power = gamepad2.left_stick_y.toDouble()
             }
-            else if (!rackAndPainNotAtTopToggle){
+            else if (gamepad2.left_stick_y.toDouble() > 0.0 && rotateMotor!!.currentPosition >0){
+                rotateMotor!!.power = gamepad2.left_stick_y.toDouble()
+            }
+            else if (!rotateNotAtBottomToggle){
                 rotateMotor!!.power = 0.0
             }
+
+
+            //INTAKE SERVO
             if (gamepad2.right_bumper  && moveTheServoNuggetAtTheTopToggle){
                 actualintakeServo?.power = -10.0
                 moveTheServoNuggetAtTheTopToggle = false
@@ -420,6 +464,8 @@ class TeleopFromHell: DriveMethods() {
                 moveTheServoNuggetAtTheTopToggle = true
                 sleep(500)
             }
+
+            //BOX SERVO
             if (gamepad2.x) {
                 if (!pixelDropperToggle) {
                     setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.GREEN) // Green means that it's open
@@ -433,35 +479,25 @@ class TeleopFromHell: DriveMethods() {
                     sleep(500)
                 }
             }
+
+            //PASSIVE SERVO
+            if(gamepad2.a) {
+                if (clawClamp) {
+                    passiveServo!!.position = 0.2;
+                }
+                else {
+                    passiveServo!!.position = .37
+                }
+                clawClamp = !clawClamp
+                sleep(200)
+            }
+
 //            if (gamepad2.dpad_left){
 //                boxServo.position = .62
 //            }
 //            if (gamepad2.dpad_right){
 //                boxServo.position = .48
 //            }
-            telemetry.addData("Gamepad2 Right Y", gamepad2.right_stick_y)
-            if (gamepad2.left_bumper){
-                rackAndPainNotAtBottomToggle=true
-                slideMotor!!.targetPosition = 0
-                if (slideMotor!!.currentPosition >50){
-                    slideMotor!!.power = -0.3
-                }
-                else if (slideMotor!!.currentPosition <50){
-                    slideMotor!!.power = 0.3
-                }
-                sleep(500)
-            }
-            else if (gamepad2.right_stick_y.toDouble() > 0.0 && slideMotor!!.currentPosition >-1100) {
-                slideMotor!!.power = -1.0 * gamepad2.right_stick_y
-                //motorBeingTested.power = .05
-            }
-            else if (gamepad2.right_stick_y.toDouble() < 0.0 && slideMotor!!.currentPosition<1100) {
-                slideMotor!!.power = -1.0 * gamepad2.right_stick_y
-                //motorBeingTested.power = .05
-            }
-            else if (!rackAndPainNotAtBottomToggle){
-                slideMotor!!.power = holdingpower
-            }
             //claw stuff
            // if (gamepad2.y) {
            //     if (placeOrCollect) {
@@ -490,18 +526,7 @@ class TeleopFromHell: DriveMethods() {
 
 
 //            All Stuff for Temp Passive intake claw
-
-            if(gamepad2.a) {
-                if (clawClamp) {
-                    passiveServo!!.position = 0.2;
-                }
-                else {
-                    passiveServo!!.position = .37
-                }
-                clawClamp = !clawClamp
-                sleep(200)
-            }
-
+            telemetry.addData("Gamepad2 Left Y", gamepad2.left_stick_y)
             telemetry.addData("Claw Clamped: ", clawClamp)
             telemetry.addData("Right rack: ", rMotorR?.currentPosition)
             telemetry.addData("Left rack: ", rMotorL?.currentPosition)
@@ -510,7 +535,7 @@ class TeleopFromHell: DriveMethods() {
             telemetry.addData("Magic num: ", magicHoldNumber)
             telemetry.addData("Rotate Motor Value: ", rotateMotor!!.currentPosition)
             telemetry.addData("Slide Motor Value: ", slideMotor!!.currentPosition)
-            telemetry.addData("Holding Power: ", holdingpower)
+            telemetry.addData("Holding Power: ", slideHoldingPower)
             telemetry.addData("ToggleRightRack: ", rackAndPainUpRightToggle)
             telemetry.addData("ToggleLeftRack: ", rackAndPainUpLeftToggle)
 //            telemetry.addData("FR: ", motorFR?.power)
