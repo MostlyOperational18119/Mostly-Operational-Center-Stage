@@ -42,6 +42,7 @@ import org.firstinspires.ftc.teamcode.Variables.rotateMotor
 import org.firstinspires.ftc.teamcode.Variables.slideAngle
 import org.firstinspires.ftc.teamcode.Variables.slideLength
 import org.firstinspires.ftc.teamcode.Variables.slideMotor
+import org.firstinspires.ftc.teamcode.Variables.slideTouch
 import org.firstinspires.ftc.teamcode.Variables.speedDiv
 import org.firstinspires.ftc.teamcode.Variables.t
 import org.firstinspires.ftc.teamcode.Variables.targetFound
@@ -372,6 +373,7 @@ open class DriveMethods: LinearOpMode() {
         actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
         boxServo = hardwareMap.get(Servo::class.java, "boxServo")
         autoServo = hardwareMap.get(Servo::class.java, "autoServo")
+        slideTouch = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "GreenCreamsImTouchingYou")
         // Odometry motorFR-Right, motorFL-Left, MotorBR-Center
 
 
