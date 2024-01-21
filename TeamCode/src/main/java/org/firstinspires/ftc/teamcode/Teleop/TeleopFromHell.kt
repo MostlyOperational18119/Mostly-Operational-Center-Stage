@@ -390,10 +390,10 @@ class TeleopFromHell: DriveMethods() {
                 rackAndPainNotAtBottomToggle = false
             }
             if (gamepad2.left_stick_y.toDouble() >0.0) {
-                rotateMotor!!.power = -leftY
+                rotateMotor!!.power = -gamepad2.left_stick_y.toDouble()
             }
             else if (gamepad2.left_stick_y.toDouble() < 0.0 && rotateMotor!!.currentPosition >0){
-                rotateMotor!!.power = 1.0*gamepad2.left_stick_y
+                rotateMotor!!.power = gamepad2.left_stick_y.toDouble()
             }
             else if (!rackAndPainNotAtTopToggle){
                 rotateMotor!!.power = 0.0
