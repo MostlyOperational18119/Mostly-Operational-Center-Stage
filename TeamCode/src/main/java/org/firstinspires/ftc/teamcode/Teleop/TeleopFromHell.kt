@@ -4,6 +4,7 @@ import com.qualcomm.hardware.rev.RevBlinkinLedDriver
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.DriveMethods
+import org.firstinspires.ftc.teamcode.Variables
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_CLOSE
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_LAUNCH
 import org.firstinspires.ftc.teamcode.Variables.actualintakeServo
@@ -33,6 +34,7 @@ import org.firstinspires.ftc.teamcode.Variables.rSpeedMax
 import org.firstinspires.ftc.teamcode.Variables.rSpeedMin
 import org.firstinspires.ftc.teamcode.Variables.rotateMotor
 import org.firstinspires.ftc.teamcode.Variables.slideMotor
+import org.firstinspires.ftc.teamcode.Variables.slideTouch
 import org.firstinspires.ftc.teamcode.Variables.touchyL
 import org.firstinspires.ftc.teamcode.Variables.touchyR
 import kotlin.math.abs
@@ -387,15 +389,16 @@ class TeleopFromHell: DriveMethods() {
             //Second Part is making sure that the slide is functional after the auto movement
             //Third Part is Auto Slide
             //Fourth Part is Manual Movement
-            if (abs(slideMotor!!.currentPosition) < 500){
+            if (abs(slideMotor!!.currentPosition) < 200){
                 slideHoldingPower = 0.0
             }
-            else if (slideMotor!!.currentPosition > 500){
+            else if (slideMotor!!.currentPosition > 200){
                 slideHoldingPower = .001
             }
-            else if (slideMotor!!.currentPosition < -500){
+            else if (slideMotor!!.currentPosition < -200){
                 slideHoldingPower = -.001
             }
+
             if (abs(slideMotor!!.currentPosition)<=50 && slideMotor!!.targetPosition == 0){
                 slideNotAtBottomToggle = false
             }
@@ -427,13 +430,23 @@ class TeleopFromHell: DriveMethods() {
 
             //ROTATE
             //Currently the Toggle Does nothing but keep it in case we need it in the future
-            if (rotateMotor!!.currentPosition >= (rotateMotor!!.targetPosition - 20) && rotateMotor!!.targetPosition == 1850){
+
+            if (slideTouch!!.isPressed && rotateMotor!!.targetPosition == 1850){
                 rotateNotAtBottomToggle = false
+                actualintakeServo?.power = 10.0
             }
-            if (gamepad2.left_stick_y.toDouble() <0.0) {
+
+            if (gamepad2.left_trigger > 0.5 && !rotateNotAtBottomToggle){
+                rotateNotAtBottomToggle = true
+                rotateMotor!!.targetPosition = 1850
+                rotateMotor!!.power = 0.3
+                actualintakeServo?.power = -10.0
+                sleep(500)
+            }
+            else if (gamepad2.left_stick_y.toDouble() >0.0) {
                 rotateMotor!!.power = gamepad2.left_stick_y.toDouble()
             }
-            else if (gamepad2.left_stick_y.toDouble() > 0.0 && rotateMotor!!.currentPosition >0){
+            else if (gamepad2.left_stick_y.toDouble() < 0.0 && rotateMotor!!.currentPosition >0){
                 rotateMotor!!.power = gamepad2.left_stick_y.toDouble()
             }
             else if (!rotateNotAtBottomToggle){
