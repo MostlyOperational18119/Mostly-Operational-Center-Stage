@@ -154,6 +154,7 @@ public class test extends MeepMeepBoilerplate{
         int auto_servo_stage = 0;
         telemetry.addLine("Controls for recording---\nThe robot being backwards has been taken into account\nUse arrow keys to move around/strafe\nUse right bumper for auto servo (it progresses in stages. Each time you press the bumper, it will move to the next preset position)\nUse left bumper to release active servo (This will only release; you cannot close it)\nUse b/y to turn 90/-90 degrees\nDo nothing to add wait time\nWhen recording, press a to stop recording and save to file.\n\nNote that the recording process will be a bit slower than when the record is being executed.");
         telemetry.update();
+        sleep(1000);
         while(do_recording){
             if(gamepad1.a){
                 BufferedWriter outputWriter;
