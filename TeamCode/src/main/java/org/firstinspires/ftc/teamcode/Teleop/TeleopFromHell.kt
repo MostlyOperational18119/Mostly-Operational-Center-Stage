@@ -415,11 +415,11 @@ class TeleopFromHell: DriveMethods() {
                 }
                 sleep(500)
             }
-            else if (gamepad2.right_stick_y.toDouble() < 0.0 && slideMotor!!.currentPosition >-1100) {
+            else if (gamepad2.right_stick_y.toDouble() > 0.0 && slideMotor!!.currentPosition >-1100) {
                 slideMotor!!.power = -1.0 * gamepad2.right_stick_y
                 //motorBeingTested.power = .05
             }
-            else if (gamepad2.right_stick_y.toDouble() > 0.0 && slideMotor!!.currentPosition<1100) {
+            else if (gamepad2.right_stick_y.toDouble() < 0.0 && slideMotor!!.currentPosition<1100) {
                 slideMotor!!.power = -1.0 * gamepad2.right_stick_y
                 //motorBeingTested.power = .05
             }
