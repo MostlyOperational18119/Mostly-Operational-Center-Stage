@@ -60,7 +60,7 @@ public class BackBlueAuto {
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
         MeepMeep meepMeep = new MeepMeep(800);
-        Detection detection = Detection.LEFT;
+        Detection detection = Detection.CENTER;
         RoadRunnerBotEntity myBot;
         DriveShim driveShim;
 
@@ -86,6 +86,7 @@ public class BackBlueAuto {
                                 .splineToLinearHeading(new Pose2d(-31.70, 34.77, Math.toRadians(180.00)), Math.toRadians(293.11))
                                 .setReversed(false)
                                 .splineToLinearHeading(new Pose2d(-36.09, 58.89, Math.toRadians(0.00)), Math.toRadians(0.00))
+                                .waitSeconds(1)
                                 .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
                                 .splineToLinearHeading(new Pose2d(50.91, 35.72, Math.toRadians(360.00)), Math.toRadians(360.00))
                                 .lineToConstantHeading(new Vector2d(42.93, 62.69))
@@ -97,6 +98,7 @@ public class BackBlueAuto {
                         driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
                                 .lineToConstantHeading(new Vector2d(-35.34, 33.82))
                                 .splineToLinearHeading(new Pose2d(-35.91, 59.46, Math.toRadians(0.00)), Math.toRadians(0.00))
+                                .waitSeconds(1)
                                 .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
                                 .splineToLinearHeading(new Pose2d(51.29, 39.89, Math.toRadians(0.00)), Math.toRadians(0.00))
                                 .lineToConstantHeading(new Vector2d(42.93, 62.69))
@@ -105,11 +107,13 @@ public class BackBlueAuto {
             case RIGHT:
                 followTrajectorySequence(
                         driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
-                                .lineToConstantHeading(new Vector2d(-47.30, 40.08))
-                                .splineToLinearHeading(new Pose2d(-35.91, 59.46, Math.toRadians(0.00)), Math.toRadians(0.00))
-                                .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
-                                .splineToLinearHeading(new Pose2d(50.91, 35.72, Math.toRadians(360.00)), Math.toRadians(360.00))
-                                .lineToConstantHeading(new Vector2d(42.93, 62.69))
+                                .splineToLinearHeading(new Pose2d(-47.49, 38.18, Math.toRadians(450.00)), Math.toRadians(270.00))
+                                .splineTo(new Vector2d(-51.29, 54.71), Math.toRadians(-1.03))
+                                .splineTo(new Vector2d(-17.29, 59.46), Math.toRadians(3.96))
+                                .splineToSplineHeading(new Pose2d(22.04, 59.65, Math.toRadians(360.00)), Math.toRadians(360.00))
+                                .lineTo(new Vector2d(50.72, 36.09))
+                                .setReversed(true)
+                                .lineTo(new Vector2d(42.93, 61.93))
                                 .build());
                 break;
         }
