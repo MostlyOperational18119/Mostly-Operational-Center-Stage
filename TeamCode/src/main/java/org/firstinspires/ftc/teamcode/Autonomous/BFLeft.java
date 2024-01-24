@@ -19,7 +19,6 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Disabled
 @Autonomous(name = "BFLeftEXPERIMENT", group = "Linear OpMode")
 public class BFLeft extends MeepMeepBoilerplate{
     @Override
@@ -59,6 +58,9 @@ public class BFLeft extends MeepMeepBoilerplate{
         rotateMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         rotateMotor.setPower(0.0);
+
+        drive.setPoseEstimate(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)));
+
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
@@ -66,18 +68,13 @@ public class BFLeft extends MeepMeepBoilerplate{
                             .splineToLinearHeading(new Pose2d(-31.70, 34.77, Math.toRadians(180.00)), Math.toRadians(293.11))
                             .setReversed(false)
                             .splineToLinearHeading(new Pose2d(-36.09, 58.89, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .splineToLinearHeading(new Pose2d(50.91, 35.72, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
                             .build());
-            case CENTER -> { drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
-                            .lineToConstantHeading(new Vector2d(-35.34, 33.82))
-                            .splineToLinearHeading(new Pose2d(-35.91, 59.46, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .splineToLinearHeading(new Pose2d(51.29, 39.89, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
-                            .build());
+            case CENTER -> {
+                drive.followTrajectorySequence(
+                        drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
+                                .lineToConstantHeading(new Vector2d(-35.34, 33.82))
+                                .splineToLinearHeading(new Pose2d(-35.91, 59.46, Math.toRadians(0.00)), Math.toRadians(0.00))
+                                .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
@@ -88,8 +85,7 @@ public class BFLeft extends MeepMeepBoilerplate{
                             .lineTo(new Vector2d(50.72, 36.09))
                             .setReversed(true)
                             .lineTo(new Vector2d(42.93, 61.93))
-                            .build()
-            );
+                            .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
                 telemetry.update();
@@ -97,7 +93,41 @@ public class BFLeft extends MeepMeepBoilerplate{
             }
         }
 
+        while (rotateMotor.getCurrentPosition()<1000){
+            rotateMotor.setPower(0.5);
+        }
+        rotateMotor.setPower(0.001);
+        sleep(5000);
 
+        switch (detection) {
+            case LEFT -> drive.followTrajectorySequence(
+                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
+                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(50.91, 35.72, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
+                            .build());
+            case CENTER -> drive.followTrajectorySequence(
+                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
+                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(51.29, 39.89, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
+                            .build());
+            case RIGHT -> drive.followTrajectorySequence(
+                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
+                            .splineToLinearHeading(new Pose2d(-47.49, 38.18, Math.toRadians(450.00)), Math.toRadians(270.00))
+                            .splineTo(new Vector2d(-51.29, 54.71), Math.toRadians(-1.03))
+                            .splineTo(new Vector2d(-17.29, 59.46), Math.toRadians(3.96))
+                            .splineToSplineHeading(new Pose2d(22.04, 59.65, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .lineTo(new Vector2d(50.72, 36.09))
+                            .setReversed(true)
+                            .lineTo(new Vector2d(42.93, 61.93))
+                            .build());
+            default -> {
+                telemetry.addLine("Warning: Cup not detected");
+                telemetry.update();
+                sleep(3000);
+            }
+        }
 
 //        drive.followTrajectorySequence(mergeSequences(sequences));
     }
