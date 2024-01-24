@@ -1,6 +1,7 @@
 package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.DriveShim;
@@ -17,7 +18,7 @@ public class BackRedAuto {
         RIGHT
     }
 
-    private static final Pose2d STARTING_POSE = new Pose2d(-36, -61.5, Math.toRadians(90));
+    private static final Pose2d STARTING_POSE = new Pose2d(-34.96, -62.69, Math.toRadians(-90.00));
 
     private static ArrayList<TrajectorySequence> sequences = new ArrayList<TrajectorySequence>();
 
@@ -69,32 +70,47 @@ public class BackRedAuto {
 
         driveShim = myBot.getDrive();
 
-        followTrajectorySequence(
-                driveShim.trajectorySequenceBuilder(STARTING_POSE)
-                        .forward(28.0)
-                        .build()
-        );
+//        followTrajectorySequence(
+//                driveShim.trajectorySequenceBuilder(STARTING_POSE)
+////                        .forward(28.0)
+//                        .build()
+//        );
 
         assert getCurrentTrajectorySequence(driveShim) != null; // Null Pointer Protection
 
         switch (detection) {
             case LEFT:
                 followTrajectorySequence(
-                        driveShim.trajectorySequenceBuilder(getCurrentTrajectorySequence(driveShim).end())
-                                .turn(Math.toRadians(90))
-                                .forward(2)
+                        driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
+                                .lineToConstantHeading(new Vector2d(-47.30, -40.08))
+                                .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
+                                .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
+                                .splineToLinearHeading(new Pose2d(50.91, -26.41, Math.toRadians(0.00)), Math.toRadians(0.00))
+                                .lineToConstantHeading(new Vector2d(42.93, -62.69))
                                 .build()
                 );
                 break;
             case CENTER:
+                followTrajectorySequence(
+                        driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
+                                .lineToConstantHeading(new Vector2d(-35.34, -33.82))
+                                .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
+                                .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
+                                .splineToLinearHeading(new Pose2d(51.29, -32.11, Math.toRadians(360.00)), Math.toRadians(360.00))
+                                .lineToConstantHeading(new Vector2d(42.93, -62.69))
+                                .build());
                 break;
             case RIGHT:
                 followTrajectorySequence(
-                        driveShim.trajectorySequenceBuilder(getCurrentTrajectorySequence(driveShim).end())
-                                .turn(Math.toRadians(-90))
-                                .forward(2)
-                                .build()
-                );
+                        driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
+                                .setReversed(true)
+                                .splineToLinearHeading(new Pose2d(-31.32, -32.85, Math.toRadians(180.00)), Math.toRadians(0))
+                                .setReversed(false)
+                                .splineToLinearHeading(new Pose2d(-36.09, -58.89, Math.toRadians(360.00)), Math.toRadians(360.00))
+                                .splineToLinearHeading(new Pose2d(26.37, -58.82, Math.toRadians(0.00)), Math.toRadians(0.00))
+                                .splineToLinearHeading(new Pose2d(51.31, -37.72, Math.toRadians(0.00)), Math.toRadians(0.00))
+                                .lineToConstantHeading(new Vector2d(42.93, -62.69))
+                                .build());
                 break;
         }
 

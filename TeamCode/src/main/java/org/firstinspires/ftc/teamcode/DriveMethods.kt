@@ -17,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition
 import org.firstinspires.ftc.teamcode.Variables.VisionProcessors
 import org.firstinspires.ftc.teamcode.Variables.actualintakeServo
 import org.firstinspires.ftc.teamcode.Variables.aeroplaneLauncherServo
+import org.firstinspires.ftc.teamcode.Variables.autoServo
 import org.firstinspires.ftc.teamcode.Variables.blinkinLedDriver
 import org.firstinspires.ftc.teamcode.Variables.blinkinWorks
 import org.firstinspires.ftc.teamcode.Variables.boxServo
@@ -32,7 +33,6 @@ import org.firstinspires.ftc.teamcode.Variables.motorFL
 import org.firstinspires.ftc.teamcode.Variables.motorFLPower
 import org.firstinspires.ftc.teamcode.Variables.motorFR
 import org.firstinspires.ftc.teamcode.Variables.motorFRPower
-import org.firstinspires.ftc.teamcode.Variables.motorSlideLeft
 import org.firstinspires.ftc.teamcode.Variables.passiveServo
 import org.firstinspires.ftc.teamcode.Variables.pattern
 import org.firstinspires.ftc.teamcode.Variables.rMotorL
@@ -42,6 +42,7 @@ import org.firstinspires.ftc.teamcode.Variables.rotateMotor
 import org.firstinspires.ftc.teamcode.Variables.slideAngle
 import org.firstinspires.ftc.teamcode.Variables.slideLength
 import org.firstinspires.ftc.teamcode.Variables.slideMotor
+import org.firstinspires.ftc.teamcode.Variables.slideTouch
 import org.firstinspires.ftc.teamcode.Variables.speedDiv
 import org.firstinspires.ftc.teamcode.Variables.t
 import org.firstinspires.ftc.teamcode.Variables.targetFound
@@ -371,6 +372,10 @@ open class DriveMethods: LinearOpMode() {
         slideMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
         actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
         boxServo = hardwareMap.get(Servo::class.java, "boxServo")
+        autoServo = hardwareMap.get(Servo::class.java, "autoServo")
+        slideTouch = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "GreenCreamsImTouchingYou")
+        // Odometry motorFR-Right, motorFL-Left, MotorBR-Center
+
 
         try {
             initBlinkin()
