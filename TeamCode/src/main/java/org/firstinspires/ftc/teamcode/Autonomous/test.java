@@ -129,6 +129,7 @@ public class test extends MeepMeepBoilerplate{
                 waiting=false;
                 do_recording=false;
             }
+      sleep(100);
         }
         if(!do_recording){
             BufferedReader reader;
