@@ -146,7 +146,8 @@ class TeleopFromHell: DriveMethods() {
             //set gamepad inputs
             leftY = (-gamepad1.left_stick_y).toDouble()* reverseThing
             leftYGPadTwo = (gamepad2.left_stick_y).toDouble()
-            leftX = gamepad1.left_stick_x.toDouble() * reverseThing
+            leftX = -
+            gamepad1.left_stick_x.toDouble() * reverseThing
             rightX = -gamepad1.right_stick_x.toDouble()
 
             //set motor speeds
@@ -204,7 +205,7 @@ class TeleopFromHell: DriveMethods() {
             }
 
             if (gamepad1.dpad_down) {
-                autoServo!!.position = 0.63
+                autoServo!!.position = 0.60
             }
 
             if (!blinkinWorks) telemetry.addLine("Blinkin is not currently working")
@@ -431,17 +432,27 @@ class TeleopFromHell: DriveMethods() {
             //ROTATE
             //Currently the Toggle Does nothing but keep it in case we need it in the future
 
-            if (slideTouch!!.isPressed && rotateMotor!!.targetPosition == 1850){
+            var isEvil = false
+
+            if (slideTouch!!.isPressed && rotateMotor!!.targetPosition == 1850 && rotateNotAtBottomToggle){
                 rotateNotAtBottomToggle = false
-                actualintakeServo?.power = 10.0
+                actualintakeServo?.power = 0.0
             }
 
-            if (gamepad2.left_trigger > 0.5 && !rotateNotAtBottomToggle){
+            if (gamepad2.left_trigger > 0.5 && !rotateNotAtBottomToggle) {
+                if (isEvil) {
+                    rotateNotAtBottomToggle = false
+                    isEvil = false
+                    rotateMotor!!.power = 0.0
+                    actualintakeServo?.power = 0.0
+                }
                 rotateNotAtBottomToggle = true
                 rotateMotor!!.targetPosition = 1850
                 rotateMotor!!.power = 0.3
                 actualintakeServo?.power = -10.0
                 sleep(500)
+            } else if (gamepad2.left_trigger > 0.5 && !isEvil) {
+                isEvil = true
             }
             else if (gamepad2.left_stick_y.toDouble() >0.0) {
                 rotateMotor!!.power = gamepad2.left_stick_y.toDouble()
