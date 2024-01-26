@@ -433,7 +433,7 @@ class TeleopFromHell: DriveMethods() {
 
             if (slideTouch!!.isPressed && rotateMotor!!.targetPosition == 1850){
                 rotateNotAtBottomToggle = false
-                actualintakeServo?.power = 10.0
+                actualintakeServo?.power = 0.0
             }
 
             if (gamepad2.left_trigger > 0.5 && !rotateNotAtBottomToggle){
