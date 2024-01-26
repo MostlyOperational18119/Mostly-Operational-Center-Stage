@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "BCOutLeftEXPERIMENT", group = "Linear OpMode")
+@Autonomous(name = "BCOutRightEXPERIMENT", group = "Linear OpMode")
 public class BCOutRightSplines extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
@@ -65,7 +65,7 @@ public class BCOutRightSplines extends MeepMeepBoilerplate{
                             .lineToConstantHeading(new Vector2d(27.18, 36.85))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(.1)
+                            .waitSeconds(.15)
                             .splineToLinearHeading(new Pose2d(57.18, 45.07, Math.toRadians(180.00)), Math.toRadians(0.0))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> autoServo.setPosition(1))

@@ -53,7 +53,7 @@ public class RFRight extends MeepMeepBoilerplate {
             );
             case CENTER -> { drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(31)
+                            .back(32.25)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(4)
