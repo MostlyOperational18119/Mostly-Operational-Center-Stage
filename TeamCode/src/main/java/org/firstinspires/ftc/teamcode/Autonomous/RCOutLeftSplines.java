@@ -77,6 +77,7 @@ public class RCOutLeftSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(47.41, -59.3))
                             .addTemporalMarker(() -> autoServo.setPosition(0))
+                            .waitSeconds(1)
                             .build());
             case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(270.00)))
@@ -92,6 +93,7 @@ public class RCOutLeftSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(47.41, -59.3))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(270.00)))
@@ -108,6 +110,7 @@ public class RCOutLeftSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(47.41, -59.3))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
                             .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");

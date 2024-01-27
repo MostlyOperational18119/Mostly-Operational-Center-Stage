@@ -74,6 +74,7 @@ public class BCOutRightSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
@@ -90,6 +91,7 @@ public class BCOutRightSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
@@ -108,6 +110,7 @@ public class BCOutRightSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
                             .build()
             );
             default -> {
