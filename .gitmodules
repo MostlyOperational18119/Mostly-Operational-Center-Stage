@@ -1,0 +1,3 @@
+[submodule "MeepMeepTesting/OurMeepMeep"]
+	path = MeepMeepTesting/OurMeepMeep
+	url = https://github.com/MostlyOperational18119/MeepMeep.git
