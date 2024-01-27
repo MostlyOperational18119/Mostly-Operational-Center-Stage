@@ -84,9 +84,9 @@ public class BackRedAuto {
                         driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
                                 .lineToConstantHeading(new Vector2d(-47.30, -40.08))
                                 .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
-                                .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
-                                .splineToLinearHeading(new Pose2d(50.91, -26.41, Math.toRadians(0.00)), Math.toRadians(0.00))
-                                .lineToConstantHeading(new Vector2d(42.93, -62.69))
+                                .splineToConstantHeading(new Vector2d(9, -58.82), Math.toRadians(0.00))
+                                .splineToConstantHeading(new Vector2d(23.49, -26.41), Math.toRadians(0.00))
+                                .splineToConstantHeading(new Vector2d(51.31, -26.41), Math.toRadians(0.00))
                                 .build()
                 );
                 break;
@@ -95,9 +95,9 @@ public class BackRedAuto {
                         driveShim.trajectorySequenceBuilder(STARTING_POSE/*getCurrentTrajectorySequence(driveShim).end()*/)
                                 .lineToConstantHeading(new Vector2d(-35.34, -33.82))
                                 .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
-                                .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
-                                .splineToLinearHeading(new Pose2d(51.29, -32.11, Math.toRadians(360.00)), Math.toRadians(360.00))
-                                .lineToConstantHeading(new Vector2d(42.93, -62.69))
+                                .splineToConstantHeading(new Vector2d(9, -58.82), Math.toRadians(0.00))
+                                .splineToConstantHeading(new Vector2d(23.49, -33), Math.toRadians(0.00))
+                                .splineToConstantHeading(new Vector2d(51.31, -33), Math.toRadians(0.00))
                                 .build());
                 break;
             case RIGHT:
@@ -107,9 +107,9 @@ public class BackRedAuto {
                                 .splineToLinearHeading(new Pose2d(-31.32, -32.85, Math.toRadians(180.00)), Math.toRadians(0))
                                 .setReversed(false)
                                 .splineToLinearHeading(new Pose2d(-36.09, -58.89, Math.toRadians(360.00)), Math.toRadians(360.00))
-                                .splineToLinearHeading(new Pose2d(26.37, -58.82, Math.toRadians(0.00)), Math.toRadians(0.00))
-                                .splineToLinearHeading(new Pose2d(51.31, -37.72, Math.toRadians(0.00)), Math.toRadians(0.00))
-                                .lineToConstantHeading(new Vector2d(42.93, -62.69))
+                                .splineToConstantHeading(new Vector2d(9, -58.82), Math.toRadians(0.00))
+                                .splineToConstantHeading(new Vector2d(23.49, -37.72), Math.toRadians(0.00))
+                                .splineToConstantHeading(new Vector2d(51.31, -37.72), Math.toRadians(0.00))
                                 .build());
                 break;
         }

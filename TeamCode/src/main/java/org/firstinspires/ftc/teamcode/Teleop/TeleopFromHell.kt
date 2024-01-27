@@ -4,7 +4,6 @@ import com.qualcomm.hardware.rev.RevBlinkinLedDriver
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.DriveMethods
-import org.firstinspires.ftc.teamcode.Variables
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_CLOSE
 import org.firstinspires.ftc.teamcode.Variables.AEROPLANE_LAUNCH
 import org.firstinspires.ftc.teamcode.Variables.actualintakeServo
@@ -44,7 +43,7 @@ class TeleopFromHell: DriveMethods() {
     override fun runOpMode() {
         initMotorsSecondBot() //init rack and pinion & wheel motors
 
-        telemetry.addLine(when ((0..38).random()) {
+        telemetry.addLine(when ((0..41).random()) {
             1 -> "good luck buddy"
             2 -> "\"what spectrum?\""
             3 -> "MostlyOp >>> AHoT"
@@ -82,6 +81,9 @@ class TeleopFromHell: DriveMethods() {
             35 -> "That is fragrantly upside down"
             36 -> "I literally just stand here and look at you guys and think god when is this done"
             37 -> "They should be singing in the closet"
+            38 -> "autoByJames"
+            39 -> "anti-fluent"
+            40 -> "fire in the hole"
             else -> "Why did we add these?"
         })
         telemetry.update()
@@ -133,6 +135,7 @@ class TeleopFromHell: DriveMethods() {
         var rackAndPainAutoRightToggle = false
         var gamepadYToggle = false
         var gamepadBToggle = false
+        var autoDownToggle = false
 
         //rotateMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         rotateMotor?.mode = DcMotor.RunMode.RUN_USING_ENCODER
@@ -253,7 +256,7 @@ class TeleopFromHell: DriveMethods() {
                 rackAndPainUpLeftToggle = false
                 rackAndPainAutoLeftToggle = false
             }
-            if (!rackAndPainUpLeftToggle && (rMotorL?.currentPosition!!>9000)){
+            if (!rackAndPainUpLeftToggle && (rMotorL?.currentPosition!!>9648)){
                 rMotorL!!.power = 0.0
                 rackAndPainUpLeftToggle = true
                 rackAndPainAutoLeftToggle = false
@@ -263,7 +266,7 @@ class TeleopFromHell: DriveMethods() {
                 rackAndPainUpRightToggle = false
                 rackAndPainAutoRightToggle = false
             }
-            if (!rackAndPainUpRightToggle && (rMotorR?.currentPosition!!<-9000)){
+            if (!rackAndPainUpRightToggle && (rMotorR?.currentPosition!!<-9063)){
                 rMotorR!!.power = 0.0
                 rackAndPainUpRightToggle = true
                 rackAndPainAutoRightToggle = false
@@ -432,7 +435,6 @@ class TeleopFromHell: DriveMethods() {
             //ROTATE
             //Currently the Toggle Does nothing but keep it in case we need it in the future
 
-            var isEvil = false
 
             if (slideTouch!!.isPressed && rotateMotor!!.targetPosition == 1850 && rotateNotAtBottomToggle){
                 rotateNotAtBottomToggle = false
@@ -440,19 +442,26 @@ class TeleopFromHell: DriveMethods() {
             }
 
             if (gamepad2.left_trigger > 0.5 && !rotateNotAtBottomToggle) {
-                if (isEvil) {
+                if (!autoDownToggle) {
+                    autoDownToggle = true
+                }
+                else {
+                    autoDownToggle = false
+                }
+
+                if (!autoDownToggle) {
                     rotateNotAtBottomToggle = false
-                    isEvil = false
+                    rotateMotor!!.targetPosition = 0
                     rotateMotor!!.power = 0.0
                     actualintakeServo?.power = 0.0
                 }
-                rotateNotAtBottomToggle = true
-                rotateMotor!!.targetPosition = 1850
-                rotateMotor!!.power = 0.3
-                actualintakeServo?.power = -10.0
+                else {
+                    rotateNotAtBottomToggle = true
+                    rotateMotor!!.targetPosition = 1850
+                    rotateMotor!!.power = 0.3
+                    actualintakeServo?.power = -10.0
+                }
                 sleep(500)
-            } else if (gamepad2.left_trigger > 0.5 && !isEvil) {
-                isEvil = true
             }
             else if (gamepad2.left_stick_y.toDouble() >0.0) {
                 rotateMotor!!.power = gamepad2.left_stick_y.toDouble()

@@ -70,7 +70,7 @@ public class RFExperimentByJames extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.15)
-                            .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(-35.91, -58.82, Math.toRadians(360.00)), Math.toRadians(360.00))
                             .build());
             case CENTER -> {drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(-34.96, -62.69, Math.toRadians(-90.00)))
@@ -78,7 +78,7 @@ public class RFExperimentByJames extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.15)
-                            .splineToLinearHeading(new Pose2d(-35.91, -59.46, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(-35.91, -58.82, Math.toRadians(360.00)), Math.toRadians(360.00))
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
@@ -89,7 +89,7 @@ public class RFExperimentByJames extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.15)
                             .setReversed(false)
-                            .splineToLinearHeading(new Pose2d(-36.09, -58.89, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(-35.91, -58.82, Math.toRadians(360.00)), Math.toRadians(360.00))
                             .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
@@ -103,25 +103,10 @@ public class RFExperimentByJames extends MeepMeepBoilerplate{
         rotateMotor.setPower(0.001);
         sleep(5000);
 
-        switch (detection) {
-            case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .build());
-            case CENTER -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(18.43, -59.84, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .build());
-            case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(26.37, -58.82, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .build());
-            default -> {
-                telemetry.addLine("Warning: Cup not detected");
-                telemetry.update();
-                sleep(3000);
-            }
-        }
+        drive.followTrajectorySequence(drive.trajectorySequenceBuilder(getCurrentPosition(drive))
+                        .splineToConstantHeading(new Vector2d(9, -58.82), Math.toRadians(0.00))
+                        .build());
+
 
         while (rotateMotor.getCurrentPosition()>400){
             rotateMotor.setPower(-0.3);
@@ -132,15 +117,18 @@ public class RFExperimentByJames extends MeepMeepBoilerplate{
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(51.29, -26.41, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToConstantHeading(new Vector2d(23.49, -22.41), Math.toRadians(0.00))
+                            .splineToConstantHeading(new Vector2d(51.31, -22.41), Math.toRadians(0.00))
                             .build());
             case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(51.29, -32.11, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .splineToConstantHeading(new Vector2d(23.49, -29), Math.toRadians(0.00))
+                            .splineToConstantHeading(new Vector2d(51.31, -29), Math.toRadians(0.00))
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(51.29, -37.72, Math.toRadians(0.00)), Math.toRadians(0.00))
+                            .splineToConstantHeading(new Vector2d(23.49, -35.89), Math.toRadians(0.00))
+                            .splineToConstantHeading(new Vector2d(51.31, -35.89), Math.toRadians(0.00))
                             .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
