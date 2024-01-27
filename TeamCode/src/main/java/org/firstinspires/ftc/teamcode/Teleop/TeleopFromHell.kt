@@ -205,7 +205,7 @@ class TeleopFromHell: DriveMethods() {
             }
 
             if (gamepad1.dpad_down) {
-                autoServo!!.position = 0.60
+                autoServo!!.position = 0.0
             }
 
             if (!blinkinWorks) telemetry.addLine("Blinkin is not currently working")

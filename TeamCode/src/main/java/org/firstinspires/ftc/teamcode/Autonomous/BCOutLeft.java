@@ -52,7 +52,7 @@ public class BCOutLeft extends MeepMeepBoilerplate{
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
-        autoServo.setPosition(0.73);
+        autoServo.setPosition(0.11);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -78,15 +78,15 @@ public class BCOutLeft extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .back(20)
                             .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(1))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
                             .waitSeconds(.5)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.30))
                             .waitSeconds(.1)
                             .forward(2)
                             .strafeRight(13)
                             .back(6)
                             .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build()
             );
