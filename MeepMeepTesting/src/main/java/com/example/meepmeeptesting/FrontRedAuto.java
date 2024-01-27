@@ -2,6 +2,7 @@ package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+//import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.DriveShim;
@@ -59,7 +60,7 @@ public class FrontRedAuto {
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
-        MeepMeep meepMeep = new MeepMeep(800);
+        MeepMeep meepMeep = new MeepMeep(640);
         Detection detection = Detection.RIGHT;
         RoadRunnerBotEntity myBot;
         DriveShim driveShim;
@@ -113,6 +114,7 @@ public class FrontRedAuto {
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
                 .setDarkMode(true)
+                .setScreenshotModeEnabled(true)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)
                 .start();
