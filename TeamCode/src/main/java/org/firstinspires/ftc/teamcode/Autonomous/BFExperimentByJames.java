@@ -19,13 +19,15 @@ import java.util.Arrays;
 
 @Config
 @Autonomous(name = "BFLeftEXPERIMENT", group = "Linear OpMode")
-public class BFLeftSplines extends MeepMeepBoilerplate{
+public class BFExperimentByJames extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         Servo passiveServo = hardwareMap.get(Servo.class, "passiveServo");
         Servo autoServo = hardwareMap.get(Servo.class, "autoServo");
         DcMotor rotateMotor = hardwareMap.get(DcMotor.class, "motorSlideRotate");
+        DcMotor slideMotor = hardwareMap.get(DcMotor.class, "motorSlideLeft");
+        Servo boxServo = hardwareMap.get(Servo.class, "boxServo");
 
         initVision(VisionProcessors.TFOD);
         Detection detection = Detection.UNKNOWN;
@@ -58,38 +60,35 @@ public class BFLeftSplines extends MeepMeepBoilerplate{
 
         rotateMotor.setPower(0.0);
 
-        drive.setPoseEstimate(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)));
+        drive.setPoseEstimate( new Pose2d(-34.96, -62.69, Math.toRadians(-90.00)));
 
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
+                    drive.trajectorySequenceBuilder(new Pose2d(-34.96, -62.69, Math.toRadians(-90.00)))
+                            .lineToConstantHeading(new Vector2d(-47.30, -40.08))
+                            .waitSeconds(.1)
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
+                            .waitSeconds(.15)
+                            .splineToLinearHeading(new Pose2d(-35.91, -58.82, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .build());
+            case CENTER -> {drive.followTrajectorySequence(
+                    drive.trajectorySequenceBuilder(new Pose2d(-34.96, -62.69, Math.toRadians(-90.00)))
+                            .lineToConstantHeading(new Vector2d(-35.34, -30.82))
+                            .waitSeconds(.1)
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
+                            .waitSeconds(.15)
+                            .splineToLinearHeading(new Pose2d(-35.91, -58.82, Math.toRadians(360.00)), Math.toRadians(360.00))
+                            .build());
+            }
+            case RIGHT -> drive.followTrajectorySequence(
+                    drive.trajectorySequenceBuilder(new Pose2d(-34.96, -62.69, Math.toRadians(-90.00)))
                             .setReversed(true)
-                            .splineToLinearHeading(new Pose2d(-31.70, 34.77, Math.toRadians(180.00)), Math.toRadians(293.11))
+                            .splineToLinearHeading(new Pose2d(-31.32, -32.85, Math.toRadians(180.00)), Math.toRadians(0))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.15)
                             .setReversed(false)
-                            .splineToLinearHeading(new Pose2d(-36.09, 58.89, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .build());
-            case CENTER -> {drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
-                            .lineToConstantHeading(new Vector2d(-35.34, 33.82))
-                            .waitSeconds(.1)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(.15)
-                            .splineToLinearHeading(new Pose2d(-35.91, 59.46, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .build());
-            }
-            case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
-                            .back(2.0)
-                            .waitSeconds(.25)
-                            .strafeLeft(8)
-                            .back(21)
-                            .waitSeconds(.25)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(4)
-                            .forward(5)
+                            .splineToLinearHeading(new Pose2d(-35.91, -58.82, Math.toRadians(360.00)), Math.toRadians(360.00))
                             .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
@@ -97,35 +96,18 @@ public class BFLeftSplines extends MeepMeepBoilerplate{
                 sleep(3000);
             }
         }
-
         while (rotateMotor.getCurrentPosition()<1000){
             rotateMotor.setPower(0.5);
         }
         rotateMotor.setPower(0.001);
         sleep(5000);
 
-        switch (detection) {
-            case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .build());
-            case CENTER -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .waitSeconds(1)
-                            .splineToLinearHeading(new Pose2d(18.43, 59.84, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .build());
-            case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .forward(1)
-                            .build());
-            default -> {
-                telemetry.addLine("Warning: Cup not detected");
-                telemetry.update();
-                sleep(3000);
-            }
-        }
+        drive.followTrajectorySequence(drive.trajectorySequenceBuilder(getCurrentPosition(drive))
+                .splineToConstantHeading(new Vector2d(9, -58.82), Math.toRadians(0.00))
+                .build());
 
-        while (rotateMotor.getCurrentPosition()>50){
+
+        while (rotateMotor.getCurrentPosition()>400){
             rotateMotor.setPower(-0.3);
         }
         rotateMotor.setPower(0.0);
@@ -134,27 +116,18 @@ public class BFLeftSplines extends MeepMeepBoilerplate{
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(50.91, 35.72, Math.toRadians(360.00)), Math.toRadians(360.00))
-                            .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(.5)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
-                            .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
+                            .splineToConstantHeading(new Vector2d(23.49, -22.41), Math.toRadians(0.00))
+                            .splineToConstantHeading(new Vector2d(51.31, -22.41), Math.toRadians(0.00))
                             .build());
             case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(51.29, 39.89, Math.toRadians(0.00)), Math.toRadians(0.00))
-                            .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(.5)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.9))
-                            .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(42.93, 62.69))
+                            .splineToConstantHeading(new Vector2d(23.49, -29), Math.toRadians(0.00))
+                            .splineToConstantHeading(new Vector2d(51.31, -29), Math.toRadians(0.00))
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .forward(1)
+                            .splineToConstantHeading(new Vector2d(23.49, -35.89), Math.toRadians(0.00))
+                            .splineToConstantHeading(new Vector2d(51.31, -35.89), Math.toRadians(0.00))
                             .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
@@ -163,11 +136,26 @@ public class BFLeftSplines extends MeepMeepBoilerplate{
             }
         }
 
-        while (rotateMotor.getCurrentPosition()>50){
+        while (Math.abs(slideMotor.getCurrentPosition()) < 500){
+            slideMotor.setPower(-0.3);
+        }
+
+        sleep(2000);
+        boxServo.setPosition(.45);
+        sleep(2000);
+
+        while (rotateMotor.getCurrentPosition()>20){
             rotateMotor.setPower(-0.3);
         }
+
+        sleep(2000);
         rotateMotor.setPower(0.0);
-        sleep(5000);
+
+        sleep(2000);
+
+        while (Math.abs(slideMotor.getCurrentPosition()) > 20){
+            slideMotor.setPower(0.3);
+        }
 
 //        drive.followTrajectorySequence(mergeSequences(sequences));
     }
