@@ -436,32 +436,31 @@ class TeleopFromHell: DriveMethods() {
             //Currently the Toggle Does nothing but keep it in case we need it in the future
 
 
-            if (slideTouch!!.isPressed && rotateMotor!!.targetPosition == 1850 && rotateNotAtBottomToggle){
+            if (slideTouch!!.isPressed && rotateMotor!!.targetPosition == 1850){
                 rotateNotAtBottomToggle = false
+                autoDownToggle = false
                 actualintakeServo?.power = 0.0
+                rotateMotor!!.targetPosition = 0
+                sleep(200)
             }
 
-            if (gamepad2.left_trigger > 0.5 && !rotateNotAtBottomToggle) {
+            if (gamepad2.left_trigger > 0.5) {
                 if (!autoDownToggle) {
                     autoDownToggle = true
-                }
-                else {
-                    autoDownToggle = false
-                }
-
-                if (!autoDownToggle) {
-                    rotateNotAtBottomToggle = false
-                    rotateMotor!!.targetPosition = 0
-                    rotateMotor!!.power = 0.0
-                    actualintakeServo?.power = 0.0
-                }
-                else {
                     rotateNotAtBottomToggle = true
                     rotateMotor!!.targetPosition = 1850
                     rotateMotor!!.power = 0.3
                     actualintakeServo?.power = -10.0
                 }
-                sleep(500)
+                else {
+                    autoDownToggle = false
+                    rotateNotAtBottomToggle = false
+                    rotateMotor!!.targetPosition = 0
+                    rotateMotor!!.power = 0.0
+                    actualintakeServo?.power = 0.0
+                }
+
+                sleep(200)
             }
             else if (gamepad2.left_stick_y.toDouble() >0.0) {
                 rotateMotor!!.power = gamepad2.left_stick_y.toDouble()
@@ -571,6 +570,8 @@ class TeleopFromHell: DriveMethods() {
             telemetry.addData("Holding Power: ", slideHoldingPower)
             telemetry.addData("ToggleRightRack: ", rackAndPainUpRightToggle)
             telemetry.addData("ToggleLeftRack: ", rackAndPainUpLeftToggle)
+            telemetry.addData("AutoDownToggle: ", autoDownToggle)
+            telemetry.addData("rotateNotAtBottom ", rotateNotAtBottomToggle)
 //            telemetry.addData("FR: ", motorFR?.power)
 //            telemetry.addData("FL: ", motorFL?.power)
 //            telemetry.addData("BR: ", motorBR?.power)
