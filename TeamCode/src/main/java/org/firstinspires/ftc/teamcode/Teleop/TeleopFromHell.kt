@@ -182,6 +182,19 @@ class TeleopFromHell: DriveMethods() {
                 motorBR?.power = 1.0/speedDiv
             }
 
+            //REVERSING DIRECTION
+            if (gamepad1.a) {
+                sleep(500)
+                if (reverseToggle) {
+                    reverseThing = 1
+                    reverseToggle = false
+                }
+                else {
+                    reverseThing = -1
+                    reverseToggle = true
+                }
+            }
+
             //Making a variable for the toggles so that you can use y in multiple locations.
             if (gamepad1.y){
                 gamepadYToggle = true
@@ -195,21 +208,7 @@ class TeleopFromHell: DriveMethods() {
             else {
                 gamepadBToggle = false
             }
-            if (gamepad1.a) {
-                sleep(500)
-                if (reverseToggle) {
-                    reverseThing = 1
-                    reverseToggle = false
-                }
-                else {
-                    reverseThing = -1
-                    reverseToggle = true
-                }
-            }
 
-            if (gamepad1.dpad_down) {
-                autoServo!!.position = 0.0
-            }
 
             if (!blinkinWorks) telemetry.addLine("Blinkin is not currently working")
 
@@ -251,22 +250,12 @@ class TeleopFromHell: DriveMethods() {
             telemetry.addData("Left Motor:", rMotorR?.currentPosition)
             telemetry.addData("Right Motor:", rMotorL?.currentPosition)
 
-            if (rackAndPainUpLeftToggle && (rMotorL?.currentPosition!!>6000)){
-                rMotorL!!.power = 0.0
-                rackAndPainUpLeftToggle = false
-                rackAndPainAutoLeftToggle = false
-            }
-            if (!rackAndPainUpLeftToggle && (rMotorL?.currentPosition!!>9648)){
+            if (rackAndPainUpLeftToggle && (rMotorL?.currentPosition!!>9000)){
                 rMotorL!!.power = 0.0
                 rackAndPainUpLeftToggle = true
                 rackAndPainAutoLeftToggle = false
             }
-            if (rackAndPainUpRightToggle && (rMotorR?.currentPosition!!<-6000)){
-                rMotorR!!.power = 0.0
-                rackAndPainUpRightToggle = false
-                rackAndPainAutoRightToggle = false
-            }
-            if (!rackAndPainUpRightToggle && (rMotorR?.currentPosition!!<-9063)){
+            if (rackAndPainUpRightToggle && (rMotorR?.currentPosition!!<-9000)){
                 rMotorR!!.power = 0.0
                 rackAndPainUpRightToggle = true
                 rackAndPainAutoRightToggle = false
@@ -434,8 +423,6 @@ class TeleopFromHell: DriveMethods() {
 
             //ROTATE
             //Currently the Toggle Does nothing but keep it in case we need it in the future
-
-
             if (slideTouch!!.isPressed && rotateMotor!!.targetPosition == 1850){
                 rotateNotAtBottomToggle = false
                 autoDownToggle = false
@@ -524,6 +511,10 @@ class TeleopFromHell: DriveMethods() {
                 sleep(200)
             }
 
+            //AUTO SERVO
+            if (gamepad1.dpad_down) {
+                autoServo!!.position = 0.0
+            }
 //            if (gamepad2.dpad_left){
 //                boxServo.position = .62
 //            }
