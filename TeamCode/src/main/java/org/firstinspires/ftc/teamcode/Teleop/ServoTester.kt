@@ -9,11 +9,11 @@ class ServoTester: DriveMethods() {
     override fun runOpMode() {
         initMotorsSecondBot()
         initSlideMotors()
-        val servoBeingTested: Servo = hardwareMap.get(Servo::class.java, "autoServo")!!
+        val servoBeingTested: Servo = hardwareMap.get(Servo::class.java, "passiveServo")!!
 
         waitForStart()
 
-        servoBeingTested.position = 0.3
+        servoBeingTested.position = 0.2
         while (opModeIsActive()) {
             if (gamepad2.y) {
                 servoBeingTested.position+=0.01

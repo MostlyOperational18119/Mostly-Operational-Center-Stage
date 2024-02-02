@@ -60,7 +60,7 @@ public class BackBlueAuto {
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
         MeepMeep meepMeep = new MeepMeep(800);
-        Detection detection = Detection.RIGHT;
+        Detection detection = Detection.LEFT;
         RoadRunnerBotEntity myBot;
         DriveShim driveShim;
 
