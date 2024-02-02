@@ -558,6 +558,7 @@ class TeleopFromHell: DriveMethods() {
             telemetry.addData("Magic num: ", magicHoldNumber)
             telemetry.addData("Rotate Motor Value: ", rotateMotor!!.currentPosition)
             telemetry.addData("Slide Motor Value: ", slideMotor!!.currentPosition)
+            telemetry.addData("Slide Power: ", slideMotor!!.power)
             telemetry.addData("Holding Power: ", slideHoldingPower)
             telemetry.addData("ToggleRightRack: ", rackAndPainUpRightToggle)
             telemetry.addData("ToggleLeftRack: ", rackAndPainUpLeftToggle)
