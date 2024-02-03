@@ -90,7 +90,10 @@ class TeleopFromHell: DriveMethods() {
 
         //slideGate?.position = 0.59
         aeroplaneLauncherServo!!.position = AEROPLANE_CLOSE
+        boxServo!!.position = .62
+        setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.CONFETTI)
         waitForStart()
+        setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.GREEN)
         //slideGate?.position = 0.55
         //set claw position into bounds
         //clawRotation!!.position = 0.3
@@ -487,12 +490,12 @@ class TeleopFromHell: DriveMethods() {
             //BOX SERVO
             if (gamepad2.x) {
                 if (!pixelDropperToggle) {
-                    setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.GREEN) // Green means that it's open
+                    setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.RED) // Green means that it's open
                     boxServo!!.position = .45
                     pixelDropperToggle = true
                     sleep(500)
                 } else {
-                    setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.RED) // Red means that it's closed
+                    setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.GREEN) // Red means that it's closed
                     boxServo!!.position = .62
                     pixelDropperToggle = false
                     sleep(500)
