@@ -25,7 +25,7 @@ import java.util.Arrays;
 @Config
 @Disabled
 @Autonomous(name = "RFLeft", group = "Linear OpMode")
-public class RFLeft extends MeepMeepBoilerplate{
+public class RFLeftDamienAndJesse extends MeepMeepBoilerplate{
 
     TrajectorySequence generate_sequence(BufferedReader reader, SampleMecanumDrive drive, Servo passiveServo, Servo autoServo){
         autoServo.setPosition(0.78);

@@ -6,7 +6,6 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
@@ -16,21 +15,18 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "RCOutLeft(actual)", group = "Linear OpMode")
-public class RCOutLeft extends MeepMeepBoilerplate{
+@Autonomous(name = "RCInLeftNOOO", group = "Linear OpMode")
+public class RCInLeftNOSplines extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         Servo passiveServo = hardwareMap.get(Servo.class, "passiveServo");
         Servo autoServo = hardwareMap.get(Servo.class, "autoServo");
-        DcMotor rotateMotor = hardwareMap.get(DcMotor.class, "motorSlideRotate");
-
-
         initVision(VisionProcessors.TFOD);
         Detection detection = Detection.UNKNOWN;
-        TrajectoryVelocityConstraint slowConstraint = new MinVelocityConstraint(Arrays.asList(
+        TrajectoryVelocityConstraint fastConstraint = new MinVelocityConstraint(Arrays.asList(
 
-                new TranslationalVelocityConstraint(20),
+                new TranslationalVelocityConstraint(50),
 
                 new AngularVelocityConstraint(1)
 
@@ -40,40 +36,11 @@ public class RCOutLeft extends MeepMeepBoilerplate{
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
-
-        autoServo.setPosition(0.11);
-        rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rotateMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        rotateMotor.setPower(0.0);
-
+        autoServo.setPosition(0.78);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(28.0)
-                            .turn(Math.toRadians(90))
-                            .back(8)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(.25)
-                            .forward(32)
-                            .waitSeconds(.25)
-                            .turn(Math.toRadians(180))
-                            .waitSeconds(.25)
-                            .strafeRight(11.5)
-                            .waitSeconds(.25)
-                            .back(12.5)
-                            .waitSeconds(.25)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.3))
-                            .waitSeconds(.25)
-                            .forward(3)
-                            .strafeLeft(37)
-                            .back(10)
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
-                            .waitSeconds(1)
+                            .addTemporalMarker(() -> goDownAuto())
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
@@ -91,11 +58,11 @@ public class RCOutLeft extends MeepMeepBoilerplate{
                             .back(24.5)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(1)
+                            .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.25)
                             .forward(3)
-                            .strafeLeft(30)
+                            .strafeRight(20)
                             .back(11)
                             .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.65))
@@ -122,11 +89,11 @@ public class RCOutLeft extends MeepMeepBoilerplate{
                             .back(15.5)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> autoServo.setPosition(1))
-                            .waitSeconds(1)
+                            .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.9))
                             .waitSeconds(.25)
                             .forward(3)
-                            .strafeLeft(24)
+                            .strafeRight(26)
                             .back(10)
                             .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.65))
