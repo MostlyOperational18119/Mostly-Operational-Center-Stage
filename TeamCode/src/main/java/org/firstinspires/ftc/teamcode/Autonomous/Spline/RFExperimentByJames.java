@@ -19,6 +19,8 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
+@Autonomous(name = "RFRightSplines", group = "Linear OpMode")
+public class RFRightSplines extends MeepMeepBoilerplate{
 @Autonomous(name = "RFLeftEXPERIMENT", group = "Linear OpMode")
 public class RFExperimentByJames extends MeepMeepBoilerplate {
     @Override
