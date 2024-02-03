@@ -15,8 +15,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
-@Disabled
 @TeleOp(name = "W_MultiPortal_v01")
+@Disabled
 public class W_MultiPortal_v01 extends LinearOpMode {
 
     VisionPortal.Builder myVisionPortalBuilder;

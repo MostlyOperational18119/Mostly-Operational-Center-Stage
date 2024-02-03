@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Teleop
+package org.firstinspires.ftc.teamcode.Teleop.SimpleTeleopByJess
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp

@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode.Teleop
+package org.firstinspires.ftc.teamcode.Teleop.Testing
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.DriveMethods
 
 @TeleOp(name = "SlideAndRotate", group = "Testing")
+@Disabled
 class TestingRotateAndSlide: DriveMethods() {
     override fun runOpMode() {
         val rotate = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")

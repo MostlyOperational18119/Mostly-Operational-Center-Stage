@@ -1,25 +1,25 @@
-package org.firstinspires.ftc.teamcode.Teleop
+package org.firstinspires.ftc.teamcode.Teleop.SimpleTeleopByJess
 
 //import org.firstinspires.ftc.teamcode.Variables.rMotorL
 //import org.firstinspires.ftc.teamcode.Variables.rMotorR
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.hardware.CRServo
 import org.firstinspires.ftc.teamcode.DriveMethods
 import org.firstinspires.ftc.teamcode.Variables.motorBL
 import org.firstinspires.ftc.teamcode.Variables.motorBR
 import org.firstinspires.ftc.teamcode.Variables.motorFL
 import org.firstinspires.ftc.teamcode.Variables.motorFR
-import java.io.BufferedWriter
-import java.io.FileWriter
+import org.firstinspires.ftc.teamcode.Variables.pomPomServo
 
 @Disabled
-@TeleOp(name = "SimpleTeleopRecorder", group = "TeleopFinal")
-class SimpleTeleopRecorder: DriveMethods() {
+@TeleOp(name = "SimpleTeleop", group = "TeleopFinal")
+class SimpleTeleop: DriveMethods() {
     override fun runOpMode() {
         initMotorsSecondSimple() //init rack and pinion & wheel motors
+        pomPomServo = hardwareMap.get(CRServo::class.java, "pomPomServo")
 
         telemetry.update()
-
 
         waitForStart()
         var leftY: Double
@@ -27,8 +27,7 @@ class SimpleTeleopRecorder: DriveMethods() {
         var rightX: Double
         var upOrDown = true
         var speedDiv = 3.0
-        var commandList = ArrayList<String>();
-
+        var pomPomSpinning = false
         while (opModeIsActive()) {
             //set gamepad inputs
             leftY = (-gamepad1.left_stick_y).toDouble()
@@ -47,21 +46,13 @@ class SimpleTeleopRecorder: DriveMethods() {
             telemetry.addLine("Power of motorBR: $motorBRPower")
 
             setMotorPowers(motorFLPower, motorFRPower, motorBLPower, motorBRPower)
-            commandList.add("motorFL.power:$motorFLPower");
-            commandList.add("motorFR.power:$motorFRPower");
-            commandList.add("motorBL.power:$motorBLPower");
-            commandList.add("motorBR.power:$motorBRPower");
-            telemetry.addLine("Length of Commands: "+commandList.size);
+
+            
             if (gamepad1.left_bumper) {
                 motorFL?.power = 1.0/speedDiv
                 motorBL?.power = -1.0/speedDiv
                 motorFR?.power = 1.0/speedDiv
                 motorBR?.power = -1.0/speedDiv
-
-                commandList.add("motorFL.power:"+(1.0/speedDiv))
-                commandList.add("motorBL.power:"+(-1.0/speedDiv))
-                commandList.add("motorFR.power:"+(1.0/speedDiv))
-                commandList.add("motorBR.power:"+(-1.0/speedDiv))
             }
 
             if (gamepad1.right_bumper) {
@@ -69,33 +60,27 @@ class SimpleTeleopRecorder: DriveMethods() {
                 motorBL?.power = 1.0/speedDiv
                 motorFR?.power = -1.0/speedDiv
                 motorBR?.power = 1.0/speedDiv
-
-                commandList.add("motorFL.power:"+(-1.0/speedDiv))
-                commandList.add("motorBL.power:"+(1.0/speedDiv))
-                commandList.add("motorFR.power:"+(-1.0/speedDiv))
-                commandList.add("motorBR.power:"+(1.0/speedDiv))
             }
 
             if (gamepad1.a) {
-                if (speedDiv == 3.0) {
-                    speedDiv = 1.5
-                } else {
-                    speedDiv = 3.0
+                speedDiv = when(speedDiv) {
+                    3.0 -> 1.5
+                    else -> 3.0
                 }
+            }
+            if (gamepad1.b) {
+                if (pomPomSpinning) {
+                    pomPomServo!!.power = 0.0
+                    pomPomSpinning = false
+                } else {
+                    pomPomServo!!.power = 1.0
+                    pomPomSpinning = true
+                }
+                sleep(400)
             }
 
             telemetry.update()
-            sleep(50);
-            commandList.add("sleep:50");
+            sleep(20)
         }
-
-        var outputWriter: BufferedWriter? = null
-        outputWriter = BufferedWriter(FileWriter("/sdcard/FIRST/training/SimpleRecordTest.txt"));
-        for (i in 0 .. commandList.size-1) {
-            outputWriter.write(commandList[i]);
-            outputWriter.newLine();
-        }
-        outputWriter.flush();
-        outputWriter.close();
     }
 }
