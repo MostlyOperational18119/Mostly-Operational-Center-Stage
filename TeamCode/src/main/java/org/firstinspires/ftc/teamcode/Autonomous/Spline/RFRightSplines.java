@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.Spline;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Autonomous.MeepMeepBoilerplate;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Variables.Detection;
 import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
@@ -18,8 +19,13 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
+<<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autonomous/RFRightSplines.java
 @Autonomous(name = "RFRightSplines", group = "Linear OpMode")
 public class RFRightSplines extends MeepMeepBoilerplate{
+========
+@Autonomous(name = "RFLeftEXPERIMENT", group = "Linear OpMode")
+public class RFExperimentByJames extends MeepMeepBoilerplate {
+>>>>>>>> b82d466ab65a05e97077ce2ccde1d96787235bc8:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autonomous/Spline/RFExperimentByJames.java
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
