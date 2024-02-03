@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Spline;
+package org.firstinspires.ftc.teamcode.Autonomous.SplineAuto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -144,8 +144,8 @@ public class RFRightSplines extends MeepMeepBoilerplate{
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(43.49, -35, Math.toRadians(180.00)), Math.toRadians(180.00))
-                            .splineToConstantHeading(new Vector2d(50.5, -35), Math.toRadians(180.00))
+                            .splineToLinearHeading(new Pose2d(43.49, -36, Math.toRadians(180.00)), Math.toRadians(180.00))
+                            .splineToConstantHeading(new Vector2d(50.5, -36), Math.toRadians(180.00))
                             .addTemporalMarker(() -> autoServo.setPosition(0.12))
                             .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.35))

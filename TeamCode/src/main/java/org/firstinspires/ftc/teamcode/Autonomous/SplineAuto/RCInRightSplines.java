@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Spline;
+package org.firstinspires.ftc.teamcode.Autonomous.SplineAuto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "RCOutRightSplines", group = "Linear OpMode")
-public class RCOutRightSplines extends MeepMeepBoilerplate {
+@Autonomous(name = "RCInRightSplines", group = "Linear OpMode")
+public class RCInRightSplines extends MeepMeepBoilerplate {
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -76,7 +76,8 @@ public class RCOutRightSplines extends MeepMeepBoilerplate {
                             .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(47.41, -59.3))
+                            .lineToConstantHeading(new Vector2d(47.41, -15.3))
+                            .lineToConstantHeading(new Vector2d(58, -15.3))
                             .addTemporalMarker(() -> autoServo.setPosition(0))
                             .waitSeconds(1)
                             .build());
@@ -92,7 +93,8 @@ public class RCOutRightSplines extends MeepMeepBoilerplate {
                             .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(47.41, -59.3))
+                            .lineToConstantHeading(new Vector2d(47.41, -15.3))
+                            .lineToConstantHeading(new Vector2d(58, -15.3))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build());
@@ -109,7 +111,8 @@ public class RCOutRightSplines extends MeepMeepBoilerplate {
                             .waitSeconds(1.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(47.41, -59.3))
+                            .lineToConstantHeading(new Vector2d(47.41, -15.3))
+                            .lineToConstantHeading(new Vector2d(58, -15.3))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build());

@@ -1,7 +1,5 @@
+package org.firstinspires.ftc.teamcode.Autonomous.VisionTesting
 
-package org.firstinspires.ftc.teamcode.Autonomous
-
-import com.google.blocks.ftcrobotcontroller.util.CurrentGame
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
@@ -12,20 +10,17 @@ import org.firstinspires.ftc.vision.VisionPortal
 import org.firstinspires.ftc.vision.tfod.TfodProcessor
 import java.io.BufferedReader
 import java.io.FileReader
-//import org.firstinspires.ftc.vision.tfod.TfodProcessor.Builder.setNumDetectorThreads;
 
 @Disabled
-@TeleOp(name="Tensor Flow Test 2", group="Concept")
-class tensorFlowTest2: LinearOpMode(){
+@TeleOp(name="TensorFlow Test 1", group="Concept")
+class tensorFlowTest1: LinearOpMode(){
     private val USE_WEBCAM = true;
     lateinit var tfod: TfodProcessor
-    lateinit var tfod2:TfodProcessor
     lateinit var visionPortal: VisionPortal
-    var processorToggled = true;
-
     val tfod_labels = "/sdcard/FIRST/models/ssd_mobilenet_v2_label_map.txt"
     private lateinit var labels: Array<String>
     override fun runOpMode() {
+
         telemetry.addLine("Reading Lables");
         telemetry.update()
         readLabels();
@@ -34,41 +29,19 @@ class tensorFlowTest2: LinearOpMode(){
         telemetry.update()
 
         initTfod();
-//        toggleProccessor()
-//        makeMultiPortalView(2, VisionPortal.MultiPortalLayout.HORIZONTAL)
-        telemetry.addLine("TfodsInitiated");
+
+        telemetry.addLine("TfodInitiated");
         telemetry.update()
         waitForStart()
-//        toggleProccessor();
+
         while (opModeIsActive()) {
             telemetry.addLine("Cool stuff is happening maybe");
-//            if(processorToggled){
             telemetryTfod()
-//            }else{
-            telemetryTfod2()
-//            }
-            telemetry.addLine("FPS: "+visionPortal.getFps())
             telemetry.update()
-//            toggleProccessor();
             sleep(100)
         }
 
     }
-
-    fun toggleProccessor(){
-      if(processorToggled){
-        visionPortal.setProcessorEnabled(tfod, true);
-        visionPortal.setProcessorEnabled(tfod2, false);
-      }
-      else{
-      visionPortal.setProcessorEnabled(tfod, false);
-      visionPortal.setProcessorEnabled(tfod2, true);
-      }
-      processorToggled=!processorToggled
-    }
-    
-
-
 
 
     /**
@@ -77,42 +50,26 @@ class tensorFlowTest2: LinearOpMode(){
     private fun initTfod() {
 
         // Create the TensorFlow processor the easy way.
-
-        tfod2 = TfodProcessor.Builder()
-            .setNumDetectorThreads(3)
-            .setModelAssetName(CurrentGame.TFOD_MODEL_ASSET)
-            .build()
-
         tfod = TfodProcessor.Builder()
-            .setNumDetectorThreads(3)
             .setModelFileName("/sdcard/FIRST/models/ssd_mobilenet_v2_320x320_coco17_tpu_8.tflite")
+//            .setIsModelTensorFlow2(false)
             .setModelLabels(labels)
             .build()
-
         telemetry.addLine("Tfod built");
         telemetry.update()
 
         // Create the vision portal the easy way.
         if (USE_WEBCAM) {
-            visionPortal = VisionPortal.Builder()
-                .enableLiveView(false)
-//                .setNumDetectorThreads(6)
-                .addProcessors(tfod, tfod2)
-//                .addProcessor(tfod2)
-                .setCamera(hardwareMap[WebcamName::class.java, "Webcam 1"])
-                .build()
-//                .makeMultiPortalView(2, MultiPortalLayout.HORIZONTAL)
-            visionPortal.setProcessorEnabled(tfod, true)
-            visionPortal.setProcessorEnabled(tfod2,false)
+
+            visionPortal = VisionPortal.easyCreateWithDefaults(
+                hardwareMap[WebcamName::class.java, "Webcam 1"], tfod
+            )
             telemetry.addLine("Webcam Initiated");
             telemetry.update()
         } else {
-
-            visionPortal = VisionPortal.Builder()
-                .enableLiveView(false)
-                .addProcessors(tfod, tfod2)
-//                .addProcessor(tfod2)
-                .setCamera(BuiltinCameraDirection.BACK).build()
+            visionPortal = VisionPortal.easyCreateWithDefaults(
+                BuiltinCameraDirection.BACK, tfod
+            )
         }
 
 
@@ -141,29 +98,6 @@ class tensorFlowTest2: LinearOpMode(){
             telemetry.addData("- Size", "%.0f x %.0f", recognition.width, recognition.height)
         } // end for() loop
     } // end method telemetryTfod()
-
-
-
-    private fun telemetryTfod2() {
-        val currentRecognitions: List<Recognition> = tfod2.getRecognitions()
-        telemetry.addData("# Objects Detected", currentRecognitions.size)
-
-        // Step through the list of recognitions and display info for each one.
-        for (recognition in currentRecognitions) {
-            val x = ((recognition.left + recognition.right) / 2).toDouble()
-            val y = ((recognition.top + recognition.bottom) / 2).toDouble()
-            telemetry.addData("", " ")
-            telemetry.addData(
-                "Image",
-                "%s (%.0f %% Conf.)",
-                recognition.label,
-                recognition.confidence * 100
-            )
-            telemetry.addData("- Position", "%.0f / %.0f", x, y)
-            telemetry.addData("- Size", "%.0f x %.0f", recognition.width, recognition.height)
-        } // end for() loop
-    } // end method telemetryTfod()
-
 
 
     /**

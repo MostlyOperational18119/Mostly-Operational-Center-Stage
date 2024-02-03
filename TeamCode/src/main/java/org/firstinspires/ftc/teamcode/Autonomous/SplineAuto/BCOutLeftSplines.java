@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Spline;
+package org.firstinspires.ftc.teamcode.Autonomous.SplineAuto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -18,10 +18,9 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 
 import java.util.Arrays;
 
-
 @Config
-@Autonomous(name = "BCInLeftSplines", group = "Linear OpMode")
-public class BCInLeftSplines extends MeepMeepBoilerplate {
+@Autonomous(name = "BCOutLeftSplines", group = "Linear OpMode")
+public class BCOutLeftSplines extends MeepMeepBoilerplate {
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -74,8 +73,7 @@ public class BCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
-                            .lineToConstantHeading(new Vector2d(58, 15.83))
+                            .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build()
@@ -92,8 +90,7 @@ public class BCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
-                            .lineToConstantHeading(new Vector2d(58, 15.83))
+                            .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build());
@@ -112,8 +109,7 @@ public class BCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
-                            .lineToConstantHeading(new Vector2d(58, 15.83))
+                            .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build()
