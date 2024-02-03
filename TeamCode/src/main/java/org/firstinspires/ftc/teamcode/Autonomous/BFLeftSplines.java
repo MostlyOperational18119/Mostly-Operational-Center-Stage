@@ -18,8 +18,8 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "BFLeftEXPERIMENT", group = "Linear OpMode")
-public class BFExperimentByJames extends MeepMeepBoilerplate{
+@Autonomous(name = "BFLeftSplines", group = "Linear OpMode")
+public class BFLeftSplines extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -58,6 +58,10 @@ public class BFExperimentByJames extends MeepMeepBoilerplate{
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rotateMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         rotateMotor.setPower(0.0);
 
         drive.setPoseEstimate( new Pose2d(-36.67, 62.45, Math.toRadians(90.00)));
@@ -75,7 +79,7 @@ public class BFExperimentByJames extends MeepMeepBoilerplate{
                             .build());
             case CENTER -> {drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
-                            .lineToConstantHeading(new Vector2d(-35.34, 31.82))
+                            .lineToConstantHeading(new Vector2d(-35.34, 30))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.15)
@@ -84,7 +88,7 @@ public class BFExperimentByJames extends MeepMeepBoilerplate{
             }
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(-36.67, 62.45, Math.toRadians(90.00)))
-                            .lineToConstantHeading(new Vector2d(-47.34, 34.82))
+                            .lineToConstantHeading(new Vector2d(-45.34, 34.82))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.15)
@@ -98,11 +102,11 @@ public class BFExperimentByJames extends MeepMeepBoilerplate{
         sleep(2000);
 
         drive.followTrajectorySequence(drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                .splineToConstantHeading(new Vector2d(12, 58.82), Math.toRadians(0.00))
+                .splineToConstantHeading(new Vector2d(20, 58.82), Math.toRadians(0.00))
                 .build());
 
 
-        while (rotateMotor.getCurrentPosition()>400){
+        while (rotateMotor.getCurrentPosition()>20){
             rotateMotor.setPower(-0.3);
         }
         rotateMotor.setPower(0.0);
@@ -111,41 +115,61 @@ public class BFExperimentByJames extends MeepMeepBoilerplate{
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToConstantHeading(new Vector2d(25.49, 36.49), Math.toRadians(0.00))
-                            .splineToConstantHeading(new Vector2d(54.31, 36.49), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(43.49, 45.49, Math.toRadians(180.00)), Math.toRadians(180.00))
+                            .splineToConstantHeading(new Vector2d(51.5, 45.49), Math.toRadians(180.00))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
+                            .waitSeconds(1)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
+                            .waitSeconds(2)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
                             .build());
             case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToConstantHeading(new Vector2d(25.49, 43.46), Math.toRadians(0.00))
-                            .splineToConstantHeading(new Vector2d(54.31, 43.46), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(43.49, 44, Math.toRadians(180.00)), Math.toRadians(180.00))
+                            .splineToConstantHeading(new Vector2d(51.5, 44), Math.toRadians(180.00))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
+                            .waitSeconds(1)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
+                            .waitSeconds(2)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToConstantHeading(new Vector2d(25.49, 50), Math.toRadians(0.00))
-                            .splineToConstantHeading(new Vector2d(54.31, 50), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(43.49, 36, Math.toRadians(180.00)), Math.toRadians(180.00))
+                            .splineToConstantHeading(new Vector2d(51.5, 36), Math.toRadians(180.00))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
+                            .waitSeconds(1)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
+                            .waitSeconds(2)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
                             .build());
         }
 
-        while (Math.abs(slideMotor.getCurrentPosition()) < 500){
-            slideMotor.setPower(-0.3);
-        }
-
-        sleep(1000);
-        boxServo.setPosition(.45);
-        sleep(1000);
-
-        while (rotateMotor.getCurrentPosition()>20){
-            rotateMotor.setPower(-0.3);
-        }
-
-        sleep(2000);
-        rotateMotor.setPower(0.0);
-
-        sleep(2000);
-
-        while (Math.abs(slideMotor.getCurrentPosition()) > 20){
-            slideMotor.setPower(0.3);
-        }
+//        while (Math.abs(slideMotor.getCurrentPosition()) < 500){
+//            slideMotor.setPower(-0.3);
+//        }
+//
+//        sleep(1000);
+//        boxServo.setPosition(.45);
+//        sleep(1000);
+//
+//        while (rotateMotor.getCurrentPosition()>20){
+//            rotateMotor.setPower(-0.3);
+//        }
+//
+//        sleep(1000);
+//        rotateMotor.setPower(0.0);
+//
+//        sleep(1000);
+//
+//        while (Math.abs(slideMotor.getCurrentPosition()) > 20){
+//            slideMotor.setPower(0.3);
+//        }
+//
+//        boxServo.setPosition(.62);
 
 //        drive.followTrajectorySequence(mergeSequences(sequences));
     }

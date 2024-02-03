@@ -9,7 +9,7 @@ class ServoTester: DriveMethods() {
     override fun runOpMode() {
         initMotorsSecondBot()
         initSlideMotors()
-        val servoBeingTested: Servo = hardwareMap.get(Servo::class.java, "passiveServo")!!
+        val servoBeingTested: Servo = hardwareMap.get(Servo::class.java, "autoServo")!!
 
         waitForStart()
 
