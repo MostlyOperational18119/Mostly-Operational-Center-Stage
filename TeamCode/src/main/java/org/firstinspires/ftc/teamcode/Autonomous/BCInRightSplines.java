@@ -17,9 +17,10 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 
 import java.util.Arrays;
 
+
 @Config
-@Autonomous(name = "BCInRightSplines", group = "Linear OpMode")
-public class BCOutRightSplines extends MeepMeepBoilerplate{
+@Autonomous(name = "BCRightEXPERIMENT", group = "Linear OpMode")
+public class BCInRightSplines extends MeepMeepBoilerplate{
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -72,7 +73,7 @@ public class BCOutRightSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(51.41, 59.31))
+                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build()
@@ -89,7 +90,7 @@ public class BCOutRightSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(51.41, 59.31))
+                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build());
@@ -108,7 +109,7 @@ public class BCOutRightSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.5)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(51.41, 59.31))
+                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build()
