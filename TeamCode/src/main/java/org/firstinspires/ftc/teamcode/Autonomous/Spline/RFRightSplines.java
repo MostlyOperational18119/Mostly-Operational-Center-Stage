@@ -19,13 +19,10 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-<<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autonomous/RFRightSplines.java
 @Autonomous(name = "RFRightSplines", group = "Linear OpMode")
 public class RFRightSplines extends MeepMeepBoilerplate{
-========
 @Autonomous(name = "RFLeftEXPERIMENT", group = "Linear OpMode")
 public class RFExperimentByJames extends MeepMeepBoilerplate {
->>>>>>>> b82d466ab65a05e97077ce2ccde1d96787235bc8:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autonomous/Spline/RFExperimentByJames.java
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
