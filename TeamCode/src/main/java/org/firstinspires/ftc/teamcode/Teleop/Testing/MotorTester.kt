@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode.Teleop
+package org.firstinspires.ftc.teamcode.Teleop.Testing
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.DriveMethods
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Variables.motorFL
 import org.firstinspires.ftc.teamcode.Variables.motorFR
 
 @TeleOp(name = "MotorTester", group = "Testing")
+@Disabled
 class MotorTester: DriveMethods() {
     override fun runOpMode() {
         initMotorsSecondBot()

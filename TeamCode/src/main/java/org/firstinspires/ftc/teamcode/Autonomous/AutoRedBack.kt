@@ -50,8 +50,8 @@ import java.util.Locale
  */
 // Autonomous
 
-@Disabled
 @TeleOp(name = "AutoRedBack", group = "Linear Opmode")
+@Disabled
 class AutoRedBack : DriveMethods() {
     override fun runOpMode() {
         // Setup Odometry :)

@@ -1,11 +1,13 @@
-package org.firstinspires.ftc.teamcode.Teleop
+package org.firstinspires.ftc.teamcode.Teleop.Testing
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.CRServo
 import org.firstinspires.ftc.teamcode.DriveMethods
 import org.firstinspires.ftc.teamcode.Variables.intakeServo
 
 @TeleOp(name = "CRServoTest", group = "Flywheel")
+@Disabled
 class FlyWheelTest: DriveMethods() {
     override fun runOpMode() {
 
