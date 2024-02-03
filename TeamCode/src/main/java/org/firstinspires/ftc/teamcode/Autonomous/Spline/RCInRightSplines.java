@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.Spline;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Autonomous.MeepMeepBoilerplate;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Variables.Detection;
 import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
@@ -18,8 +19,8 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "RCInLeftSplines", group = "Linear OpMode")
-public class RCInLeftSplines extends MeepMeepBoilerplate{
+@Autonomous(name = "RCInRightSplines", group = "Linear OpMode")
+public class RCInRightSplines extends MeepMeepBoilerplate {
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -69,7 +70,7 @@ public class RCInLeftSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
-                            .lineToLinearHeading(new Pose2d(51.29, -26.60, Math.toRadians(180.00)))
+                            .lineToLinearHeading(new Pose2d(51.29, -29.60, Math.toRadians(180.00)))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.35))
                             .waitSeconds(1)
@@ -86,7 +87,7 @@ public class RCInLeftSplines extends MeepMeepBoilerplate{
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
-                            .splineToLinearHeading(new Pose2d(51.29, -33.09, Math.toRadians(180.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(51.29, -36.09, Math.toRadians(180.00)), Math.toRadians(0.00))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.35))
                             .waitSeconds(1)
@@ -104,7 +105,7 @@ public class RCInLeftSplines extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
                             .lineToConstantHeading(new Vector2d(24.18, -40.99))
-                            .splineToLinearHeading(new Pose2d(51.29, -39.89, Math.toRadians(180.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(51.29, -42.89, Math.toRadians(180.00)), Math.toRadians(360.00))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.35))
                             .waitSeconds(1.5)
