@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.NoSplineAuto;
 
 import android.util.Log;
 
@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Autonomous.MeepMeepBoilerplate;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequenceBuilder;
@@ -25,7 +26,7 @@ import java.util.Arrays;
 @Config
 @Disabled
 @Autonomous(name = "RFLeft", group = "Linear OpMode")
-public class RFLeftDamienAndJesse extends MeepMeepBoilerplate{
+public class RFLeftDamienAndJesse extends MeepMeepBoilerplate {
 
     TrajectorySequence generate_sequence(BufferedReader reader, SampleMecanumDrive drive, Servo passiveServo, Servo autoServo){
         autoServo.setPosition(0.78);

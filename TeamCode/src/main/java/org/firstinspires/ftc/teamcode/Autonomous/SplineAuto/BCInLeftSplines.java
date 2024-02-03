@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Spline;
+package org.firstinspires.ftc.teamcode.Autonomous.SplineAuto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -18,9 +18,10 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 
 import java.util.Arrays;
 
+
 @Config
-@Autonomous(name = "RCInLeftSplines", group = "Linear OpMode")
-public class RCInLeftSplines extends MeepMeepBoilerplate {
+@Autonomous(name = "BCInLeftSplines", group = "Linear OpMode")
+public class BCInLeftSplines extends MeepMeepBoilerplate {
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -57,65 +58,66 @@ public class RCInLeftSplines extends MeepMeepBoilerplate {
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rotateMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        drive.setPoseEstimate(new Pose2d(15.01, -62.69, Math.toRadians(270.00)));
+        drive.setPoseEstimate(new Pose2d(15.01, 62.69, Math.toRadians(90.00)));
+
         rotateMotor.setPower(0.0);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(270.00)))
+                    drive.trajectorySequenceBuilder(new Pose2d(15.01, 62.69, Math.toRadians(90.00)))
+                            .lineToConstantHeading(new Vector2d(27.18, 36.85))
+                            .waitSeconds(.1)
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
+                            .waitSeconds(.5)
+                            .splineToLinearHeading(new Pose2d(57.18, 48.07, Math.toRadians(180.00)), Math.toRadians(0.0))
+                            .waitSeconds(.1)
+                            .addTemporalMarker(() -> autoServo.setPosition(.35))
+                            .waitSeconds(.5)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.3))
+                            .waitSeconds(.1)
+                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
+                            .lineToConstantHeading(new Vector2d(58, 15.83))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
+                            .build()
+            );
+            case CENTER -> { drive.followTrajectorySequence(
+                    drive.trajectorySequenceBuilder(new Pose2d(15.01, 62.69, Math.toRadians(90.00)))
+                            .lineToConstantHeading(new Vector2d(16.35, 30))
+                            .waitSeconds(.1)
+                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
+                            .waitSeconds(.5)
+                            .splineToLinearHeading(new Pose2d(54.91, 42.46, Math.toRadians(180.00)), Math.toRadians(0.00))
+                            .waitSeconds(.1)
+                            .addTemporalMarker(() -> autoServo.setPosition(.35))
+                            .waitSeconds(.5)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.3))
+                            .waitSeconds(.1)
+                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
+                            .lineToConstantHeading(new Vector2d(58, 15.83))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .waitSeconds(1)
+                            .build());
+            }
+            case RIGHT -> drive.followTrajectorySequence(
+                    drive.trajectorySequenceBuilder(new Pose2d(15.01, 62.69, Math.toRadians(90.00)))
                             .setReversed(true)
-                            .splineToLinearHeading(new Pose2d(18.98, -44.59, Math.toRadians(-90.00)), Math.toRadians(90.00))
-                            .splineToLinearHeading(new Pose2d(13, -34, Math.toRadians(0.00)), Math.toRadians(180.00))
-                            .splineToLinearHeading(new Pose2d(7, -34, Math.toRadians(0.00)), Math.toRadians(180.00))
+                            .splineToLinearHeading(new Pose2d(15.75, 45.61, Math.toRadians(90.00)), Math.toRadians(-90.00))
+                            .splineToLinearHeading(new Pose2d(10.95, 35.39, Math.toRadians(0.00)), Math.toRadians(180.00))
                             .setReversed(false)
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
-                            .lineToLinearHeading(new Pose2d(51.29, -26.60, Math.toRadians(180.00)))
-                            .waitSeconds(.1)
+                            .lineToLinearHeading(new Pose2d(55.29, 35.49, Math.toRadians(180.00)))
                             .addTemporalMarker(() -> autoServo.setPosition(0.35))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.3))
-                            .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(47.41, -15.3))
-                            .lineToConstantHeading(new Vector2d(58, -15.3))
-                            .addTemporalMarker(() -> autoServo.setPosition(0))
-                            .waitSeconds(1)
-                            .build());
-            case CENTER -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(270.00)))
-                            .lineToConstantHeading(new Vector2d(12.16, -30.68))
-                            .waitSeconds(.1)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
-                            .splineToLinearHeading(new Pose2d(51.29, -33.09, Math.toRadians(180.00)), Math.toRadians(0.00))
-                            .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
-                            .waitSeconds(1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(47.41, -15.3))
-                            .lineToConstantHeading(new Vector2d(58, -15.3))
+                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
+                            .lineToConstantHeading(new Vector2d(58, 15.83))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
-                            .build());
-            case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(270.00)))
-                            .lineToConstantHeading(new Vector2d(24.18, -37.99))
-                            .waitSeconds(.1)
-                            .addTemporalMarker(() -> passiveServo.setPosition(0.2))
-                            .waitSeconds(.5)
-                            .lineToConstantHeading(new Vector2d(24.18, -40.99))
-                            .splineToLinearHeading(new Pose2d(51.29, -39.89, Math.toRadians(180.00)), Math.toRadians(360.00))
-                            .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
-                            .waitSeconds(1.5)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.3))
-                            .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(47.41, -15.3))
-                            .lineToConstantHeading(new Vector2d(58, -15.3))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
-                            .waitSeconds(1)
-                            .build());
+                            .build()
+            );
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
                 telemetry.update();
