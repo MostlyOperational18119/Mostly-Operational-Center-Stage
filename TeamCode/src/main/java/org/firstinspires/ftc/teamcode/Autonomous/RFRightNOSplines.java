@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
@@ -15,8 +16,10 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "BFRight(actual)", group = "Linear OpMode")
-public class BFRight extends MeepMeepBoilerplate{
+@Disabled
+@Autonomous(name = "RFRightNOOOO", group = "LinearOpmode")
+public class RFRightNOSplines extends MeepMeepBoilerplate {
+
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -36,12 +39,15 @@ public class BFRight extends MeepMeepBoilerplate{
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
+
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(28.0)
-                            .turn(Math.toRadians(90))
-                            .back(8)
+                            .back(2.0)
+                            .waitSeconds(.1)
+                            .strafeRight(11)
+                            .back(21)
+                            .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(4)
                             .forward(5)
@@ -49,7 +55,7 @@ public class BFRight extends MeepMeepBoilerplate{
             );
             case CENTER -> { drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(31.5)
+                            .back(32.25)
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(4)
@@ -58,11 +64,9 @@ public class BFRight extends MeepMeepBoilerplate{
             }
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .back(2.0)
-                            .waitSeconds(.25)
-                            .strafeLeft(8)
-                            .back(21)
-                            .waitSeconds(.25)
+                            .back(28.0)
+                            .turn(Math.toRadians(-90))
+                            .back(4)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(4)
                             .forward(5)
@@ -74,7 +78,6 @@ public class BFRight extends MeepMeepBoilerplate{
                 sleep(3000);
             }
         }
-
 
 //        drive.followTrajectorySequence(mergeSequences(sequences));
     }

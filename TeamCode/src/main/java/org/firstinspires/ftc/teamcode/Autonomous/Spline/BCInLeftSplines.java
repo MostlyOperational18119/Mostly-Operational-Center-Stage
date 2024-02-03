@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 
 @Config
-@Autonomous(name = "BCOutLeftSplines", group = "Linear OpMode")
+@Autonomous(name = "BCInLeftSplines", group = "Linear OpMode")
 public class BCInLeftSplines extends MeepMeepBoilerplate {
     @Override
     public void runOpMode() {
