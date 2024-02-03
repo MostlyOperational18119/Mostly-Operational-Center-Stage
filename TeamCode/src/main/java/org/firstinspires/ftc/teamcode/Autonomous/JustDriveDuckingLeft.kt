@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.DriveMethods
 import org.firstinspires.ftc.teamcode.Variables
 
 @Autonomous(name="Just Drive Left, we need an Auto")
+@Disabled
 class JustDriveDuckingLeft: DriveMethods() {
     override fun runOpMode() {
         initMotorsSecondBot()
