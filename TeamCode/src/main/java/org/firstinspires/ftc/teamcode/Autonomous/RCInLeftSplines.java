@@ -76,6 +76,7 @@ public class RCInLeftSplines extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(47.41, -15.3))
+                            .lineToConstantHeading(new Vector2d(58, -15.3))
                             .addTemporalMarker(() -> autoServo.setPosition(0))
                             .waitSeconds(1)
                             .build());
@@ -92,6 +93,7 @@ public class RCInLeftSplines extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(47.41, -15.3))
+                            .lineToConstantHeading(new Vector2d(58, -15.3))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build());
@@ -109,6 +111,7 @@ public class RCInLeftSplines extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(47.41, -15.3))
+                            .lineToConstantHeading(new Vector2d(58, -15.3))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build());

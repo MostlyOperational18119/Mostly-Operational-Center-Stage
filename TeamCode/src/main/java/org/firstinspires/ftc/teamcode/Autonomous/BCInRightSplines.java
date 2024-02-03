@@ -74,6 +74,7 @@ public class BCInRightSplines extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 15.83))
+                            .lineToConstantHeading(new Vector2d(58, 15.83))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build()
@@ -91,6 +92,7 @@ public class BCInRightSplines extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 15.83))
+                            .lineToConstantHeading(new Vector2d(58, 15.83))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build());
@@ -110,6 +112,7 @@ public class BCInRightSplines extends MeepMeepBoilerplate{
                             .addTemporalMarker(() -> autoServo.setPosition(0.3))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 15.83))
+                            .lineToConstantHeading(new Vector2d(58, 15.83))
                             .addTemporalMarker(() -> autoServo.setPosition(0.0))
                             .waitSeconds(1)
                             .build()
