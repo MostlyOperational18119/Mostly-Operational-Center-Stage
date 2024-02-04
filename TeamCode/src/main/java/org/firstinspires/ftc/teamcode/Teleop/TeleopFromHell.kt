@@ -44,7 +44,7 @@ class TeleopFromHell: DriveMethods() {
     override fun runOpMode() {
         initMotorsSecondBot() //init rack and pinion & wheel motors
 
-        telemetry.addLine(when ((0..41).random()) {
+        telemetry.addLine(when ((0..49).random()) {
             1 -> "good luck buddy"
             2 -> "\"what spectrum?\""
             3 -> "MostlyOp >>> AHoT"
@@ -85,6 +85,14 @@ class TeleopFromHell: DriveMethods() {
             38 -> "autoByJames"
             39 -> "anti-fluent"
             40 -> "fire in the hole"
+            41 -> "Antidisestablishmentarianism is a position that advocates that a state church (the \"established church\") should continue to receive government patronage, rather than be disestablished (i.e., be separated from the state)."
+            42 -> "#include <iostream>\n\nint main() {\n\tstd::cout << \"Hello World!\\n\";\n\treturn 0;\n}\n"
+            43 -> "fn main() {\n\tprintln!(\"Hello World!\");\n}\n"
+            44 -> "console.log(\"Hello World!\");"
+            45 -> "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Hello World!\")\n}\n"
+            46 -> "with Text_IO; use Text_IO;\nprocedure hello is\nbegin\n\tPut_Line(\"Hello world!\");\nend hello;\n"
+            47 -> ">++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+."
+            48 -> "main = putStrLn \"Hello, World!\""
             else -> "Why did we add these?"
         })
         telemetry.update()
