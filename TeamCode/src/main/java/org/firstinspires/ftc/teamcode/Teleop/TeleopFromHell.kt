@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Teleop
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver.BlinkinPattern
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.DriveMethods
@@ -139,6 +140,8 @@ class TeleopFromHell: DriveMethods() {
         var gamepadYToggle = false
         var gamepadBToggle = false
         var autoDownToggle = false
+        var pulseBlinkin = false
+        var currentPattern = BlinkinPattern.RED
 
         //rotateMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         rotateMotor?.mode = DcMotor.RunMode.RUN_USING_ENCODER
@@ -152,9 +155,9 @@ class TeleopFromHell: DriveMethods() {
             //set gamepad inputs
             leftY = (-gamepad1.left_stick_y).toDouble()* reverseThing
             leftYGPadTwo = (gamepad2.left_stick_y).toDouble()
-            leftX = -
-            gamepad1.left_stick_x.toDouble() * reverseThing
+            leftX = -gamepad1.left_stick_x.toDouble() * reverseThing
             rightX = -gamepad1.right_stick_x.toDouble()
+            pulseBlinkin = false
 
             //set motor speeds
 
@@ -199,18 +202,8 @@ class TeleopFromHell: DriveMethods() {
             }
 
             //Making a variable for the toggles so that you can use y in multiple locations.
-            if (gamepad1.y){
-                gamepadYToggle = true
-            }
-            else {
-                gamepadYToggle = false
-            }
-            if (gamepad1.b){
-                gamepadBToggle = true
-            }
-            else {
-                gamepadBToggle = false
-            }
+            gamepadYToggle = gamepad1.y
+            gamepadBToggle = gamepad1.b
 
 
             if (!blinkinWorks) telemetry.addLine("Blinkin is not currently working")
@@ -400,13 +393,14 @@ class TeleopFromHell: DriveMethods() {
             }
 
             telemetry.addData("Gamepad2 Right Y", gamepad2.right_stick_y)
-            if (gamepad2.left_bumper){
-                slideNotAtBottomToggle=true
+            if (gamepad2.left_bumper) {
+                slideNotAtBottomToggle = true
+                pulseBlinkin = true
                 slideMotor!!.targetPosition = 0
-                if (slideMotor!!.currentPosition >50){
+                if (slideMotor!!.currentPosition > 50){
                     slideMotor!!.power = -0.3
                 }
-                else if (slideMotor!!.currentPosition <50){
+                else if (slideMotor!!.currentPosition < 50){
                     slideMotor!!.power = 0.3
                 }
                 sleep(500)
@@ -490,12 +484,12 @@ class TeleopFromHell: DriveMethods() {
             //BOX SERVO
             if (gamepad2.x) {
                 if (!pixelDropperToggle) {
-                    setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.RED) // Green means that it's open
+                    currentPattern = BlinkinPattern.RED // Red means that it's closed
                     boxServo!!.position = .45
                     pixelDropperToggle = true
                     sleep(500)
                 } else {
-                    setBlinkinColour(RevBlinkinLedDriver.BlinkinPattern.GREEN) // Red means that it's closed
+                    currentPattern = BlinkinPattern.GREEN // Green means that it's open
                     boxServo!!.position = .62
                     pixelDropperToggle = false
                     sleep(500)
@@ -550,6 +544,8 @@ class TeleopFromHell: DriveMethods() {
           //  telemetry.addData("pos", slideRotationMotor!!.currentPosition)
          //   telemetry.addData("Tpos", slideRottarget)
 
+            setBlinkinColour(currentPattern, pulseBlinkin)
+
 
 //            All Stuff for Temp Passive intake claw
             telemetry.addData("Gamepad2 Left Y", gamepad2.left_stick_y)
@@ -567,6 +563,7 @@ class TeleopFromHell: DriveMethods() {
             telemetry.addData("ToggleLeftRack: ", rackAndPainUpLeftToggle)
             telemetry.addData("AutoDownToggle: ", autoDownToggle)
             telemetry.addData("rotateNotAtBottom ", rotateNotAtBottomToggle)
+            telemetry.addData("Current Blinkin pattern ", currentPattern.toString())
 //            telemetry.addData("FR: ", motorFR?.power)
 //            telemetry.addData("FL: ", motorFL?.power)
 //            telemetry.addData("BR: ", motorBR?.power)
