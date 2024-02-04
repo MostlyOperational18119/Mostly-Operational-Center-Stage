@@ -164,8 +164,6 @@ open class DriveMethods: LinearOpMode() {
         return null
     }
 
-
-
     fun initVision(processorType: VisionProcessors, zoom: Double = 1.0, model: String = "/sdcard/FIRST/models/ssd_mobilenet_v2_320x320_coco17_tpu_8.tflite", labelMap: Array<String> = readLabels("/sdcard/FIRST/models/ssd_mobilenet_v2_label_map.txt"), useRightCam: Boolean = false) {
         // Create the bob the builder to build the VisionPortal
         val builder: VisionPortal.Builder = VisionPortal.Builder()
@@ -518,7 +516,22 @@ open class DriveMethods: LinearOpMode() {
     }
 
     fun setBlinkinColour(pattern: BlinkinPattern) {
+        setBlinkinColour(pattern, false)
+    }
+
+    fun setBlinkinColour(pattern: BlinkinPattern, pulse: Boolean) {
+        val newPattern = if (pulse) convertPatternToPulsingPattern(pattern) else pattern
         Variables.pattern = pattern
         if (blinkinWorks) blinkinLedDriver!!.setPattern(pattern)
+    }
+
+    fun convertPatternToPulsingPattern(pattern: BlinkinPattern): BlinkinPattern {
+        return when (pattern) {
+            BlinkinPattern.GREEN -> BlinkinPattern.BEATS_PER_MINUTE_FOREST_PALETTE
+            BlinkinPattern.RED -> BlinkinPattern.BEATS_PER_MINUTE_LAVA_PALETTE
+            BlinkinPattern.ORANGE -> BlinkinPattern.BEATS_PER_MINUTE_LAVA_PALETTE
+            BlinkinPattern.BLUE -> BlinkinPattern.BEATS_PER_MINUTE_OCEAN_PALETTE
+            else -> pattern
+        }
     }
 }
