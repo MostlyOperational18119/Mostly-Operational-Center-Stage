@@ -26,7 +26,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.firstinspires.ftc.teamcode.Autonomous
+package org.firstinspires.ftc.teamcode.Autonomous.NoSplineAuto
 
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.geometry.Vector2d
@@ -50,9 +50,9 @@ import java.util.Locale
  */
 // Autonomous
 
+@TeleOp(name = "AutoRedBack", group = "Linear Opmode")
 @Disabled
-@TeleOp(name = "TestAuto01", group = "Linear Opmode")
-class TestAuto01 : DriveMethods() {
+class AutoRedBack : DriveMethods() {
     override fun runOpMode() {
         // Setup Odometry :)
         val drive = SampleMecanumDrive(hardwareMap)

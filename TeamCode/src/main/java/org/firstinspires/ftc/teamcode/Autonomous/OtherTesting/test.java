@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.OtherTesting;
 
 import android.util.Log;
 
@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Autonomous.MeepMeepBoilerplate;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequenceBuilder;
@@ -30,7 +31,7 @@ import java.util.List;
 @Config
 @Autonomous(name = "auto_test", group = "Linear OpMode")
 @Disabled
-public class test extends MeepMeepBoilerplate{
+public class test extends MeepMeepBoilerplate {
 
     TrajectorySequence generate_sequence(BufferedReader reader, SampleMecanumDrive drive, Servo passiveServo, Servo autoServo){
         autoServo.setPosition(0.78);
