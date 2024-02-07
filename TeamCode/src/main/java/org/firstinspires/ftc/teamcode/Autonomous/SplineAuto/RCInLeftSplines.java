@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "RCInLeftSplines", group = "Linear OpMode")
+@Autonomous(name = "RCInLeftSplines (Main)", group = "Linear OpMode")
 public class RCInLeftSplines extends MeepMeepBoilerplate {
     @Override
     public void runOpMode() {
@@ -70,14 +70,14 @@ public class RCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
-                            .lineToLinearHeading(new Pose2d(51.29, -26.60, Math.toRadians(180.00)))
+                            .lineToLinearHeading(new Pose2d(52.29, -26.60, Math.toRadians(180.00)))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.65))
                             .waitSeconds(2)
                             .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(47.41, -15.3))
-                            .lineToConstantHeading(new Vector2d(58, -15.3))
+                            .lineToConstantHeading(new Vector2d(47.41, -10.3))
+                            .lineToConstantHeading(new Vector2d(58, -10.3))
                             .build());
             case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(270.00)))
@@ -85,14 +85,14 @@ public class RCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
-                            .splineToLinearHeading(new Pose2d(51.29, -33.09, Math.toRadians(180.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(52.29, -33.09, Math.toRadians(180.00)), Math.toRadians(0.00))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.65))
                             .waitSeconds(2)
                             .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(47.41, -15.3))
-                            .lineToConstantHeading(new Vector2d(58, -15.3))
+                            .lineToConstantHeading(new Vector2d(47.41, -10.3))
+                            .lineToConstantHeading(new Vector2d(58, -10.3))
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(15.01, -62.69, Math.toRadians(270.00)))
@@ -101,14 +101,14 @@ public class RCInLeftSplines extends MeepMeepBoilerplate {
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
                             .lineToConstantHeading(new Vector2d(24.18, -40.99))
-                            .splineToLinearHeading(new Pose2d(51.29, -39.89, Math.toRadians(180.00)), Math.toRadians(360.00))
+                            .splineToLinearHeading(new Pose2d(52.29, -39.89, Math.toRadians(180.00)), Math.toRadians(360.00))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> autoServo.setPosition(0.65))
                             .waitSeconds(2)
                             .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(47.41, -15.3))
-                            .lineToConstantHeading(new Vector2d(58, -15.3))
+                            .lineToConstantHeading(new Vector2d(47.41, -10.3))
+                            .lineToConstantHeading(new Vector2d(58, -10.3))
                             .build());
             default -> {
                 telemetry.addLine("Warning: Cup not detected");

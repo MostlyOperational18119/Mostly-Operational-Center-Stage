@@ -53,7 +53,7 @@ public class BFLeftSplines extends MeepMeepBoilerplate {
             telemetry.update();
         }
 
-        autoServo.setPosition(0.22);
+        autoServo.setPosition(0.245);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -101,18 +101,15 @@ public class BFLeftSplines extends MeepMeepBoilerplate {
             rotateMotor.setPower(0.5);
         }
         rotateMotor.setPower(0.001);
-        sleep(2000);
 
         drive.followTrajectorySequence(drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                 .splineToConstantHeading(new Vector2d(20, 58.82), Math.toRadians(0.00))
                 .build());
 
-
-        while (rotateMotor.getCurrentPosition()>20){
-            rotateMotor.setPower(-0.3);
+        while (rotateMotor.getCurrentPosition()>300){
+            rotateMotor.setPower(-.5);
         }
         rotateMotor.setPower(0.0);
-        sleep(4000);
 
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
