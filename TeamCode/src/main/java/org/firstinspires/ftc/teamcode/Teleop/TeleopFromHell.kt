@@ -518,7 +518,7 @@ class TeleopFromHell: DriveMethods() {
 
             //AUTO SERVO
             if (gamepad1.dpad_down) {
-                autoServo!!.position = 0.0
+                autoServo!!.position = 0.24
             }
 //            if (gamepad2.dpad_left){
 //                boxServo.position = .62

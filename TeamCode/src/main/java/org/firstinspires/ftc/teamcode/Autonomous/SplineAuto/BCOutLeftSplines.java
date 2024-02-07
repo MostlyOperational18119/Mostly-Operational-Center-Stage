@@ -51,7 +51,7 @@ public class BCOutLeftSplines extends MeepMeepBoilerplate {
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
-        autoServo.setPosition(0.11);
+        autoServo.setPosition(0.32);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -69,13 +69,11 @@ public class BCOutLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.5)
                             .splineToLinearHeading(new Pose2d(57.18, 48.07, Math.toRadians(180.00)), Math.toRadians(0.0))
                             .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(.35))
-                            .waitSeconds(.5)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.3))
+                            .addTemporalMarker(() -> autoServo.setPosition(.65))
+                            .waitSeconds(2)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 59.31))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
-                            .waitSeconds(1)
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
@@ -86,13 +84,11 @@ public class BCOutLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.5)
                             .splineToLinearHeading(new Pose2d(54.91, 42.46, Math.toRadians(180.00)), Math.toRadians(0.00))
                             .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(.35))
-                            .waitSeconds(.5)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.3))
+                            .addTemporalMarker(() -> autoServo.setPosition(.65))
+                            .waitSeconds(2)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 59.31))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
-                            .waitSeconds(1)
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
@@ -105,13 +101,11 @@ public class BCOutLeftSplines extends MeepMeepBoilerplate {
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
                             .lineToLinearHeading(new Pose2d(55.29, 35.49, Math.toRadians(180.00)))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
-                            .waitSeconds(.5)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.3))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .waitSeconds(2)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 59.31))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
-                            .waitSeconds(1)
                             .build()
             );
             default -> {

@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.DriveMethods
 
 @TeleOp(name = "ServoTester", group = "Testing")
-@Disabled
 class ServoTester: DriveMethods() {
     override fun runOpMode() {
         initMotorsSecondBot()
