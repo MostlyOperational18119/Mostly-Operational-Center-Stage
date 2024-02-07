@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "BFRightSplines", group = "Linear OpMode")
+@Autonomous(name = "BFRightSplines (Main)", group = "Linear OpMode")
 public class BFRightSplines extends MeepMeepBoilerplate {
     @Override
     public void runOpMode() {
@@ -53,7 +53,7 @@ public class BFRightSplines extends MeepMeepBoilerplate {
             telemetry.update();
         }
 
-        autoServo.setPosition(0.22);
+        autoServo.setPosition(0.245);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -96,28 +96,30 @@ public class BFRightSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.5)
                             .splineToLinearHeading(new Pose2d(-36.09, 58.88, Math.toRadians(360.00)), Math.toRadians(360.00))
                             .build());
+            default -> {
+                telemetry.addLine("Warning: Cup not detected");
+                telemetry.update();
+                sleep(3000);
+            }
         }
         while (rotateMotor.getCurrentPosition()<1000){
             rotateMotor.setPower(0.5);
         }
         rotateMotor.setPower(0.001);
-        sleep(2000);
 
         drive.followTrajectorySequence(drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                 .splineToConstantHeading(new Vector2d(20, 58.82), Math.toRadians(0.00))
                 .build());
 
-
-        while (rotateMotor.getCurrentPosition()>20){
-            rotateMotor.setPower(-0.3);
+        while (rotateMotor.getCurrentPosition()>300){
+            rotateMotor.setPower(-.5);
         }
-        rotateMotor.setPower(0.0);
-        sleep(2000);
 
+        rotateMotor.setPower(0.0);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(43.49, 44.49, Math.toRadians(180.00)), Math.toRadians(180.00))
+                            .splineToLinearHeading(new Pose2d(43.49, 45.49, Math.toRadians(180.00)), Math.toRadians(180.00))
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(52.5, 45.49), Math.toRadians(180.00))
                             .addTemporalMarker(() -> autoServo.setPosition(0.32))
@@ -129,7 +131,7 @@ public class BFRightSplines extends MeepMeepBoilerplate {
                             .build());
             case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                            .splineToLinearHeading(new Pose2d(43.49, 40.26, Math.toRadians(180.00)), Math.toRadians(180.00))
+                            .splineToLinearHeading(new Pose2d(43.49, 41.26, Math.toRadians(180.00)), Math.toRadians(180.00))
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(52.5, 41.26), Math.toRadians(180.00))
                             .addTemporalMarker(() -> autoServo.setPosition(0.32))
@@ -151,7 +153,13 @@ public class BFRightSplines extends MeepMeepBoilerplate {
                             .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(1)
                             .build());
+            default -> {
+                telemetry.addLine("Warning: Cup not detected");
+                telemetry.update();
+                sleep(3000);
+            }
         }
+
 
 //        while (Math.abs(slideMotor.getCurrentPosition()) < 500){
 //            slideMotor.setPower(-0.3);

@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 
 @Config
-@Autonomous(name = "BCInLeftSplines", group = "Linear OpMode")
+@Autonomous(name = "BCInLeftSplines (Main)", group = "Linear OpMode")
 public class BCInLeftSplines extends MeepMeepBoilerplate {
     @Override
     public void runOpMode() {
@@ -74,8 +74,8 @@ public class BCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(2)
                             .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
-                            .lineToConstantHeading(new Vector2d(58, 15.83))
+                            .lineToConstantHeading(new Vector2d(52.41, 10.83))
+                            .lineToConstantHeading(new Vector2d(58, 10.83))
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
@@ -90,8 +90,8 @@ public class BCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(2)
                             .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
-                            .lineToConstantHeading(new Vector2d(58, 15.83))
+                            .lineToConstantHeading(new Vector2d(52.41, 10.83))
+                            .lineToConstantHeading(new Vector2d(58, 10.83))
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
@@ -108,8 +108,8 @@ public class BCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(2)
                             .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(.1)
-                            .lineToConstantHeading(new Vector2d(51.41, 15.83))
-                            .lineToConstantHeading(new Vector2d(58, 15.83))
+                            .lineToConstantHeading(new Vector2d(52.41, 10.83))
+                            .lineToConstantHeading(new Vector2d(58, 10.83))
                             .build()
             );
             default -> {

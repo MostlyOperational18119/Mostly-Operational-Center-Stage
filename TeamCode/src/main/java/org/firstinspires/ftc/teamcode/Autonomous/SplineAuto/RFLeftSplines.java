@@ -53,7 +53,7 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
             telemetry.update();
         }
 
-        autoServo.setPosition(0.22);
+        autoServo.setPosition(0.245);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -88,7 +88,8 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(new Pose2d(-34.96, -62.69, Math.toRadians(-90.00)))
                             .setReversed(true)
-                            .splineToLinearHeading(new Pose2d(-31.32, -34, Math.toRadians(180.00)), Math.toRadians(0))
+                            .lineToConstantHeading(new Vector2d(-38, -37))
+                            .splineToLinearHeading(new Pose2d(-31.32, -35.5, Math.toRadians(180.00)), Math.toRadians(0))
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(1)
@@ -106,18 +107,16 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
             rotateMotor.setPower(0.5);
         }
         rotateMotor.setPower(0.001);
-        sleep(2000);
 
         drive.followTrajectorySequence(drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                         .splineToConstantHeading(new Vector2d(20, -58.5), Math.toRadians(0.00))
                         .build());
 
 
-        while (rotateMotor.getCurrentPosition()>20){
-            rotateMotor.setPower(-0.3);
+        while (rotateMotor.getCurrentPosition()>300){
+            rotateMotor.setPower(-.5);
         }
         rotateMotor.setPower(0.0);
-        sleep(4000);
 
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
