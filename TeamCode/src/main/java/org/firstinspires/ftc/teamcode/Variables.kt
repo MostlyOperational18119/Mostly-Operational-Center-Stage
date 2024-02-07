@@ -85,6 +85,9 @@ object Variables {
     var pattern: BlinkinPattern? = null
     var blinkinWorks = true
 
+    var setAutoServoDown = 0.0
+    var setAutoServoPlace= 0.35
+
     var desiredTag: AprilTagDetection? = null
     var targetFound = false
 

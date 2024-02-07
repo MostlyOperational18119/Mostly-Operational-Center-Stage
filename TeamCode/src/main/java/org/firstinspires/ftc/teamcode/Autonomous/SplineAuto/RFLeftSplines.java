@@ -34,7 +34,7 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
         Detection detection = Detection.UNKNOWN;
         TrajectoryVelocityConstraint slowConstraint = new MinVelocityConstraint(Arrays.asList(
 
-                new TranslationalVelocityConstraint(20),
+                new TranslationalVelocityConstraint(10),
 
                 new AngularVelocityConstraint(1)
 
@@ -53,7 +53,7 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
             telemetry.update();
         }
 
-        autoServo.setPosition(0.0);
+        autoServo.setPosition(0.22);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -109,7 +109,7 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
         sleep(2000);
 
         drive.followTrajectorySequence(drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                        .splineToConstantHeading(new Vector2d(20, -57.5), Math.toRadians(0.00))
+                        .splineToConstantHeading(new Vector2d(20, -58.5), Math.toRadians(0.00))
                         .build());
 
 
@@ -123,34 +123,40 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .splineToLinearHeading(new Pose2d(43.49, -20.41, Math.toRadians(180.00)), Math.toRadians(180.00))
+                            .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(50.5, -20.41), Math.toRadians(180.00))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
+//                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .waitSeconds(2)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(1)
                             .build());
             case CENTER -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .splineToLinearHeading(new Pose2d(43.49, -27.7, Math.toRadians(180.00)), Math.toRadians(180.00))
+                            .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(50.5, -27.7), Math.toRadians(180.00))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
+//                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .waitSeconds(2)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(1)
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))
                             .splineToLinearHeading(new Pose2d(43.49, -32, Math.toRadians(180.00)), Math.toRadians(180.00))
+                            .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(50.5, -32), Math.toRadians(180.00))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
-                            .waitSeconds(1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.35))
+//                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.0))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .waitSeconds(2)
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(1)
                             .build());
             default -> {
