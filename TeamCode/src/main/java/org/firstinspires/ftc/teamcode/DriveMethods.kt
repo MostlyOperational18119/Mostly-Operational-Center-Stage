@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode
 
+import android.util.Log
 import android.util.Size
 import com.google.blocks.ftcrobotcontroller.util.CurrentGame
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver
@@ -361,6 +362,7 @@ open class DriveMethods: LinearOpMode() {
         motorBR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBR")
         motorBR?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         rMotorR = hardwareMap.get<DcMotor>(DcMotor::class.java, "rMotorR")
+        
         rMotorL = hardwareMap.get<DcMotor>(DcMotor::class.java, "rMotorL")
         touchyR = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyR")
         touchyL = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyL")
@@ -374,11 +376,14 @@ open class DriveMethods: LinearOpMode() {
         slideTouch = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "GreenCreamsImTouchingYou")
         // Odometry motorFR-Right, motorFL-Left, MotorBR-Center
 
+        Log.d("DriveMeth", "Initing blinkin")
+
 
         try {
             initBlinkin()
         } catch (e: Exception) {
             telemetry.addLine("Failed to init blinkin with error: ${e.localizedMessage}")
+            Log.e("DriveMeth", "Error initing blinkin ${e.localizedMessage}")
             blinkinWorks = false
         }
     }
