@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstra
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -31,6 +32,7 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
         Servo boxServo = hardwareMap.get(Servo.class, "boxServo");
 
         initVision(VisionProcessors.TFOD);
+        initBlinkinSafe(RevBlinkinLedDriver.BlinkinPattern.RED); // Inits Blinkin with a colour corresponding to the Auto
         Detection detection = Detection.UNKNOWN;
         TrajectoryVelocityConstraint slowConstraint = new MinVelocityConstraint(Arrays.asList(
 
