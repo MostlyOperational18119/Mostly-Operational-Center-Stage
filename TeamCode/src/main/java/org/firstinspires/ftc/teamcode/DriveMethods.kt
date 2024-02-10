@@ -362,7 +362,7 @@ open class DriveMethods: LinearOpMode() {
         motorBR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBR")
         motorBR?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         rMotorR = hardwareMap.get<DcMotor>(DcMotor::class.java, "rMotorR")
-        
+
         rMotorL = hardwareMap.get<DcMotor>(DcMotor::class.java, "rMotorL")
         touchyR = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyR")
         touchyL = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyL")
