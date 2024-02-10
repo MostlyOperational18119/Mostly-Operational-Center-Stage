@@ -515,9 +515,26 @@ open class DriveMethods: LinearOpMode() {
         setMotorPowers(motorFLPower, motorFRPower, motorBLPower, motorBRPower)
     }
 
-    fun initBlinkin() {
+    fun initBlinkin(initialPattern: BlinkinPattern) {
         blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver::class.java, "blinkin")
-        pattern = RevBlinkinLedDriver.BlinkinPattern.RED
+        pattern = initialPattern
+    }
+
+    fun initBlinkin() {
+        initBlinkin(RevBlinkinLedDriver.BlinkinPattern.RED)
+    }
+
+    fun initBlinkinSafe(initialPattern: BlinkinPattern) {
+        try {
+            initBlinkin(initialPattern)
+        } catch (e: Exception) {
+            blinkinWorks = false
+            Log.e("DriveMethods", "Blinkin didn't init with the error ${e.localizedMessage} (Error code: 0xG3TG00DN3RD)")
+        }
+    }
+
+    fun initBlinkinSafe() {
+        initBlinkinSafe(RevBlinkinLedDriver.BlinkinPattern.RED)
     }
 
     fun setBlinkinColour(pattern: BlinkinPattern) {

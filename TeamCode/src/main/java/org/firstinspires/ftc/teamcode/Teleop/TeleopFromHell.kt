@@ -492,12 +492,12 @@ class TeleopFromHell: DriveMethods() {
             //BOX SERVO
             if (gamepad2.x) {
                 if (!pixelDropperToggle) {
-                    currentPattern = BlinkinPattern.GREEN // Green means that it's open
+                    currentPattern = BlinkinPattern.RED // Red means that it's closed
                     boxServo!!.position = .45
                     pixelDropperToggle = true
                     sleep(500)
                 } else {
-                    currentPattern = BlinkinPattern.RED // Red means that it's closed
+                    currentPattern = BlinkinPattern.GREEN // Green means that it's open
                     boxServo!!.position = .62
                     pixelDropperToggle = false
                     sleep(500)
