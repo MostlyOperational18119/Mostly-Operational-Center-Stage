@@ -36,7 +36,7 @@ public class BFRightSplines extends MeepMeepBoilerplate {
         Detection detection = Detection.UNKNOWN;
         TrajectoryVelocityConstraint slowConstraint = new MinVelocityConstraint(Arrays.asList(
 
-                new TranslationalVelocityConstraint(10),
+                new TranslationalVelocityConstraint(7),
 
                 new AngularVelocityConstraint(1)
 
@@ -110,7 +110,7 @@ public class BFRightSplines extends MeepMeepBoilerplate {
         rotateMotor.setPower(0.001);
 
         drive.followTrajectorySequence(drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                .splineToConstantHeading(new Vector2d(20, 58.82), Math.toRadians(0.00))
+                .splineToConstantHeading(new Vector2d(17, 58.88), Math.toRadians(0.00))
                 .build());
 
         while (rotateMotor.getCurrentPosition()>300){
@@ -118,6 +118,8 @@ public class BFRightSplines extends MeepMeepBoilerplate {
         }
 
         rotateMotor.setPower(0.0);
+
+        sleep(2000);
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
                     drive.trajectorySequenceBuilder(getCurrentPosition(drive))

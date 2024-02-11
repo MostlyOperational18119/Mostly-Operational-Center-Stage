@@ -36,7 +36,7 @@ public class RFRightSplines extends MeepMeepBoilerplate{
         Detection detection = Detection.UNKNOWN;
         TrajectoryVelocityConstraint slowConstraint = new MinVelocityConstraint(Arrays.asList(
 
-                new TranslationalVelocityConstraint(10),
+                new TranslationalVelocityConstraint(7),
 
                 new AngularVelocityConstraint(1)
 
@@ -111,14 +111,14 @@ public class RFRightSplines extends MeepMeepBoilerplate{
         rotateMotor.setPower(0.001);
 
         drive.followTrajectorySequence(drive.trajectorySequenceBuilder(getCurrentPosition(drive))
-                        .splineToConstantHeading(new Vector2d(20, -58.5), Math.toRadians(0.00))
+                        .splineToConstantHeading(new Vector2d(17, -58.5), Math.toRadians(0.00))
                         .build());
 
         while (rotateMotor.getCurrentPosition()>300){
             rotateMotor.setPower(-.5);
         }
         rotateMotor.setPower(0.0);
-        sleep(4000);
+        sleep(6000);
 
         switch (detection) {
             case LEFT -> drive.followTrajectorySequence(
