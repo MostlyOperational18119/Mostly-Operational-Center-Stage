@@ -28,7 +28,7 @@ public abstract class AutoBoilerplate extends DriveMethods {
     public Servo autoServo;
     public DcMotor rotateMotor;
 
-    public abstract Pose2d getSTARTING_POSE();
+    public abstract Pose2d getStartingPose();
 
     public void drive(Pose2d startingPos) {
         initMotorsSecondBot();
