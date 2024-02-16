@@ -126,11 +126,11 @@ public class RFRightSplines extends MeepMeepBoilerplate{
                             .splineToLinearHeading(new Pose2d(43.49, -22.41, Math.toRadians(180.00)), Math.toRadians(180.00))
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(50.5, -22.41), Math.toRadians(180.00))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(1)
                             .build());
             case CENTER -> drive.followTrajectorySequence(
@@ -138,11 +138,11 @@ public class RFRightSplines extends MeepMeepBoilerplate{
                             .splineToLinearHeading(new Pose2d(43.49, -30.7, Math.toRadians(180.00)), Math.toRadians(180.00))
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(50.5, -30.7), Math.toRadians(180.00))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(1)
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
@@ -150,11 +150,11 @@ public class RFRightSplines extends MeepMeepBoilerplate{
                             .splineToLinearHeading(new Pose2d(43.49, -36, Math.toRadians(180.00)), Math.toRadians(180.00))
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(50.5, -36), Math.toRadians(180.00))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(1)
                             .build());
             default -> {

@@ -55,7 +55,7 @@ public class BFRightSplines extends MeepMeepBoilerplate {
             telemetry.update();
         }
 
-        autoServo.setPosition(0.245);
+        autoServo.setPosition(0.75);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -126,11 +126,11 @@ public class BFRightSplines extends MeepMeepBoilerplate {
                             .splineToLinearHeading(new Pose2d(43.49, 45.49, Math.toRadians(180.00)), Math.toRadians(180.00))
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(52.5, 45.49), Math.toRadians(180.00))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(1)
                             .build());
             case CENTER -> drive.followTrajectorySequence(
@@ -138,11 +138,11 @@ public class BFRightSplines extends MeepMeepBoilerplate {
                             .splineToLinearHeading(new Pose2d(43.49, 41.26, Math.toRadians(180.00)), Math.toRadians(180.00))
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(52.5, 41.26), Math.toRadians(180.00))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(1)
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
@@ -150,11 +150,11 @@ public class BFRightSplines extends MeepMeepBoilerplate {
                             .splineToLinearHeading(new Pose2d(43.49, 33.4, Math.toRadians(180.00)), Math.toRadians(180.00))
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(52.5, 33.4), Math.toRadians(180.00))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(1)
                             .build());
             default -> {

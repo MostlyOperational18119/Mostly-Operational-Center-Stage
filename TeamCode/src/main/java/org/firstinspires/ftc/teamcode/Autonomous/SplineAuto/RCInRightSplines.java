@@ -53,7 +53,7 @@ public class RCInRightSplines extends MeepMeepBoilerplate {
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
-        autoServo.setPosition(0.32);
+        autoServo.setPosition(0.75);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -74,9 +74,9 @@ public class RCInRightSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.5)
                             .lineToLinearHeading(new Pose2d(51.29, -29.60, Math.toRadians(180.00)))
                             .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(47.41, -15.3))
                             .lineToConstantHeading(new Vector2d(58, -15.3))
@@ -89,9 +89,9 @@ public class RCInRightSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.5)
                             .splineToLinearHeading(new Pose2d(51.29, -36.09, Math.toRadians(180.00)), Math.toRadians(0.00))
                             .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(47.41, -15.3))
                             .lineToConstantHeading(new Vector2d(58, -15.3))
@@ -105,9 +105,9 @@ public class RCInRightSplines extends MeepMeepBoilerplate {
                             .lineToConstantHeading(new Vector2d(24.18, -40.99))
                             .splineToLinearHeading(new Pose2d(51.29, -42.89, Math.toRadians(180.00)), Math.toRadians(360.00))
                             .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.65))
+                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(47.41, -15.3))
                             .lineToConstantHeading(new Vector2d(58, -15.3))
