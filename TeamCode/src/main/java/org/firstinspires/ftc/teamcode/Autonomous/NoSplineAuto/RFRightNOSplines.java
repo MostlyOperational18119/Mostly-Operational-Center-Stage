@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Disabled
 @Autonomous(name = "RFRightNOOOO", group = "LinearOpmode")
 public class RFRightNOSplines extends MeepMeepBoilerplate {
 
