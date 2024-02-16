@@ -3,69 +3,30 @@ package org.firstinspires.ftc.teamcode.Autonomous.SplineAuto;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
-import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
-import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
-import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Autonomous.MeepMeepBoilerplate;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoBoilerplate;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Variables.Detection;
-import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
-
-import java.util.Arrays;
-
 
 @Config
 @Autonomous(name = "BCInLeftSplines (Main)", group = "Linear OpMode")
-public class BCInLeftSplines extends MeepMeepBoilerplate {
+public class BCInLeftSplines extends AutoBoilerplate {
     @Override
-    public void runOpMode() {
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        Servo passiveServo = hardwareMap.get(Servo.class, "passiveServo");
-        Servo autoServo = hardwareMap.get(Servo.class, "autoServo");
-        DcMotor rotateMotor = hardwareMap.get(DcMotor.class, "motorSlideRotate");
+    public Pose2d getSTARTING_POSE() {
+        return new Pose2d(15.01, 62.69, Math.toRadians(90.00));
+    }
 
-        initVision(VisionProcessors.TFOD);
-        initBlinkinSafe(RevBlinkinLedDriver.BlinkinPattern.BLUE); // Inits Blinkin with a colour corresponding to the Auto
-        Detection detection = Detection.UNKNOWN;
-        TrajectoryVelocityConstraint slowConstraint = new MinVelocityConstraint(Arrays.asList(
+    @Override
+    public RevBlinkinLedDriver.BlinkinPattern getDefaultColour() { return RevBlinkinLedDriver.BlinkinPattern.BLUE; }
 
-                new TranslationalVelocityConstraint(20),
-
-                new AngularVelocityConstraint(1)
-
-        ));
-        TrajectoryVelocityConstraint fastConstraint = new MinVelocityConstraint(Arrays.asList(
-
-                new TranslationalVelocityConstraint(50),
-
-                new AngularVelocityConstraint(3)
-
-        ));
-
-        while (opModeInInit()) {
-            detection = getDetectionsSingleTFOD(400
-            );
-            telemetry.addData("Detection", detection);
-            telemetry.update();
-        }
-        autoServo.setPosition(0.32);
-
-        rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rotateMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        drive.setPoseEstimate(new Pose2d(15.01, 62.69, Math.toRadians(90.00)));
-
-        rotateMotor.setPower(0.0);
-        switch (detection) {
-            case LEFT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(15.01, 62.69, Math.toRadians(90.00)))
+    @Override
+    public TrajectorySequence getTrajectorySequence(Detection detection, SampleMecanumDrive drive) {
+        Pose2d startPos = getSTARTING_POSE();
+        return switch (detection) {
+            case LEFT -> drive.trajectorySequenceBuilder(startPos)
                             .lineToConstantHeading(new Vector2d(27.18, 36.85))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
@@ -78,10 +39,8 @@ public class BCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(52.41, 10.83))
                             .lineToConstantHeading(new Vector2d(58, 10.83))
-                            .build()
-            );
-            case CENTER -> { drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(15.01, 62.69, Math.toRadians(90.00)))
+                            .build();
+            case CENTER -> drive.trajectorySequenceBuilder(startPos)
                             .lineToConstantHeading(new Vector2d(16.35, 30))
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
@@ -94,10 +53,8 @@ public class BCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(52.41, 10.83))
                             .lineToConstantHeading(new Vector2d(58, 10.83))
-                            .build());
-            }
-            case RIGHT -> drive.followTrajectorySequence(
-                    drive.trajectorySequenceBuilder(new Pose2d(15.01, 62.69, Math.toRadians(90.00)))
+                            .build();
+            case RIGHT -> drive.trajectorySequenceBuilder(startPos)
                             .setReversed(true)
                             .splineToLinearHeading(new Pose2d(15.75, 45.61, Math.toRadians(90.00)), Math.toRadians(-90.00))
                             .splineToLinearHeading(new Pose2d(10.95, 35.39, Math.toRadians(0.00)), Math.toRadians(180.00))
@@ -112,17 +69,13 @@ public class BCInLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(52.41, 10.83))
                             .lineToConstantHeading(new Vector2d(58, 10.83))
-                            .build()
-            );
+                            .build();
             default -> {
                 telemetry.addLine("Warning: Cup not detected");
                 telemetry.update();
                 sleep(3000);
+                yield null;
             }
-        }
-
-
-
-//        drive.followTrajectorySequence(mergeSequences(sequences));
+        };
     }
 }

@@ -96,7 +96,7 @@ public class RCInLeft extends AutoBoilerplate {
                 break;
             default:
                 trajectorySequence = null;
-                print("Nothing detected");
+                println("Nothing detected");
         }
 
         return trajectorySequence;
