@@ -1,0 +1,97 @@
+package org.firstinspires.ftc.teamcode.Autonomous.SplineAuto
+
+import com.acmerobotics.dashboard.config.Config
+import com.acmerobotics.roadrunner.geometry.Pose2d
+import com.acmerobotics.roadrunner.geometry.Vector2d
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver.BlinkinPattern
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import org.firstinspires.ftc.teamcode.Autonomous.AutoBoilerplate
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
+import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence
+import org.firstinspires.ftc.teamcode.Variables
+
+@Config
+@Autonomous(name = "BCInLeftSplines (Main)", group = "Linear OpMode")
+class BCInLeftSplines : AutoBoilerplate() {
+    override fun getStartingPose(): Pose2d {
+        return Pose2d(15.01, 62.69, Math.toRadians(90.00))
+    }
+
+    override fun getDefaultColour(): BlinkinPattern {
+        return BlinkinPattern.BLUE
+    }
+
+    override fun getTrajectorySequence(
+        detection: Variables.Detection,
+        drive: SampleMecanumDrive
+    ): TrajectorySequence? {
+        val startPos = startingPose
+        return when (detection) {
+            Variables.Detection.LEFT -> drive.trajectorySequenceBuilder(startPos)
+                .lineToConstantHeading(Vector2d(27.18, 36.85))
+                .waitSeconds(.1)
+                .addTemporalMarker { passiveServo.position = 0.2 }
+                .waitSeconds(.5)
+                .splineToLinearHeading(
+                    Pose2d(57.18, 48.07, Math.toRadians(180.00)),
+                    Math.toRadians(0.0)
+                )
+                .waitSeconds(.1)
+                .addTemporalMarker { autoServo.position = .65 }
+                .waitSeconds(2.0)
+                .addTemporalMarker { autoServo.position = 0.32 }
+                .waitSeconds(.1)
+                .lineToConstantHeading(Vector2d(52.41, 10.83))
+                .lineToConstantHeading(Vector2d(58.0, 10.83))
+                .build()
+
+            Variables.Detection.CENTER -> drive.trajectorySequenceBuilder(startPos)
+                .lineToConstantHeading(Vector2d(16.35, 30.0))
+                .waitSeconds(.1)
+                .addTemporalMarker { passiveServo.position = 0.2 }
+                .waitSeconds(.5)
+                .splineToLinearHeading(
+                    Pose2d(54.91, 42.46, Math.toRadians(180.00)),
+                    Math.toRadians(0.00)
+                )
+                .waitSeconds(.1)
+                .addTemporalMarker { autoServo.position = .65 }
+                .waitSeconds(2.0)
+                .addTemporalMarker { autoServo.position = 0.32 }
+                .waitSeconds(.1)
+                .lineToConstantHeading(Vector2d(52.41, 10.83))
+                .lineToConstantHeading(Vector2d(58.0, 10.83))
+                .build()
+
+            Variables.Detection.RIGHT -> drive.trajectorySequenceBuilder(startPos)
+                .setReversed(true)
+                .splineToLinearHeading(
+                    Pose2d(15.75, 45.61, Math.toRadians(90.00)),
+                    Math.toRadians(-90.00)
+                )
+                .splineToLinearHeading(
+                    Pose2d(10.95, 35.39, Math.toRadians(0.00)),
+                    Math.toRadians(180.00)
+                )
+                .setReversed(false)
+                .waitSeconds(.1)
+                .addTemporalMarker { passiveServo.position = 0.2 }
+                .waitSeconds(.5)
+                .lineToLinearHeading(Pose2d(55.29, 35.49, Math.toRadians(180.00)))
+                .addTemporalMarker { autoServo.position = 0.65 }
+                .waitSeconds(2.0)
+                .addTemporalMarker { autoServo.position = 0.32 }
+                .waitSeconds(.1)
+                .lineToConstantHeading(Vector2d(52.41, 10.83))
+                .lineToConstantHeading(Vector2d(58.0, 10.83))
+                .build()
+
+            else -> {
+                telemetry.addLine("Warning: Cup not detected")
+                telemetry.update()
+                sleep(3000)
+                null
+            }
+        }
+    }
+}
