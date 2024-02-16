@@ -54,7 +54,7 @@ public abstract class AutoBoilerplate {
 
     public abstract TrajectorySequence getTrajectorySequence(Detection detection, DriveShim drive);
 
-    public void print(Object o) {
+    public void println(Object o) {
         System.out.println(o);
     }
 

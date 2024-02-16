@@ -1,31 +1,34 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.teamcode.DriveMethods;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.sequencesegment.SequenceSegment;
 import org.firstinspires.ftc.teamcode.Variables;
 
 import java.util.ArrayList;
 
 
-enum Detection {
-    LEFT,
-    CENTER,
-    RIGHT
-}
-
 public abstract class AutoBoilerplate extends DriveMethods {
     @Override
     public void runOpMode() {
-        drive(new Pose2d());
+        drive(STARTING_POSE);
     }
     SampleMecanumDrive drive;
 
     public Pose2d STARTING_POSE = new Pose2d(-36, 61.5, Math.toRadians(-90));
 
     public ArrayList<TrajectorySequence> sequences = new ArrayList<TrajectorySequence>();
+
+    public Servo passiveServo;
+    public Servo autoServo;
+    public DcMotor rotateMotor;
+
+    public abstract Pose2d getSTARTING_POSE();
 
     public void drive(Pose2d startingPos) {
         initMotorsSecondBot();
@@ -34,22 +37,28 @@ public abstract class AutoBoilerplate extends DriveMethods {
         telemetry.addLine("Motors and TFOD were ignited (same as inited)");
         telemetry.update();
 
-        Detection detection = detect();
+        Variables.Detection detection = detect();
 
-        while (opModeIsActive()) detection = detect();
         STARTING_POSE = startingPos;
         drive = new SampleMecanumDrive(hardwareMap);
+        initCall();
+
+        while (opModeInInit()) {
+            detection = detect();
+            telemetry.addData("Detection", detection);
+            telemetry.update();
+        }
 
         drive.followTrajectorySequence(getTrajectorySequence(detection, drive));
     }
 
-    public Detection detect() {
-        return Detection.RIGHT;
+    public Variables.Detection detect() {
+        return getDetectionsSingleTFOD();
     }
 
-    public abstract TrajectorySequence getTrajectorySequence(Detection detection, SampleMecanumDrive drive);
+    public abstract TrajectorySequence getTrajectorySequence(Variables.Detection detection, SampleMecanumDrive drive);
 
-    public void print(Object o) {
+    public void println(Object o) {
         System.out.println(o);
     }
 
@@ -96,4 +105,16 @@ public abstract class AutoBoilerplate extends DriveMethods {
 //        if (!opModeIsActive()) waitForStart();
         sequences.add(trajectorySequence);
     }
+
+    public void initCall() {
+        rotateMotor = hardwareMap.get(DcMotor.class, "motorSlideRotate");
+        passiveServo = hardwareMap.get(Servo.class, "passiveServo");
+        autoServo = hardwareMap.get(Servo.class, "autoServo");
+        initVision(Variables.VisionProcessors.TFOD);
+        initBlinkinSafe(getDefaultColour());
+        autoServo.setPosition(0.32);
+        autoServo.setPosition(0.0);
+    }
+
+    public abstract RevBlinkinLedDriver.BlinkinPattern getDefaultColour();
 }
