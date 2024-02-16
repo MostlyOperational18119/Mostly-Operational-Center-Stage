@@ -25,9 +25,8 @@ class BCInLeftSplines : AutoBoilerplate() {
         detection: Variables.Detection,
         drive: SampleMecanumDrive
     ): TrajectorySequence? {
-        val startPos = startingPose
         return when (detection) {
-            Variables.Detection.LEFT -> drive.trajectorySequenceBuilder(startPos)
+            Variables.Detection.LEFT -> drive.trajectorySequenceBuilder(startingPose)
                 .lineToConstantHeading(Vector2d(27.18, 36.85))
                 .waitSeconds(.1)
                 .addTemporalMarker { passiveServo.position = 0.2 }
@@ -45,7 +44,7 @@ class BCInLeftSplines : AutoBoilerplate() {
                 .lineToConstantHeading(Vector2d(58.0, 10.83))
                 .build()
 
-            Variables.Detection.CENTER -> drive.trajectorySequenceBuilder(startPos)
+            Variables.Detection.CENTER -> drive.trajectorySequenceBuilder(startingPose)
                 .lineToConstantHeading(Vector2d(16.35, 30.0))
                 .waitSeconds(.1)
                 .addTemporalMarker { passiveServo.position = 0.2 }
@@ -63,7 +62,7 @@ class BCInLeftSplines : AutoBoilerplate() {
                 .lineToConstantHeading(Vector2d(58.0, 10.83))
                 .build()
 
-            Variables.Detection.RIGHT -> drive.trajectorySequenceBuilder(startPos)
+            Variables.Detection.RIGHT -> drive.trajectorySequenceBuilder(startingPose)
                 .setReversed(true)
                 .splineToLinearHeading(
                     Pose2d(15.75, 45.61, Math.toRadians(90.00)),
