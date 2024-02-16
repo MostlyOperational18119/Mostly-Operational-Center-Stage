@@ -10,6 +10,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection
 
 
 object Variables {
+
     // Redundant thanks to odometry.
     var rotationsPerMeter = 3.3
     var encoders = 537.6
