@@ -12,8 +12,8 @@ public enum class CupLocation {
     UNKNOWN
 }
 
-@Disabled
 @TeleOp(name="BetterTensorFlow", group="Concept")
+@Disabled
 class BetterTensorFlow: DriveMethods(){
     override fun runOpMode() {
         initVision(Variables.VisionProcessors.TFOD)

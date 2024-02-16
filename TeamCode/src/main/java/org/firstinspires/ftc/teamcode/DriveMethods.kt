@@ -1,16 +1,27 @@
 package org.firstinspires.ftc.teamcode
 
+import android.util.Log
 import android.util.Size
 import com.google.blocks.ftcrobotcontroller.util.CurrentGame
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver.BlinkinPattern
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.TouchSensor
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition
 import org.firstinspires.ftc.teamcode.Variables.VisionProcessors
+import org.firstinspires.ftc.teamcode.Variables.actualintakeServo
+import org.firstinspires.ftc.teamcode.Variables.aeroplaneLauncherServo
+import org.firstinspires.ftc.teamcode.Variables.autoServo
+import org.firstinspires.ftc.teamcode.Variables.blinkinLedDriver
+import org.firstinspires.ftc.teamcode.Variables.blinkinWorks
+import org.firstinspires.ftc.teamcode.Variables.boxServo
 import org.firstinspires.ftc.teamcode.Variables.clawAngle
 import org.firstinspires.ftc.teamcode.Variables.desiredTag
 import org.firstinspires.ftc.teamcode.Variables.leftX
@@ -23,12 +34,16 @@ import org.firstinspires.ftc.teamcode.Variables.motorFL
 import org.firstinspires.ftc.teamcode.Variables.motorFLPower
 import org.firstinspires.ftc.teamcode.Variables.motorFR
 import org.firstinspires.ftc.teamcode.Variables.motorFRPower
-import org.firstinspires.ftc.teamcode.Variables.motorSlideLeft
+import org.firstinspires.ftc.teamcode.Variables.passiveServo
+import org.firstinspires.ftc.teamcode.Variables.pattern
 import org.firstinspires.ftc.teamcode.Variables.rMotorL
 import org.firstinspires.ftc.teamcode.Variables.rMotorR
 import org.firstinspires.ftc.teamcode.Variables.rightX
+import org.firstinspires.ftc.teamcode.Variables.rotateMotor
 import org.firstinspires.ftc.teamcode.Variables.slideAngle
 import org.firstinspires.ftc.teamcode.Variables.slideLength
+import org.firstinspires.ftc.teamcode.Variables.slideMotor
+import org.firstinspires.ftc.teamcode.Variables.slideTouch
 import org.firstinspires.ftc.teamcode.Variables.speedDiv
 import org.firstinspires.ftc.teamcode.Variables.t
 import org.firstinspires.ftc.teamcode.Variables.targetFound
@@ -78,12 +93,15 @@ open class DriveMethods: LinearOpMode() {
     fun initVision(processorType: VisionProcessors, zoom: Double) {
         initVision(processorType, zoom, "/sdcard/FIRST/models/ssd_mobilenet_v2_320x320_coco17_tpu_8.tflite", readLabels("/sdcard/FIRST/models/ssd_mobilenet_v2_label_map.txt"))
     }
-
     fun getDetectionsSingleTFOD(): Variables.Detection {
+        return getDetectionsSingleTFOD(260)
+    }
+
+    fun getDetectionsSingleTFOD(compNumber: Int = 500): Variables.Detection {
         val webcam = hardwareMap.get(WebcamName::class.java, "Webcam 1")
         // Ensure the Webcam is correct
 //        if (visionPortal.activeCamera != webcam) visionPortal.activeCamera = webcam
-        tfod.setZoom(1.3);
+        tfod.setZoom(1.15);
         // Wait for recognitions
         sleep(3000)
 
@@ -91,14 +109,15 @@ open class DriveMethods: LinearOpMode() {
 
         // Convert it to a Position (real)
         if (includesCup(recognitions)) {
-            val cup = getCup(recognitions) ?: return Variables.Detection.CENTER
+            val cup = getCup(recognitions) ?: return Variables.Detection.LEFT
+            telemetry.addData("Cup right position (for debugging, you monster)", cup.right)
 
-            return if (cup.right < 260) Variables.Detection.LEFT
-            else if (cup.right > 260) Variables.Detection.CENTER
+            return if (cup.right < compNumber) Variables.Detection.CENTER
+            else if (cup.right > compNumber) Variables.Detection.RIGHT
 //            else if (cup.right > 428) Variables.Detection.RIGHT
-            else Variables.Detection.CENTER
+            else Variables.Detection.LEFT
         } else {
-            return Variables.Detection.RIGHT
+            return Variables.Detection.LEFT
         }
     }
 
@@ -141,12 +160,10 @@ open class DriveMethods: LinearOpMode() {
 
     fun getCup(recognitions: List<Recognition>): Recognition? {
         for (recognition in recognitions) {
-            if (recognition.label == "cup" || recognition.label == "parking meter"||recognition.label == "suitcase"||recognition.label == "fire hydrant") return recognition
+            if (recognition.label == "cup" || recognition.label == "parking meter"||recognition.label == "suitcase"||recognition.label == "fire hydrant"||recognition.label == "vase") return recognition
         }
         return null
     }
-
-
 
     fun initVision(processorType: VisionProcessors, zoom: Double = 1.0, model: String = "/sdcard/FIRST/models/ssd_mobilenet_v2_320x320_coco17_tpu_8.tflite", labelMap: Array<String> = readLabels("/sdcard/FIRST/models/ssd_mobilenet_v2_label_map.txt"), useRightCam: Boolean = false) {
         // Create the bob the builder to build the VisionPortal
@@ -337,13 +354,38 @@ open class DriveMethods: LinearOpMode() {
     }
     open fun initMotorsSecondBot() {
         motorFL = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorFL")
+        motorFL?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         motorBL = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBL")
+        motorBL?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         motorFR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorFR")
+        motorFR?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         motorBR = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorBR")
+        motorBR?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         rMotorR = hardwareMap.get<DcMotor>(DcMotor::class.java, "rMotorR")
+
         rMotorL = hardwareMap.get<DcMotor>(DcMotor::class.java, "rMotorL")
         touchyR = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyR")
         touchyL = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "touchyL")
+        passiveServo = hardwareMap.get(Servo::class.java, "passiveServo")
+        aeroplaneLauncherServo = hardwareMap.get(Servo::class.java, "PLANE!")
+        rotateMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
+        slideMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideLeft")
+        actualintakeServo = hardwareMap.get(CRServo::class.java, "intakeServo")
+        boxServo = hardwareMap.get(Servo::class.java, "boxServo")
+        autoServo = hardwareMap.get(Servo::class.java, "autoServo")
+        slideTouch = hardwareMap.get<TouchSensor>(TouchSensor::class.java, "GreenCreamsImTouchingYou")
+        // Odometry motorFR-Right, motorFL-Left, MotorBR-Center
+
+        Log.d("DriveMeth", "Initing blinkin")
+
+
+        try {
+            initBlinkin()
+        } catch (e: Exception) {
+            telemetry.addLine("Failed to init blinkin with error: ${e.localizedMessage}")
+            Log.e("DriveMeth", "Error initing blinkin ${e.localizedMessage}")
+            blinkinWorks = false
+        }
     }
 
     open fun initOnlyRackAndPain() {
@@ -423,6 +465,24 @@ open class DriveMethods: LinearOpMode() {
         }
     }
 
+    fun goDownAuto(){
+        rotateMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
+        rotateMotor!!.targetPosition = 1550
+        while (rotateMotor!!.currentPosition<1500){
+            rotateMotor!!.power = .3
+        }
+        rotateMotor!!.power = 0.0
+    }
+
+    fun goUpAuto(){
+        rotateMotor = hardwareMap.get<DcMotor>(DcMotor::class.java, "motorSlideRotate")
+        rotateMotor!!.targetPosition = 0
+        while (rotateMotor!!.currentPosition>0){
+            rotateMotor!!.power = -.3
+        }
+        rotateMotor!!.power = 0.0
+    }
+
     fun linearSlideCalc() {
         x =  Variables.slideToBoard - Variables.clawToBoard + .5* t
         y = sqrt(3.0) /2 * t
@@ -453,5 +513,47 @@ open class DriveMethods: LinearOpMode() {
         motorBRPower = (leftY - leftX + rightX) / speedDiv
 
         setMotorPowers(motorFLPower, motorFRPower, motorBLPower, motorBRPower)
+    }
+
+    fun initBlinkin(initialPattern: BlinkinPattern) {
+        blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver::class.java, "blinkin")
+        pattern = initialPattern
+    }
+
+    fun initBlinkin() {
+        initBlinkin(RevBlinkinLedDriver.BlinkinPattern.RED)
+    }
+
+    fun initBlinkinSafe(initialPattern: BlinkinPattern) {
+        try {
+            initBlinkin(initialPattern)
+        } catch (e: Exception) {
+            blinkinWorks = false
+            Log.e("DriveMethods", "Blinkin didn't init with the error ${e.localizedMessage} (Error code: 0xG3TG00DN3RD)")
+        }
+    }
+
+    fun initBlinkinSafe() {
+        initBlinkinSafe(RevBlinkinLedDriver.BlinkinPattern.RED)
+    }
+
+    fun setBlinkinColour(pattern: BlinkinPattern) {
+        setBlinkinColour(pattern, false)
+    }
+
+    fun setBlinkinColour(pattern: BlinkinPattern, pulse: Boolean) {
+        val newPattern = if (pulse) convertPatternToPulsingPattern(pattern) else pattern
+        Variables.pattern = pattern
+        if (blinkinWorks) blinkinLedDriver!!.setPattern(pattern)
+    }
+
+    fun convertPatternToPulsingPattern(pattern: BlinkinPattern): BlinkinPattern {
+        return when (pattern) {
+            BlinkinPattern.GREEN -> BlinkinPattern.BEATS_PER_MINUTE_FOREST_PALETTE
+            BlinkinPattern.RED -> BlinkinPattern.BEATS_PER_MINUTE_LAVA_PALETTE
+            BlinkinPattern.ORANGE -> BlinkinPattern.BEATS_PER_MINUTE_LAVA_PALETTE
+            BlinkinPattern.BLUE -> BlinkinPattern.BEATS_PER_MINUTE_OCEAN_PALETTE
+            else -> pattern
+        }
     }
 }

@@ -34,17 +34,26 @@ object Variables {
     var slideGate: Servo? = null
     var pomPomServo: CRServo? = null
     var leftFlyWheel: CRServo? = null
+    var intakeServo: CRServo? = null
     var rightFlyWheel: CRServo? = null
     var rMotorR: DcMotor? = null;
     var rMotorL: DcMotor? = null;
     var touchyR: TouchSensor? = null
     var touchyL: TouchSensor? = null
+    var passiveServo: Servo? = null
+    var aeroplaneLauncherServo: Servo? = null
+    var rotateMotor: DcMotor? = null
+    var slideMotor: DcMotor? = null
+    var actualintakeServo: CRServo? = null
+    var boxServo: Servo? = null
     var slideRotationMotor: DcMotor? = null
     var motorSlideRotate: DcMotor? = null
     var motorSlideLeft: DcMotor? = null
     var motorSlideRight: DcMotor? = null
     var clawRotation: Servo? = null
     var clawMotor: Servo? = null
+    var autoServo: Servo? = null
+    var slideTouch: TouchSensor? = null
 
     var closedClaw = 0.87
     var openClaw = 0.8
@@ -74,6 +83,10 @@ object Variables {
     var degree2Click = encoders/360
     var blinkinLedDriver: RevBlinkinLedDriver? = null
     var pattern: BlinkinPattern? = null
+    var blinkinWorks = true
+
+    var setAutoServoDown = 0.0
+    var setAutoServoPlace= 0.35
 
     var desiredTag: AprilTagDetection? = null
     var targetFound = false
@@ -89,8 +102,8 @@ object Variables {
     var drive = 0.0 //x
     var strafe = 0.0 //y
     var turn = 0.0 //yaw
-    val AEROPLANE_LAUNCH = 0.32
-    val AEROPLANE_CLOSE = 0.6
+    val AEROPLANE_LAUNCH = 0.9
+    val AEROPLANE_CLOSE = 0.65
 
     enum class Direction {
         FORWARD, BACKWARD, RIGHT, LEFT, ROTATE_LEFT, ROTATE_RIGHT, ROTATE
