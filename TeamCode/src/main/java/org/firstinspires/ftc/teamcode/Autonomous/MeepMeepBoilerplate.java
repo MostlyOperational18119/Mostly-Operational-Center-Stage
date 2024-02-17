@@ -44,9 +44,6 @@ public class MeepMeepBoilerplate extends DriveMethods {
         return drive.getPoseEstimate();
     }
 
-    //    private static void followTrajectorySequence(TrajectorySequence trajectorySequence) {
-//        sequences.add(trajectorySequence);
-//    }
     public void followTrajectorySequence(TrajectorySequence trajectorySequence) {
         if (!opModeIsActive()) waitForStart();
         drive.followTrajectorySequence(trajectorySequence);
