@@ -572,6 +572,11 @@ class TeleopFromHell: DriveMethods() {
             telemetry.addData("AutoDownToggle: ", autoDownToggle)
             telemetry.addData("rotateNotAtBottom ", rotateNotAtBottomToggle)
             telemetry.addData("Current Blinkin pattern ", currentPattern.toString())
+            //checking out encoders
+            telemetry.addData("MotorFR Encoder position", motorFL!!.getCurrentPosition());
+            telemetry.addData("MotorFL Encoder position", motorFL!!.getCurrentPosition());
+            telemetry.addData("MotorBR Encoder position", motorBR!!.getCurrentPosition());
+            telemetry.addData("MotorBL Encoder position", motorBL!!.getCurrentPosition());
 //            telemetry.addData("FR: ", motorFR?.power)
 //            telemetry.addData("FL: ", motorFL?.power)
 //            telemetry.addData("BR: ", motorBR?.power)
