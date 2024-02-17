@@ -1,34 +1,15 @@
 package org.firstinspires.ftc.teamcode.Autonomous
 
 import com.acmerobotics.roadrunner.geometry.Pose2d
-import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver.BlinkinPattern
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.DriveMethods
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence
 import org.firstinspires.ftc.teamcode.Variables
-import java.util.Arrays
-
-
-abstract class AutoBoilerplateMultiSequences : DriveMethods() {
-    val slowConstraint: TrajectoryVelocityConstraint = MinVelocityConstraint(
-        Arrays.asList(
-            TranslationalVelocityConstraint(10.0),
-            AngularVelocityConstraint(1.0)
-        )
-    )
-
-    val fastConstraint: TrajectoryVelocityConstraint = MinVelocityConstraint(
-        Arrays.asList(
-            TranslationalVelocityConstraint(55.0),
-            AngularVelocityConstraint(3.0)
-        )
-    )
+import java.util.List
+abstract class AutoBoilerplate : DriveMethods() {
     override fun runOpMode() {
         drive(STARTING_POSE)
     }
@@ -55,19 +36,17 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
             telemetry.update()
         }
 
-        getTrajectorySequences(detection, drive).forEach {
-            it.followSync(drive)
-        }
+        drive.followTrajectorySequence(getTrajectorySequence(detection, drive))
     }
 
     fun detect(): Variables.Detection {
         return getDetectionsSingleTFOD()
     }
 
-    abstract fun getTrajectorySequences(
+    abstract fun getTrajectorySequence(
         detection: Variables.Detection?,
         drive: SampleMecanumDrive?
-    ): ArrayList<TrajectorySequenceWithCallback>
+    ): TrajectorySequence?
 
     fun println(o: Any?) {
         kotlin.io.println(o)
@@ -126,24 +105,7 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
         autoServo!!.position = 0.0
     }
 
-    abstract val defaultColour: BlinkinPattern
+    abstract val defaultColour: RevBlinkinLedDriver.BlinkinPattern
 
-    open fun fromSequence(trajectorySequence: TrajectorySequence, hasCallback: Boolean, callback: (() -> Unit)?): TrajectorySequenceWithCallback {
-        val optionalTrajectorySequence = OptionalTrajectorySequence(true, trajectorySequence)
-        val trajectorySequenceWithCallback = if (hasCallback) {
-            TrajectorySequenceWithCallback(optionalTrajectorySequence, true, callback)
-        } else TrajectorySequenceWithCallback(optionalTrajectorySequence, false, null)
 
-        return trajectorySequenceWithCallback
-    }
-
-    open fun fromSequence(trajectorySequence: TrajectorySequence, callback: (() -> Unit)?): TrajectorySequenceWithCallback {
-        val hasCallback = callback != null
-
-        return fromSequence(trajectorySequence, hasCallback, callback)
-    }
-
-    open fun fromSequence(trajectorySequence: TrajectorySequence): TrajectorySequenceWithCallback {
-        return fromSequence(trajectorySequence, false, null)
-    }
 }
