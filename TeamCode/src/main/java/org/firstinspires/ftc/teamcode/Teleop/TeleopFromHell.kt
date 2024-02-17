@@ -120,6 +120,7 @@ class TeleopFromHell: DriveMethods() {
         var placeOrCollect = true
         var upOrDown = true
         var slideTarget = bottom
+        var cycles = 0
         var targetHeight = 0
         var slidePos = 0
         var slideRotPos = 0
@@ -441,7 +442,7 @@ class TeleopFromHell: DriveMethods() {
                     autoDownToggle = true
                     rotateNotAtBottomToggle = true
                     rotateMotor!!.targetPosition = 1850
-                    rotateMotor!!.power = 0.3
+                    rotateMotor!!.power = 0.5
                     actualintakeServo?.power = -10.0
                 }
                 else {
@@ -577,11 +578,13 @@ class TeleopFromHell: DriveMethods() {
             telemetry.addData("MotorFL Encoder position", motorFL!!.getCurrentPosition());
             telemetry.addData("MotorBR Encoder position", motorBR!!.getCurrentPosition());
             telemetry.addData("MotorBL Encoder position", motorBL!!.getCurrentPosition());
+            telemetry.addData("Cycles ", cycles.toString())
 //            telemetry.addData("FR: ", motorFR?.power)
 //            telemetry.addData("FL: ", motorFL?.power)
 //            telemetry.addData("BR: ", motorBR?.power)
 //            telemetry.addData("BL: ", motorBL?.power)
             telemetry.update()
+            cycles += 1
         }
         aeroplaneLauncherServo!!.position = AEROPLANE_CLOSE
     }
