@@ -38,7 +38,11 @@ abstract class AutoBoilerplate : DriveMethods() {
             telemetry.update()
         }
 
-        drive.followTrajectorySequence(getTrajectorySequence(detection, drive))
+        drive.followTrajectorySequenceAsync(getTrajectorySequence(detection, drive))
+
+        while (drive.isBusy && opModeIsActive()) {
+            drive.update()
+        }
     }
 
     fun detect(): Variables.Detection {
