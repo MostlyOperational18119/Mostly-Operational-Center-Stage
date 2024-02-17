@@ -30,11 +30,11 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
         )
     )
     override fun runOpMode() {
-        drive(STARTING_POSE)
+        drive(startingPose!!)
     }
 
     lateinit var drive: SampleMecanumDrive
-    var STARTING_POSE = Pose2d(-36.0, 61.5, Math.toRadians(-90.0))
+    lateinit var STARTING_POSE: Pose2d
     var sequences = ArrayList<TrajectorySequence>()
     var passiveServo: Servo? = null
     var autoServo: Servo? = null
@@ -48,6 +48,7 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
         var detection = detect()
         STARTING_POSE = startingPos
         drive = SampleMecanumDrive(hardwareMap)
+        drive.poseEstimate = startingPose!!
         initCall()
         while (opModeInInit()) {
             detection = detect()
