@@ -11,9 +11,6 @@ import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import static org.firstinspires.ftc.teamcode.VariablesButJava.servoRestPosition;
-import static org.firstinspires.ftc.teamcode.VariablesButJava.servoMidPosition;
-import static org.firstinspires.ftc.teamcode.VariablesButJava.servoPlacePosition;
 import org.firstinspires.ftc.teamcode.Autonomous.MeepMeepBoilerplate;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Variables.Detection;
@@ -129,11 +126,11 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(50.5, -20.41), Math.toRadians(180.00))
 //                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
-                            .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(2)
                             .addTemporalMarker(() -> autoServo.setPosition(0.65))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
+                            .addTemporalMarker(() -> autoServo.setPosition(0.32))
                             .waitSeconds(1)
                             .build());
             case CENTER -> drive.followTrajectorySequence(

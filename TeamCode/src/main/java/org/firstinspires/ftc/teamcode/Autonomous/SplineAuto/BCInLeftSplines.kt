@@ -9,6 +9,9 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutoBoilerplate
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence
 import org.firstinspires.ftc.teamcode.Variables
+import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
+import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
+import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
 
 @Config
 @Autonomous(name = "BCInLeftSplines (Main)", group = "Linear OpMode")
@@ -31,9 +34,9 @@ class BCInLeftSplines : AutoBoilerplate() {
                     Math.toRadians(0.0)
                 )
                 .waitSeconds(.1)
-                .addTemporalMarker { autoServo!!.position = .65 }
+                .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(2.0)
-                .addTemporalMarker { autoServo!!.position = 0.32 }
+                .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
                 .lineToConstantHeading(Vector2d(52.41, 10.83))
                 .lineToConstantHeading(Vector2d(58.0, 10.83))
@@ -49,9 +52,9 @@ class BCInLeftSplines : AutoBoilerplate() {
                     Math.toRadians(0.00)
                 )
                 .waitSeconds(.1)
-                .addTemporalMarker { autoServo!!.position = .65 }
+                .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(2.0)
-                .addTemporalMarker { autoServo!!.position = 0.32 }
+                .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
                 .lineToConstantHeading(Vector2d(52.41, 10.83))
                 .lineToConstantHeading(Vector2d(58.0, 10.83))
@@ -72,9 +75,9 @@ class BCInLeftSplines : AutoBoilerplate() {
                 .addTemporalMarker { passiveServo!!.position = 0.2 }
                 .waitSeconds(.5)
                 .lineToLinearHeading(Pose2d(55.29, 35.49, Math.toRadians(180.00)))
-                .addTemporalMarker { autoServo!!.position = 0.65 }
+                .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(2.0)
-                .addTemporalMarker { autoServo!!.position = 0.32 }
+                .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
                 .lineToConstantHeading(Vector2d(52.41, 10.83))
                 .lineToConstantHeading(Vector2d(58.0, 10.83))

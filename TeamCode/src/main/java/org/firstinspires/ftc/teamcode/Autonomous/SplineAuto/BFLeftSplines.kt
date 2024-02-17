@@ -10,6 +10,9 @@ import org.firstinspires.ftc.teamcode.Autonomous.TrajectorySequenceWithCallback
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence
 import org.firstinspires.ftc.teamcode.Variables
+import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
+import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
+import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
 
 
 @Config
@@ -96,17 +99,11 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
                         )
                         .setVelConstraint(slowConstraint)
                         .splineToConstantHeading(Vector2d(52.5, 47.49), Math.toRadians(180.00))
-                        .addTemporalMarker {
-                            autoServo!!.position = 0.32
-                        }
+                        .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(2.0)
-                        .addTemporalMarker {
-                            autoServo!!.position = 0.65
-                        }
+                        .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                         .waitSeconds(2.0)
-                        .addTemporalMarker {
-                            autoServo!!.position = 0.32
-                        }
+                        .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(1.0)
                         .build()
 
@@ -119,17 +116,11 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
                         )
                         .setVelConstraint(slowConstraint)
                         .splineToConstantHeading(Vector2d(52.5, 43.26), Math.toRadians(180.00))
-                        .addTemporalMarker {
-                            autoServo!!.position = 0.32
-                        }
+                        .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(2.0)
-                        .addTemporalMarker {
-                            autoServo!!.position = 0.65
-                        }
+                        .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                         .waitSeconds(2.0)
-                        .addTemporalMarker {
-                            autoServo!!.position = 0.32
-                        }
+                        .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(1.0)
                         .build()
 
@@ -140,17 +131,11 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
                         )
                         .setVelConstraint(slowConstraint)
                         .splineToConstantHeading(Vector2d(52.5, 36.4), Math.toRadians(180.00))
-                        .addTemporalMarker {
-                            autoServo!!.position = 0.32
-                        }
+                        .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(2.0)
-                        .addTemporalMarker {
-                            autoServo!!.position = 0.65
-                        }
+                        .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                         .waitSeconds(2.0)
-                        .addTemporalMarker {
-                            autoServo!!.position = 0.32
-                        }
+                        .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(1.0)
                         .build()
                 }
