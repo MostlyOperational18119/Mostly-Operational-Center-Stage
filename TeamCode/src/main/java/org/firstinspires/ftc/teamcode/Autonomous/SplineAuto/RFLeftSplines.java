@@ -57,7 +57,7 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
             telemetry.update();
         }
 
-        autoServo.setPosition(0.245);
+        autoServo.setPosition(servoRestPosition);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -131,7 +131,7 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
 //                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
                             .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoPlacePosition))
                             .waitSeconds(2)
                             .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
                             .waitSeconds(1)
@@ -142,11 +142,11 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(50.5, -27.7), Math.toRadians(180.00))
 //                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoPlacePosition))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
                             .waitSeconds(1)
                             .build());
             case RIGHT -> drive.followTrajectorySequence(
@@ -155,11 +155,11 @@ public class RFLeftSplines extends MeepMeepBoilerplate{
                             .setVelConstraint(slowConstraint)
                             .splineToConstantHeading(new Vector2d(50.5, -32), Math.toRadians(180.00))
 //                            .addTemporalMarker(() -> autoServo.setPosition(0.12))
-                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoPlacePosition))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
                             .waitSeconds(1)
                             .build());
             default -> {

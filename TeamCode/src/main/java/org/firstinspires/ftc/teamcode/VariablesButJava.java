@@ -13,9 +13,9 @@ import java.util.Optional;
 
 public class VariablesButJava {
     // Redundant thanks to odometry.
-    public static double servoRestPosition = 0.245;
-    public static double servoMidPosition = 0.32;
-    public static double servoPlacePosition = 0.65;
+    public static double servoPlacePosition = 1.0;
+    public static double servoRestPosition = 0.65;
+    public static double servoMidPosition = 0.74;
     static final double rotationsPerMeter = 3.3;
     static double encoders = 537.6;
     // Farmers Market Servo Values

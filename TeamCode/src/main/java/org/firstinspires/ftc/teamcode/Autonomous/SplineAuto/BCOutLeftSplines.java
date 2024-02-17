@@ -16,6 +16,9 @@ import org.firstinspires.ftc.teamcode.Autonomous.MeepMeepBoilerplate;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Variables.Detection;
 import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
+import static org.firstinspires.ftc.teamcode.VariablesButJava.servoRestPosition;
+import static org.firstinspires.ftc.teamcode.VariablesButJava.servoMidPosition;
+import static org.firstinspires.ftc.teamcode.VariablesButJava.servoPlacePosition;
 
 import java.util.Arrays;
 
@@ -53,7 +56,7 @@ public class BCOutLeftSplines extends MeepMeepBoilerplate {
             telemetry.addData("Detection", detection);
             telemetry.update();
         }
-        autoServo.setPosition(0.75);
+        autoServo.setPosition(servoMidPosition);
 
         rotateMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -69,11 +72,11 @@ public class BCOutLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
-                            .splineToLinearHeading(new Pose2d(57.18, 48.07, Math.toRadians(180.00)), Math.toRadians(0.0))
+                            .splineToLinearHeading(new Pose2d(55, 48.07, Math.toRadians(180.00)), Math.toRadians(0.0))
                             .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoPlacePosition))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .build()
@@ -84,11 +87,11 @@ public class BCOutLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
-                            .splineToLinearHeading(new Pose2d(54.91, 42.46, Math.toRadians(180.00)), Math.toRadians(0.00))
+                            .splineToLinearHeading(new Pose2d(55, 42.46, Math.toRadians(180.00)), Math.toRadians(0.00))
                             .waitSeconds(.1)
-                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoPlacePosition))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .build());
@@ -102,10 +105,10 @@ public class BCOutLeftSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.1)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(.5)
-                            .lineToLinearHeading(new Pose2d(55.29, 35.49, Math.toRadians(180.00)))
-                            .addTemporalMarker(() -> autoServo.setPosition(1.0))
+                            .lineToLinearHeading(new Pose2d(55, 35.49, Math.toRadians(180.00)))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoPlacePosition))
                             .waitSeconds(2)
-                            .addTemporalMarker(() -> autoServo.setPosition(0.75))
+                            .addTemporalMarker(() -> autoServo.setPosition(servoMidPosition))
                             .waitSeconds(.1)
                             .lineToConstantHeading(new Vector2d(51.41, 59.31))
                             .build()
