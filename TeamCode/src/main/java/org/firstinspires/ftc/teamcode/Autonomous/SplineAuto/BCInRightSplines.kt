@@ -38,7 +38,7 @@ class BCInRightSplines : AutoBoilerplate() {
                     .addTemporalMarker { passiveServo!!.position = 0.2 }
                     .waitSeconds(.5)
                     .splineToLinearHeading(
-                        Pose2d(57.18, 45.07, Math.toRadians(180.00)),
+                        Pose2d(55.0, 45.07, Math.toRadians(180.00)),
                         Math.toRadians(0.0)
                     )
                     .waitSeconds(.1)
@@ -56,7 +56,7 @@ class BCInRightSplines : AutoBoilerplate() {
                         .addTemporalMarker { passiveServo!!.position = 0.2 }
                         .waitSeconds(.5)
                         .splineToLinearHeading(
-                            Pose2d(54.91, 39.46, Math.toRadians(180.00)),
+                            Pose2d(55.0, 39.46, Math.toRadians(180.00)),
                             Math.toRadians(0.00)
                         )
                         .waitSeconds(.1)
@@ -82,7 +82,7 @@ class BCInRightSplines : AutoBoilerplate() {
                     .waitSeconds(.1)
                     .addTemporalMarker { passiveServo!!.position = 0.2 }
                     .waitSeconds(.5)
-                    .lineToLinearHeading(Pose2d(55.29, 32.49, Math.toRadians(180.00)))
+                    .lineToLinearHeading(Pose2d(55.0, 32.49, Math.toRadians(180.00)))
                     .addTemporalMarker { autoServo!!.position = servoPlacePosition}
                     .waitSeconds(2.0)
                     .addTemporalMarker { autoServo!!.position = servoMidPosition }

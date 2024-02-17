@@ -39,7 +39,7 @@ class BCOutLeftSplines : AutoBoilerplate() {
                     .addTemporalMarker { passiveServo!!.position = 0.2 }
                     .waitSeconds(.5)
                     .splineToLinearHeading(
-                        Pose2d(57.18, 48.07, Math.toRadians(180.00)),
+                        Pose2d(55.0, 48.07, Math.toRadians(180.00)),
                         Math.toRadians(0.0)
                     )
                     .waitSeconds(.1)
