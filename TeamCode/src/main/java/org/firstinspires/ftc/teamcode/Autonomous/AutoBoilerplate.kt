@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.DriveMethods
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence
 import org.firstinspires.ftc.teamcode.Variables
+import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
 import java.util.List
 abstract class AutoBoilerplate : DriveMethods() {
     override fun runOpMode() {
@@ -101,8 +102,7 @@ abstract class AutoBoilerplate : DriveMethods() {
         autoServo = hardwareMap.get(Servo::class.java, "autoServo")
         initVision(Variables.VisionProcessors.TFOD)
         initBlinkinSafe(defaultColour)
-        autoServo!!.position = 0.32
-        autoServo!!.position = 0.0
+        autoServo!!.position =  servoRestPosition
     }
 
     abstract val defaultColour: RevBlinkinLedDriver.BlinkinPattern
