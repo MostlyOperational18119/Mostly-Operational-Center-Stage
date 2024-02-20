@@ -105,46 +105,4 @@ class RCInRightSplines : AutoBoilerplate() {
             }
         }
     }
-    override fun runOpMode() {
-        val drive = SampleMecanumDrive(hardwareMap)
-        val passiveServo = hardwareMap.get(
-            Servo::class.java, "passiveServo"
-        )
-        val autoServo = hardwareMap.get(
-            Servo::class.java, "autoServo"
-        )
-        val rotateMotor = hardwareMap.get(DcMotor::class.java, "motorSlideRotate")
-        initVision(VisionProcessors.TFOD)
-        initBlinkinSafe(RevBlinkinLedDriver.BlinkinPattern.RED) // Inits Blinkin with a colour corresponding to the Auto
-        var detection = Variables.Detection.UNKNOWN
-        val slowConstraint: TrajectoryVelocityConstraint = MinVelocityConstraint(
-            Arrays.asList(
-                TranslationalVelocityConstraint(20.0),
-                AngularVelocityConstraint(1.0)
-            )
-        )
-        val fastConstraint: TrajectoryVelocityConstraint = MinVelocityConstraint(
-            Arrays.asList(
-                TranslationalVelocityConstraint(50.0),
-                AngularVelocityConstraint(3.0)
-            )
-        )
-        while (opModeInInit()) {
-            detection = getDetectionsSingleTFOD(
-                400
-            )
-            telemetry.addData("Detection", detection)
-            telemetry.update()
-        }
-        autoServo.position = 0.32
-        rotateMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        rotateMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        rotateMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        drive.poseEstimate = Pose2d(15.01, -62.69, Math.toRadians(270.00))
-        rotateMotor.power = 0.0
-
-
-
-//        drive.followTrajectorySequence(mergeSequences(sequences));
-    }
 }

@@ -50,7 +50,7 @@ class BFRightSplines : AutoBoilerplateMultiSequences() {
                         .splineToConstantHeading(Vector2d(-36.32, 33.85), Math.toRadians(0.0))
                         .setReversed(false)
                         .splineToLinearHeading(
-                            Pose2d(-40.09, 58.88, Math.toRadians(360.00)),
+                            Pose2d(-40.09, 59.88, Math.toRadians(360.00)),
                             Math.toRadians(360.00)
                         )
                         .build()
@@ -61,7 +61,7 @@ class BFRightSplines : AutoBoilerplateMultiSequences() {
                         .addTemporalMarker { passiveServo!!.position = 0.2 }
                         .waitSeconds(.5)
                         .splineToLinearHeading(
-                            Pose2d(-36.09, 58.88, Math.toRadians(360.00)),
+                            Pose2d(-36.09, 59.88, Math.toRadians(360.00)),
                             Math.toRadians(360.00)
                         )
                         .build()
@@ -72,15 +72,15 @@ class BFRightSplines : AutoBoilerplateMultiSequences() {
                         .addTemporalMarker { passiveServo!!.position = 0.2 }
                         .waitSeconds(.5)
                         .splineToLinearHeading(
-                            Pose2d(-36.09, 58.88, Math.toRadians(360.00)),
+                            Pose2d(-36.09, 59.88, Math.toRadians(360.00)),
                             Math.toRadians(360.00)
                         )
                         .build()
                 }, true) {
                 while (rotateMotor!!.currentPosition < 1000) {
-                    rotateMotor!!.power = 0.5
+                    rotateMotor!!.power = 0.3
                 }
-                rotateMotor!!.power = 0.001
+                rotateMotor!!.power = -0.001
 
             }
         )
@@ -88,14 +88,14 @@ class BFRightSplines : AutoBoilerplateMultiSequences() {
         sequences.add(
             fromSequence(
                 drive.trajectorySequenceBuilder(sequences[0].trajectorySequence.sequence!!.end())
-                    .splineToConstantHeading(Vector2d(17.0, 58.88), Math.toRadians(0.00))
+                    .splineToConstantHeading(Vector2d(17.0, 59.88), Math.toRadians(0.00))
                     .build(), true
             ) {
                 while (rotateMotor!!.currentPosition > 300) {
                     rotateMotor!!.power = -.5
                 }
-                rotateMotor!!.power = 0.0
-                sleep(2000)
+                rotateMotor!!.power = -0.001
+                sleep(5000)
             }
         )
 
@@ -123,7 +123,7 @@ class BFRightSplines : AutoBoilerplateMultiSequences() {
                                 Math.toRadians(180.00)
                             )
                             .setVelConstraint(slowConstraint)
-                            .splineToConstantHeading(Vector2d(52.5, 41.26), Math.toRadians(180.00))
+                            .splineToConstantHeading(Vector2d(52.5, 42.26), Math.toRadians(180.00))
                             .addTemporalMarker { autoServo!!.position = servoMidPosition}
                             .waitSeconds(2.0)
                             .addTemporalMarker { autoServo!!.position = servoPlacePosition }
