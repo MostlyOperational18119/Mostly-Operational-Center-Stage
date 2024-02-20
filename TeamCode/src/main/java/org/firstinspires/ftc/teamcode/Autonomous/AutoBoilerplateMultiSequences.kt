@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.DriveMethods
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence
 import org.firstinspires.ftc.teamcode.Variables
+import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
 import java.util.Arrays
 
 
@@ -29,6 +30,8 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
             AngularVelocityConstraint(3.0)
         )
     )
+
+    var tfodFirstTime = true
     override fun runOpMode() {
         drive(startingPose!!)
     }
@@ -62,7 +65,9 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
     }
 
     fun detect(): Variables.Detection {
-        return getDetectionsSingleTFOD()
+        val detection = getDetectionsSingleTFOD(tfodFirstTime)
+        tfodFirstTime = false
+        return detection
     }
 
     abstract fun getTrajectorySequences(
@@ -123,8 +128,7 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
         autoServo = hardwareMap.get(Servo::class.java, "autoServo")
         initVision(Variables.VisionProcessors.TFOD)
         initBlinkinSafe(defaultColour)
-        autoServo!!.position = 0.32
-        autoServo!!.position = 0.0
+        autoServo!!.position = servoRestPosition
     }
 
     abstract val defaultColour: BlinkinPattern

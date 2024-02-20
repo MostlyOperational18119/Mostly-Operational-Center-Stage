@@ -57,6 +57,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
 import org.firstinspires.ftc.vision.tfod.TfodProcessor
 import java.io.BufferedReader
 import java.io.FileReader
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 import kotlin.math.atan
@@ -95,17 +97,22 @@ open class DriveMethods: LinearOpMode() {
     fun initVision(processorType: VisionProcessors, zoom: Double) {
         initVision(processorType, zoom, "/sdcard/FIRST/models/ssd_mobilenet_v2_320x320_coco17_tpu_8.tflite", readLabels("/sdcard/FIRST/models/ssd_mobilenet_v2_label_map.txt"))
     }
-    fun getDetectionsSingleTFOD(): Variables.Detection {
-        return getDetectionsSingleTFOD(260)
+
+    fun getDetectionsSingleTFOD(firstTime: Boolean): Variables.Detection {
+        return getDetectionsSingleTFOD(260, firstTime)
     }
 
-    fun getDetectionsSingleTFOD(compNumber: Int = 500): Variables.Detection {
+    fun getDetectionsSingleTFOD(): Variables.Detection {
+        return getDetectionsSingleTFOD(260, true)
+    }
+
+    fun getDetectionsSingleTFOD(compNumber: Int = 500, firstTime: Boolean): Variables.Detection {
         val webcam = hardwareMap.get(WebcamName::class.java, "Webcam 1")
         // Ensure the Webcam is correct
 //        if (visionPortal.activeCamera != webcam) visionPortal.activeCamera = webcam
         tfod.setZoom(1.15);
         // Wait for recognitions
-        sleep(3000)
+        if (firstTime) sleep(3000)
 
         val recognitions = tfod.recognitions
 
