@@ -129,6 +129,7 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
         initVision(Variables.VisionProcessors.TFOD)
         initBlinkinSafe(defaultColour)
         autoServo!!.position = servoRestPosition
+        rotateMotor!!.power = -0.001
     }
 
     abstract val defaultColour: BlinkinPattern

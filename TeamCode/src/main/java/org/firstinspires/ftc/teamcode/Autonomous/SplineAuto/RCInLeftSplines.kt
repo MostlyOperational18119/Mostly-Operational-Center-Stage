@@ -51,7 +51,7 @@ class RCInLeftSplines : AutoBoilerplate() {
                     .addTemporalMarker { passiveServo!!.position = 0.2 }
                     .waitSeconds(.5)
                     .lineToLinearHeading(Pose2d(52.29, -23.60, Math.toRadians(180.00)))
-                    .waitSeconds(.1)
+                    .waitSeconds(.25)
                     .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                     .waitSeconds(2.0)
                     .addTemporalMarker { autoServo!!.position = servoMidPosition }
@@ -66,10 +66,10 @@ class RCInLeftSplines : AutoBoilerplate() {
                     .addTemporalMarker { passiveServo!!.position = 0.2 }
                     .waitSeconds(.5)
                     .splineToLinearHeading(
-                        Pose2d(52.29, -32.09, Math.toRadians(180.00)),
+                        Pose2d(52.29, -30.7, Math.toRadians(180.00)),
                         Math.toRadians(0.00)
                     )
-                    .waitSeconds(.1)
+                    .waitSeconds(.25)
                     .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                     .waitSeconds(2.0)
                     .addTemporalMarker { autoServo!!.position = servoMidPosition }
@@ -83,12 +83,12 @@ class RCInLeftSplines : AutoBoilerplate() {
                     .waitSeconds(.1)
                     .addTemporalMarker { passiveServo!!.position = 0.2 }
                     .waitSeconds(.5)
-                    .lineToConstantHeading(Vector2d(24.18, -40.99))
+                    .lineToConstantHeading(Vector2d(24.18, -38.99))
                     .splineToLinearHeading(
                         Pose2d(52.29, -40.89, Math.toRadians(180.00)),
                         Math.toRadians(360.00)
                     )
-                    .waitSeconds(.1)
+                    .waitSeconds(.25)
                     .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                     .waitSeconds(2.0)
                     .addTemporalMarker { autoServo!!.position = servoMidPosition }

@@ -41,7 +41,7 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                         .lineToConstantHeading(Vector2d(-47.30, -40.08))
                         .waitSeconds(.25)
                         .addTemporalMarker { passiveServo!!.position = 0.2 }
-                        .waitSeconds(1.0)
+                        .waitSeconds(0.5)
                         .splineToLinearHeading(
                             Pose2d(-35.91, -58.5, Math.toRadians(360.00)),
                             Math.toRadians(360.00)
@@ -53,7 +53,7 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                             .lineToConstantHeading(Vector2d(-37.34, -30.82))
                             .waitSeconds(.25)
                             .addTemporalMarker { passiveServo!!.position = 0.2 }
-                            .waitSeconds(1.0)
+                            .waitSeconds(0.5)
                             .splineToLinearHeading(
                                 Pose2d(-35.91, -58.5, Math.toRadians(360.00)),
                                 Math.toRadians(360.00)
@@ -70,7 +70,7 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                         )
                         .waitSeconds(.25)
                         .addTemporalMarker { passiveServo!!.position = 0.2 }
-                        .waitSeconds(1.0)
+                        .waitSeconds(0.5)
                         .setReversed(false)
                         .splineToConstantHeading(Vector2d(-36.32, -34.0), Math.toRadians(0.0))
                         .splineToLinearHeading(
@@ -83,7 +83,7 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                 while (rotateMotor!!.currentPosition < 1000) {
                     rotateMotor!!.power = 0.5
                 }
-                rotateMotor!!.power = 0.001
+                rotateMotor!!.power = -0.001
             }
         )
 
@@ -96,8 +96,8 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                 while (rotateMotor!!.currentPosition > 300) {
                     rotateMotor!!.power = -.5
                 }
-                rotateMotor!!.power = 0.0
-                sleep(6000)
+                rotateMotor!!.power = -0.001
+                sleep(5000)
             }
         )
 
@@ -106,11 +106,11 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                 when (detection) {
                     Variables.Detection.LEFT -> drive.trajectorySequenceBuilder(sequences[sequences.size-1].trajectorySequence.sequence!!.end())
                             .splineToLinearHeading(
-                                Pose2d(43.49, -22.41, Math.toRadians(180.00)),
+                                Pose2d(37.0, -22.8, Math.toRadians(180.00)),
                                 Math.toRadians(180.00)
                             )
                             .setVelConstraint(slowConstraint)
-                            .splineToConstantHeading(Vector2d(50.5, -22.41), Math.toRadians(180.00))
+                            .splineToConstantHeading(Vector2d(50.5, -23.1), Math.toRadians(180.00))
                             .addTemporalMarker { autoServo!!.position = servoMidPosition }
                             .waitSeconds(2.0)
                             .addTemporalMarker { autoServo!!.position = servoPlacePosition }
@@ -121,11 +121,11 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
 
                     Variables.Detection.CENTER -> drive.trajectorySequenceBuilder(sequences[sequences.size-1].trajectorySequence.sequence!!.end())
                             .splineToLinearHeading(
-                                Pose2d(43.49, -30.7, Math.toRadians(180.00)),
+                                Pose2d(37.0, -32.2, Math.toRadians(180.00)),
                                 Math.toRadians(180.00)
                             )
                             .setVelConstraint(slowConstraint)
-                            .splineToConstantHeading(Vector2d(50.5, -30.7), Math.toRadians(180.00))
+                            .splineToConstantHeading(Vector2d(50.5, -32.2), Math.toRadians(180.00))
                             .addTemporalMarker { autoServo!!.position = servoMidPosition }
                             .waitSeconds(2.0)
                             .addTemporalMarker { autoServo!!.position = servoPlacePosition }
@@ -136,7 +136,7 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
 
                     else -> drive.trajectorySequenceBuilder(sequences[sequences.size-1].trajectorySequence.sequence!!.end())
                         .splineToLinearHeading(
-                            Pose2d(43.49, -36.0, Math.toRadians(180.00)),
+                            Pose2d(37.0, -36.0, Math.toRadians(180.00)),
                             Math.toRadians(180.00)
                         )
                         .setVelConstraint(slowConstraint)

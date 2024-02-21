@@ -104,11 +104,11 @@ class BFRightSplines : AutoBoilerplateMultiSequences() {
                 when (detection) {
                     Variables.Detection.LEFT -> drive.trajectorySequenceBuilder(sequences[sequences.size - 1].trajectorySequence.sequence!!.end())
                             .splineToLinearHeading(
-                                Pose2d(43.49, 45.49, Math.toRadians(180.00)),
+                                Pose2d(43.49, 43.2, Math.toRadians(180.00)),
                                 Math.toRadians(180.00)
                             )
                             .setVelConstraint(slowConstraint)
-                            .splineToConstantHeading(Vector2d(52.5, 45.49), Math.toRadians(180.00))
+                            .splineToConstantHeading(Vector2d(52.5, 43.2), Math.toRadians(180.00))
                             .addTemporalMarker { autoServo!!.position = servoMidPosition }
                             .waitSeconds(2.0)
                             .addTemporalMarker { autoServo!!.position = servoPlacePosition }
@@ -119,11 +119,11 @@ class BFRightSplines : AutoBoilerplateMultiSequences() {
 
                     Variables.Detection.CENTER -> drive.trajectorySequenceBuilder(sequences[sequences.size - 1].trajectorySequence.sequence!!.end())
                             .splineToLinearHeading(
-                                Pose2d(43.49, 41.26, Math.toRadians(180.00)),
+                                Pose2d(43.49, 40.06, Math.toRadians(180.00)),
                                 Math.toRadians(180.00)
                             )
                             .setVelConstraint(slowConstraint)
-                            .splineToConstantHeading(Vector2d(52.5, 42.26), Math.toRadians(180.00))
+                            .splineToConstantHeading(Vector2d(52.5, 40.06), Math.toRadians(180.00))
                             .addTemporalMarker { autoServo!!.position = servoMidPosition}
                             .waitSeconds(2.0)
                             .addTemporalMarker { autoServo!!.position = servoPlacePosition }
