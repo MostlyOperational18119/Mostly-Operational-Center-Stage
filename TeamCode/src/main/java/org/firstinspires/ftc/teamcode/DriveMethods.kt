@@ -57,6 +57,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
 import org.firstinspires.ftc.vision.tfod.TfodProcessor
 import java.io.BufferedReader
 import java.io.FileReader
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 import kotlin.math.atan
@@ -74,6 +76,8 @@ open class DriveMethods: LinearOpMode() {
     lateinit var aprilTag: AprilTagProcessor
 
     lateinit var visionProcessor: VisionProcessors
+
+    var visionInit = false
 
     fun setMotorPowers(powerFL: Double, powerFR: Double, powerBL: Double, powerBR: Double) {
         motorFL?.power = powerFL
@@ -93,17 +97,20 @@ open class DriveMethods: LinearOpMode() {
     fun initVision(processorType: VisionProcessors, zoom: Double) {
         initVision(processorType, zoom, "/sdcard/FIRST/models/ssd_mobilenet_v2_320x320_coco17_tpu_8.tflite", readLabels("/sdcard/FIRST/models/ssd_mobilenet_v2_label_map.txt"))
     }
-    fun getDetectionsSingleTFOD(): Variables.Detection {
-        return getDetectionsSingleTFOD(260)
+
+    fun getDetectionsSingleTFOD(firstTime: Boolean): Variables.Detection {
+        return getDetectionsSingleTFOD(260, firstTime)
     }
 
-    fun getDetectionsSingleTFOD(compNumber: Int = 500): Variables.Detection {
-        val webcam = hardwareMap.get(WebcamName::class.java, "Webcam 1")
+    fun getDetectionsSingleTFOD(): Variables.Detection {
+        return getDetectionsSingleTFOD(260, true)
+    }
+
+    fun getDetectionsSingleTFOD(compNumber: Int = 500, firstTime: Boolean): Variables.Detection {
         // Ensure the Webcam is correct
-//        if (visionPortal.activeCamera != webcam) visionPortal.activeCamera = webcam
         tfod.setZoom(1.15);
         // Wait for recognitions
-        sleep(3000)
+        if (firstTime) sleep(3000)
 
         val recognitions = tfod.recognitions
 
@@ -166,57 +173,65 @@ open class DriveMethods: LinearOpMode() {
     }
 
     fun initVision(processorType: VisionProcessors, zoom: Double = 1.0, model: String = "/sdcard/FIRST/models/ssd_mobilenet_v2_320x320_coco17_tpu_8.tflite", labelMap: Array<String> = readLabels("/sdcard/FIRST/models/ssd_mobilenet_v2_label_map.txt"), useRightCam: Boolean = false) {
-        // Create the bob the builder to build the VisionPortal
-        val builder: VisionPortal.Builder = VisionPortal.Builder()
+        if (!visionInit) {
+            // Create the bob the builder to build the VisionPortal
+            val builder: VisionPortal.Builder = VisionPortal.Builder()
 
-        // Set the camera of the new VisionPortal to the webcam mounted to the robot
-        builder.setCamera(hardwareMap.get(WebcamName::class.java, "Webcam 1"))
+            // Set the camera of the new VisionPortal to the webcam mounted to the robot
+            builder.setCamera(hardwareMap.get(WebcamName::class.java, "Webcam 1"))
 
-        // Enable Live View for debugging purposes
-        builder.enableLiveView(true)
-        builder.setCameraResolution(Size(640, 480))
+            // Enable Live View for debugging purposes
+//        builder.enableLiveView(true)
+            builder.setCameraResolution(Size(640, 480))
 
-        when (processorType) {
-            VisionProcessors.APRILTAG -> {
-                // Initialize the AprilTag Processor
-                aprilTag = AprilTagProcessor.Builder()
-                    .build()
+            when (processorType) {
+                VisionProcessors.APRILTAG -> {
+                    // Initialize the AprilTag Processor
+                    aprilTag = AprilTagProcessor.Builder()
+                        .build()
 
-                builder.addProcessor(aprilTag)
+                    builder.addProcessor(aprilTag)
+                }
+
+                VisionProcessors.TFOD -> {
+                    // Initialize the TensorFlow Processor
+                    tfod = TfodProcessor.Builder()
+                        .setModelFileName(model)
+                        .setModelLabels(labelMap)
+                        .build()
+
+                    tfod.setZoom(zoom)
+                    tfod.setMinResultConfidence(0.3F)
+                    if (useRightCam) tfod.setZoom(zoom)
+                    if (useRightCam) tfod.setMinResultConfidence(0.5F)
+                    // Add TensorFlow Processor to VisionPortal builder
+                    builder.addProcessor(tfod)
+
+                }
+
+                VisionProcessors.BOTH -> {
+                    // Initialize the TensorFlow Processor
+                    tfod = TfodProcessor.Builder()
+                        .setModelAssetName(CurrentGame.TFOD_MODEL_ASSET)
+                        .build()
+
+                    // Initialize the AprilTag Processor
+                    aprilTag = AprilTagProcessor.Builder()
+                        .build()
+
+                    builder.addProcessor(tfod)
+                    builder.addProcessor(aprilTag)
+                }
             }
-            VisionProcessors.TFOD -> {
-                // Initialize the TensorFlow Processor
-                tfod = TfodProcessor.Builder()
-                    .setModelFileName(model)
-                    .setModelLabels(labelMap)
-                    .build()
+            // Build the VisionPortal and set visionPortal to it
+            visionPortal = builder.build()
 
-                tfod.setZoom(zoom)
-                tfod.setMinResultConfidence(0.3F)
-                if (useRightCam) tfod.setZoom(zoom)
-                if (useRightCam) tfod.setMinResultConfidence(0.5F)
-                // Add TensorFlow Processor to VisionPortal builder
-                builder.addProcessor(tfod)
+            visionProcessor = processorType
 
-            }
-            VisionProcessors.BOTH -> {
-                // Initialize the TensorFlow Processor
-                tfod = TfodProcessor.Builder()
-                    .setModelAssetName(CurrentGame.TFOD_MODEL_ASSET)
-                    .build()
-
-                // Initialize the AprilTag Processor
-                aprilTag = AprilTagProcessor.Builder()
-                    .build()
-
-                builder.addProcessor(tfod)
-                builder.addProcessor(aprilTag)
-            }
+            visionInit = true
+        } else {
+            Log.e("DriveMethods", "init Called twice")
         }
-        // Build the VisionPortal and set visionPortal to it
-        visionPortal = builder.build()
-
-        visionProcessor = processorType
     }
 
 //    fun switchCamera(cameraName: String) {

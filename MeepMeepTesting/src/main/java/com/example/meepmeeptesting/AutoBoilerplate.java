@@ -6,7 +6,6 @@ import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.DriveShim;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 import com.noahbres.meepmeep.roadrunner.trajectorysequence.TrajectorySequence;
-import com.noahbres.meepmeep.roadrunner.trajectorysequence.sequencesegment.SequenceSegment;
 
 import java.util.ArrayList;
 
@@ -16,7 +15,7 @@ enum Detection {
     RIGHT
 }
 
-public abstract class MeepMeepBoilerplate {
+public abstract class AutoBoilerplate {
     DriveShim drive;
 
     public Pose2d STARTING_POSE = new Pose2d(-36, 61.5, Math.toRadians(-90));
@@ -55,6 +54,11 @@ public abstract class MeepMeepBoilerplate {
 
     public abstract TrajectorySequence getTrajectorySequence(Detection detection, DriveShim drive);
 
+    public void println(Object o) {
+        System.out.println(o);
+    }
+
+    /*
     public TrajectorySequence mergeSequences(ArrayList<TrajectorySequence> trajectorySequences) {
         TrajectorySequence[] trajectorySequencesArr = new TrajectorySequence[trajectorySequences.size()];
         trajectorySequencesArr = trajectorySequences.toArray(trajectorySequencesArr);
@@ -73,6 +77,7 @@ public abstract class MeepMeepBoilerplate {
 
         return new TrajectorySequence(trajectorySegments);
     }
+    */
 
     public TrajectorySequence getCurrentTrajectorySequence(DriveShim drive) {
          if (sequences.size() == 0) {
@@ -92,9 +97,6 @@ public abstract class MeepMeepBoilerplate {
         }
     }
 
-    //    private static void followTrajectorySequence(TrajectorySequence trajectorySequence) {
-//        sequences.add(trajectorySequence);
-//    }
     public void followTrajectorySequence(TrajectorySequence trajectorySequence) {
 //        if (!opModeIsActive()) waitForStart();
         sequences.add(trajectorySequence);
