@@ -34,6 +34,9 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
     ): ArrayList<TrajectorySequenceWithCallback> {
         val sequences = ArrayList<TrajectorySequenceWithCallback>()
 
+        telemetry.addLine("FUCK THIS")
+        telemetry.update()
+
         sequences.add(
             fromSequence(
                 when (detection) {
@@ -84,8 +87,12 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                     rotateMotor!!.power = 0.5
                 }
                 rotateMotor!!.power = -0.001
+
             }
         )
+
+        telemetry.addLine("FUCK THIS 2")
+        telemetry.update()
 
         sequences.add(
             fromSequence(
@@ -100,24 +107,33 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                 sleep(3000)
             }
         )
-
+        telemetry.addLine("FUCK THIS 3")
+        telemetry.update()
         sequences.add(
             fromSequence(
                 when (detection) {
-                    Variables.Detection.LEFT -> drive.trajectorySequenceBuilder(sequences[sequences.size-1].trajectorySequence.sequence!!.end())
-                            .splineToLinearHeading(
-                                Pose2d(37.0, -22.8, Math.toRadians(180.00)),
-                                Math.toRadians(180.00)
-                            )
-                            .setVelConstraint(slowConstraint)
-                            .splineToConstantHeading(Vector2d(50.5, -23.1), Math.toRadians(180.00))
-                            .addTemporalMarker { autoServo!!.position = servoMidPosition }
-                            .waitSeconds(2.0)
-                            .addTemporalMarker { autoServo!!.position = servoPlacePosition }
-                            .waitSeconds(2.0)
-                            .addTemporalMarker { autoServo!!.position = servoMidPosition }
-                            .waitSeconds(1.0)
-                            .build()
+                    Variables.Detection.LEFT ->  {
+                        telemetry.addLine("FUCK THIS 3.5")
+                        telemetry.addData("FUCKING START POSE", sequences[sequences.size-1].trajectorySequence.sequence!!.end())
+                        telemetry.update()
+                        val traj = drive.trajectorySequenceBuilder(sequences[sequences.size-1].trajectorySequence.sequence!!.end())
+                                .splineToLinearHeading(
+                                        Pose2d(37.0, -22.8, Math.toRadians(180.00)),
+                                        Math.toRadians(180.00)
+                                )
+//                                .setVelConstraint(slowConstraint)
+                                .splineToConstantHeading(Vector2d(50.5, -23.1), Math.toRadians(180.00))
+                                .addTemporalMarker { autoServo!!.position = servoMidPosition }
+                                .waitSeconds(2.0)
+                                .addTemporalMarker { autoServo!!.position = servoPlacePosition }
+                                .waitSeconds(2.0)
+                                .addTemporalMarker { autoServo!!.position = servoMidPosition }
+                                .waitSeconds(1.0)
+                                .build()
+                        telemetry.addLine("FUCK THIS 3.7")
+                        telemetry.update()
+                        traj
+                    }
 
                     Variables.Detection.CENTER -> drive.trajectorySequenceBuilder(sequences[sequences.size-1].trajectorySequence.sequence!!.end())
                             .splineToLinearHeading(
@@ -151,6 +167,8 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                 }
             )
         )
+        telemetry.addLine("FUCK THIS 4")
+        telemetry.update()
 
         return sequences
     }

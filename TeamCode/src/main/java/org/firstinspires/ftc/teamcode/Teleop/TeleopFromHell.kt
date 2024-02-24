@@ -33,6 +33,7 @@ import org.firstinspires.ftc.teamcode.Variables.rPowerSlow
 import org.firstinspires.ftc.teamcode.Variables.rSpeedMax
 import org.firstinspires.ftc.teamcode.Variables.rSpeedMin
 import org.firstinspires.ftc.teamcode.Variables.rotateMotor
+import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
 import org.firstinspires.ftc.teamcode.Variables.slideMotor
 import org.firstinspires.ftc.teamcode.Variables.slideTouch
 import org.firstinspires.ftc.teamcode.Variables.touchyL
@@ -519,7 +520,7 @@ class TeleopFromHell: DriveMethods() {
 
             //AUTO SERVO
             if (gamepad1.dpad_down) {
-                autoServo!!.position = 0.5
+                autoServo!!.position = servoRestPosition
             }
 //            if (gamepad2.dpad_left){
 //                boxServo.position = .62
