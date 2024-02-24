@@ -58,6 +58,7 @@ object Variables {
     var servoPlacePosition = 1.0
     var servoRestPosition = 0.65
     var servoMidPosition = 0.74
+    var passiveServoPlacePosition = 0.2
 
     var closedClaw = 0.87
     var openClaw = 0.8
