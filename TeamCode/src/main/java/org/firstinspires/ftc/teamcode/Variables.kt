@@ -55,9 +55,9 @@ object Variables {
     var clawMotor: Servo? = null
     var autoServo: Servo? = null
     var slideTouch: TouchSensor? = null
-    var servoPlacePosition = 1.0
-    var servoRestPosition = 0.65
-    var servoMidPosition = 0.74
+    var servoPlacePosition = 0.83
+    var servoRestPosition = 0.46
+    var servoMidPosition = 0.68
     var passiveServoPlacePosition = 0.2
 
     var closedClaw = 0.87

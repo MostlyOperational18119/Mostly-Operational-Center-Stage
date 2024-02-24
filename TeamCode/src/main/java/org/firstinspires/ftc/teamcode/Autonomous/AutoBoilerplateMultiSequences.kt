@@ -53,10 +53,14 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
         drive = SampleMecanumDrive(hardwareMap)
         drive.poseEstimate = startingPose!!
         initCall()
+        var initLoopNum = 0
         while (opModeInInit()) {
             detection = detect()
             telemetry.addData("Detection", detection)
+            telemetry.addData("Init loop num", initLoopNum)
             telemetry.update()
+            initLoopNum++
+            if (opModeIsActive()) break
         }
 
         getTrajectorySequences(detection, drive).forEach {
@@ -65,9 +69,7 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
     }
 
     fun detect(): Variables.Detection {
-        val detection = getDetectionsSingleTFOD(tfodFirstTime)
-        tfodFirstTime = false
-        return detection
+        return getDetectionsSingleTFOD()
     }
 
     abstract fun getTrajectorySequences(

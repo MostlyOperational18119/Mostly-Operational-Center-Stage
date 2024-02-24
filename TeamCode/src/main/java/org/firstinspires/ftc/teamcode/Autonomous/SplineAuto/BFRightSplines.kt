@@ -123,7 +123,7 @@ class BFRightSplines : AutoBoilerplateMultiSequences() {
                                 Math.toRadians(180.00)
                             )
                             .setVelConstraint(slowConstraint)
-                            .splineToConstantHeading(Vector2d(52.5, 40.06), Math.toRadians(180.00))
+                            .splineToConstantHeading(Vector2d(52.5, 44.06), Math.toRadians(180.00))
                             .addTemporalMarker { autoServo!!.position = servoMidPosition}
                             .waitSeconds(2.0)
                             .addTemporalMarker { autoServo!!.position = servoPlacePosition }

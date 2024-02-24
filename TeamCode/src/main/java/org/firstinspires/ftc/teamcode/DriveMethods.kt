@@ -128,34 +128,34 @@ open class DriveMethods: LinearOpMode() {
         }
     }
 
-    fun getDetectionsMultiTFOD(): Variables.Detection {
-        val webcamL = hardwareMap.get(WebcamName::class.java, "Webcam 1")
-        val webcamR = hardwareMap.get(WebcamName::class.java, "Webcam 2")
-
-        // Ensure we are using Left Cam
-        if (visionPortal.activeCamera != webcamL)  visionPortal.activeCamera = webcamL; sleep(1000)
-
-        // Wait for recognitions
-        sleep(2000)
-        val recognitionsL = tfod.recognitions
-        // Switch cams
-        visionPortal.activeCamera = webcamR
-        sleep(3000)
-        val recognitionsR = tfod.recognitions
-
-        sleep(500) // Sharing is caring
-
-        // It works (I guess)
-        if (includesCup(recognitionsR)) {
-            val cup = getCup(recognitionsR) ?: return Variables.Detection.UNKNOWN
-            return if (cup.right < 214) Variables.Detection.CENTER else Variables.Detection.RIGHT
-        } else if (includesCup(recognitionsL)) {
-            val cup = getCup(recognitionsL) ?: return Variables.Detection.UNKNOWN
-            return if (cup.right < 426) Variables.Detection.LEFT else Variables.Detection.CENTER
-        } else {
-            return Variables.Detection.UNKNOWN
-        }
-    }
+//    fun getDetectionsMultiTFOD(): Variables.Detection {
+//        val webcamL = hardwareMap.get(WebcamName::class.java, "Webcam 1")
+//        val webcamR = hardwareMap.get(WebcamName::class.java, "Webcam 2")
+//
+//        // Ensure we are using Left Cam
+//        if (visionPortal.activeCamera != webcamL)  visionPortal.activeCamera = webcamL; sleep(1000)
+//
+//        // Wait for recognitions
+//        sleep(2000)
+//        val recognitionsL = tfod.recognitions
+//        // Switch cams
+//        visionPortal.activeCamera = webcamR
+//        sleep(3000)
+//        val recognitionsR = tfod.recognitions
+//
+//        sleep(500) // Sharing is caring
+//
+//        // It works (I guess)
+//        if (includesCup(recognitionsR)) {
+//            val cup = getCup(recognitionsR) ?: return Variables.Detection.UNKNOWN
+//            return if (cup.right < 214) Variables.Detection.CENTER else Variables.Detection.RIGHT
+//        } else if (includesCup(recognitionsL)) {
+//            val cup = getCup(recognitionsL) ?: return Variables.Detection.UNKNOWN
+//            return if (cup.right < 426) Variables.Detection.LEFT else Variables.Detection.CENTER
+//        } else {
+//            return Variables.Detection.UNKNOWN
+//        }
+//    }
 
     fun includesCup(recognitions: List<Recognition>): Boolean {
         for (recognition in recognitions) {
