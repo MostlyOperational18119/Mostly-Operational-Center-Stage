@@ -31,19 +31,13 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
             fromSequence(when (detection) {
                 Variables.Detection.LEFT -> drive!!.trajectorySequenceBuilder(startingPose)
                     .setReversed(true)
-                    .splineToLinearHeading(
-                        Pose2d(-30.32, 33.85, Math.toRadians(180.00)),
-                        Math.toRadians(0.0)
-                    )
+                    .splineToLinearHeading(Pose2d(-30.32, 33.85, Math.toRadians(180.00)), Math.toRadians(0.0))
                     .waitSeconds(.1)
                     .addTemporalMarker { passiveServo!!.position = 0.2 }
                     .waitSeconds(.5)
                     .splineToConstantHeading(Vector2d(-36.32, 33.85), Math.toRadians(0.0))
                     .setReversed(false)
-                    .splineToLinearHeading(
-                        Pose2d(-40.09, 59.88, Math.toRadians(360.00)),
-                        Math.toRadians(360.00)
-                    )
+                    .splineToLinearHeading(Pose2d(-40.09, 59.88, Math.toRadians(360.00)), Math.toRadians(360.00))
                     .build()
 
                 Variables.Detection.CENTER -> drive!!.trajectorySequenceBuilder(startingPose)
@@ -51,10 +45,7 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
                     .waitSeconds(.1)
                     .addTemporalMarker { passiveServo!!.position = 0.2 }
                     .waitSeconds(.5)
-                    .splineToLinearHeading(
-                        Pose2d(-36.09, 59.88, Math.toRadians(360.00)),
-                        Math.toRadians(360.00)
-                    )
+                    .splineToLinearHeading(Pose2d(-36.09, 59.88, Math.toRadians(360.00)), Math.toRadians(360.00))
                     .build()
 
                 else -> // Default to right
@@ -63,14 +54,11 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
                         .waitSeconds(.1)
                         .addTemporalMarker { passiveServo!!.position = 0.2 }
                         .waitSeconds(.5)
-                        .splineToLinearHeading(
-                            Pose2d(-36.09, 59.88, Math.toRadians(360.00)),
-                            Math.toRadians(360.00)
-                        )
+                        .splineToLinearHeading(Pose2d(-36.09, 59.88, Math.toRadians(360.00)), Math.toRadians(360.00))
                         .build()
             }, true) {
                 while (rotateMotor!!.currentPosition < 1000) {
-                    rotateMotor!!.power = 0.5
+                    rotateMotor!!.power = 0.3
                 }
                 rotateMotor!!.power = -0.001
             }
@@ -79,11 +67,11 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
         sequences.add(
             fromSequence(
                 drive.trajectorySequenceBuilder(sequences[sequences.size - 1].trajectorySequence.sequence!!.end())
-                    .splineToConstantHeading(Vector2d(20.0, 59.82), Math.toRadians(0.00))
+                    .splineToConstantHeading(Vector2d(17.0, 59.82), Math.toRadians(0.00))
                     .build(), true
             ) {
                 while (rotateMotor!!.currentPosition > 300) {
-                    rotateMotor!!.power = -.5
+                    rotateMotor!!.power = -0.5
                 }
                 rotateMotor!!.power = -0.001
 
@@ -95,10 +83,7 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
             fromSequence(
                 when (detection) {
                     Variables.Detection.LEFT -> drive.trajectorySequenceBuilder(sequences[sequences.size - 1].trajectorySequence.sequence!!.end())
-                        .splineToLinearHeading(
-                            Pose2d(43.49, 47.49, Math.toRadians(180.00)),
-                            Math.toRadians(180.00)
-                        )
+                        .splineToLinearHeading(Pose2d(43.49, 47.0, Math.toRadians(180.00)), Math.toRadians(180.00))
                         .setVelConstraint(slowConstraint)
                         .splineToConstantHeading(Vector2d(52.5, 47.0), Math.toRadians(180.00))
                         .addTemporalMarker { autoServo!!.position = servoMidPosition }
@@ -109,15 +94,10 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
                         .waitSeconds(1.0)
                         .build()
 
-                    Variables.Detection.CENTER -> drive.trajectorySequenceBuilder(
-                        sequences[sequences.size - 1].trajectorySequence.sequence!!.end()
-                    )
-                        .splineToLinearHeading(
-                            Pose2d(43.49, 43.26, Math.toRadians(180.00)),
-                            Math.toRadians(180.00)
-                        )
+                    Variables.Detection.CENTER -> drive.trajectorySequenceBuilder(sequences[sequences.size - 1].trajectorySequence.sequence!!.end())
+                        .splineToLinearHeading(Pose2d(43.49, 42.5, Math.toRadians(180.00)), Math.toRadians(180.00))
                         .setVelConstraint(slowConstraint)
-                        .splineToConstantHeading(Vector2d(52.5, 43.26), Math.toRadians(180.00))
+                        .splineToConstantHeading(Vector2d(52.5, 42.5), Math.toRadians(180.00))
                         .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(2.0)
                         .addTemporalMarker { autoServo!!.position = servoPlacePosition }
@@ -127,12 +107,9 @@ class BFLeftSplines : AutoBoilerplateMultiSequences() {
                         .build()
 
                     else -> drive.trajectorySequenceBuilder(sequences[sequences.size - 1].trajectorySequence.sequence!!.end())
-                        .splineToLinearHeading(
-                            Pose2d(43.49, 36.4, Math.toRadians(180.00)),
-                            Math.toRadians(180.00)
-                        )
+                        .splineToLinearHeading(Pose2d(43.49, 38.0, Math.toRadians(180.00)), Math.toRadians(180.00))
                         .setVelConstraint(slowConstraint)
-                        .splineToConstantHeading(Vector2d(52.5, 36.4), Math.toRadians(180.00))
+                        .splineToConstantHeading(Vector2d(52.5, 38.0), Math.toRadians(180.00))
                         .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(2.0)
                         .addTemporalMarker { autoServo!!.position = servoPlacePosition }

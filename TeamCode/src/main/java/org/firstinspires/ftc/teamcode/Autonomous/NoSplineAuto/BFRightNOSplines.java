@@ -46,7 +46,8 @@ public class BFRightNOSplines extends MeepMeepBoilerplate {
                             .back(8)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(4)
-                            .forward(5)
+                            .forward(10)
+                            .turn(Math.toRadians(90))
                             .build()
             );
             case CENTER -> { drive.followTrajectorySequence(
@@ -55,7 +56,8 @@ public class BFRightNOSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(4)
-                            .forward(5)
+                            .forward(10)
+                            .turn(Math.toRadians(180))
                             .build());
             }
             case RIGHT -> drive.followTrajectorySequence(
@@ -67,7 +69,8 @@ public class BFRightNOSplines extends MeepMeepBoilerplate {
                             .waitSeconds(.25)
                             .addTemporalMarker(() -> passiveServo.setPosition(0.2))
                             .waitSeconds(4)
-                            .forward(5)
+                            .forward(10)
+                            .turn(Math.toRadians(180))
                             .build()
             );
             default -> {
