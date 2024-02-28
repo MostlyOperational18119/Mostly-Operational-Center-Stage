@@ -49,7 +49,7 @@ class RCInLeftSplines : AutoBoilerplate() {
                 .waitSeconds(.25)
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
                 .waitSeconds(.5)
-                .splineToLinearHeading(Pose2d(47.29, -30.7, Math.toRadians(180.00)), Math.toRadians(0.00))
+                .splineToLinearHeading(Pose2d(52.29, -30.7, Math.toRadians(180.00)), Math.toRadians(0.00))
                 .waitSeconds(.25)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(2.0)
@@ -64,7 +64,7 @@ class RCInLeftSplines : AutoBoilerplate() {
                 .waitSeconds(.25)
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
                 .waitSeconds(.5)
-                .lineToConstantHeading(Vector2d(24.18, -42.99))
+                .lineToConstantHeading(Vector2d(24.18, -40.99))
                 .splineToLinearHeading(Pose2d(52.29, -40.89, Math.toRadians(180.00)), Math.toRadians(360.00))
                 .waitSeconds(.25)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition }

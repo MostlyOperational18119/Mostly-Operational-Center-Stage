@@ -160,6 +160,8 @@ class TeleopFromHell: DriveMethods() {
         //slideMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         slideMotor?.mode = DcMotor.RunMode.RUN_USING_ENCODER
         slideMotor?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        autoServo!!.position = servoRestPosition
+
 
         while (opModeIsActive()) {
             //set gamepad inputs
