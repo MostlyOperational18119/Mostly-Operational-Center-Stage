@@ -57,7 +57,7 @@ object Variables {
     var slideTouch: TouchSensor? = null
     var servoPlacePosition = 0.83
     var servoRestPosition = 0.46
-    var servoMidPosition = 0.68
+    var servoMidPosition = 0.63
     var passiveServoPlacePosition = 0.2
 
     var closedClaw = 0.87
