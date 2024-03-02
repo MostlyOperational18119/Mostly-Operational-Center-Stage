@@ -9,13 +9,13 @@ import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
 import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence
 import org.firstinspires.ftc.teamcode.Variables
 import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
-import java.util.List
 abstract class AutoBoilerplate : DriveMethods() {
     override fun runOpMode() {
         drive(startingPose!!)
     }
 
     lateinit var drive: SampleMecanumDrive
+    var firstTime = true
     lateinit var STARTING_POSE: Pose2d
     var sequences = ArrayList<TrajectorySequence>()
     var passiveServo: Servo? = null
@@ -23,6 +23,7 @@ abstract class AutoBoilerplate : DriveMethods() {
     var rotateMotor: DcMotor? = null
     abstract val startingPose: Pose2d?
     fun drive(startingPos: Pose2d) {
+        firstTime = true
         initMotorsSecondBot()
         initVision(Variables.VisionProcessors.TFOD)
         telemetry.addLine("Motors and TFOD were ignited (same as inited)")
@@ -46,6 +47,7 @@ abstract class AutoBoilerplate : DriveMethods() {
     }
 
     fun detect(): Variables.Detection {
+        val isFirstTime = if(firstTime) {firstTime = false; true} else false
         return getDetectionsSingleTFOD()
     }
 

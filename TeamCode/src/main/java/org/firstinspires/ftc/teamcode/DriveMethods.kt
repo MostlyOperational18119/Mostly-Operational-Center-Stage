@@ -110,7 +110,7 @@ open class DriveMethods: LinearOpMode() {
         // Ensure the Webcam is correct
         tfod.setZoom(1.15);
         // Wait for recognitions
-        if (firstTime) sleep(3000)
+//        if (firstTime) sleep(3000) else sleep(500)
 
         val recognitions = tfod.recognitions
 

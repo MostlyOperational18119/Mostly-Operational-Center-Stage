@@ -3,24 +3,14 @@ package org.firstinspires.ftc.teamcode.Autonomous.SplineAuto
 import com.acmerobotics.dashboard.config.Config
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.geometry.Vector2d
-import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.Autonomous.AutoBoilerplate
 import org.firstinspires.ftc.teamcode.Autonomous.AutoBoilerplateMultiSequences
-import org.firstinspires.ftc.teamcode.Autonomous.MeepMeepBoilerplate
 import org.firstinspires.ftc.teamcode.Autonomous.TrajectorySequenceWithCallback
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
 import org.firstinspires.ftc.teamcode.Variables
-import org.firstinspires.ftc.teamcode.Variables.VisionProcessors
 import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
 import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
-import java.util.Arrays
 
 @Config
 @Autonomous(name = "RF_Right_Splines", group = "Linear OpMode")
@@ -93,7 +83,7 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                 when (detection) {
                     Variables.Detection.LEFT ->  { drive.trajectorySequenceBuilder(sequences[sequences.size-1].trajectorySequence.sequence!!.end())
                         .splineToLinearHeading(Pose2d(37.0, -23.1, Math.toRadians(180.00)), Math.toRadians(180.00))
-                        .splineToConstantHeading(Vector2d(50.5, -23.1), Math.toRadians(180.00))
+                        .splineToConstantHeading(Vector2d(50.5, -25.1), Math.toRadians(180.00)) // Y: -23.1
                         .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(2.0)
                         .addTemporalMarker { autoServo!!.position = servoPlacePosition }
@@ -104,9 +94,9 @@ class RFRightSplines : AutoBoilerplateMultiSequences() {
                     }
 
                     Variables.Detection.CENTER -> drive.trajectorySequenceBuilder(sequences[sequences.size-1].trajectorySequence.sequence!!.end())
-                        .splineToLinearHeading(Pose2d(37.0, -32.2, Math.toRadians(180.00)), Math.toRadians(180.00))
+                        .splineToLinearHeading(Pose2d(37.0, -31.7, Math.toRadians(180.00)), Math.toRadians(180.00)) // The Y of this and the next spline needs to be the same or it waits for 10 seconds
                         .setVelConstraint(slowConstraint)
-                        .splineToConstantHeading(Vector2d(50.5, -32.2), Math.toRadians(180.00))
+                        .splineToConstantHeading(Vector2d(50.5, -31.7), Math.toRadians(180.00)) // The Y of this and the previous spline needs to be the same or it waits for 10 seconds
                         .addTemporalMarker { autoServo!!.position = servoMidPosition }
                         .waitSeconds(2.0)
                         .addTemporalMarker { autoServo!!.position = servoPlacePosition }

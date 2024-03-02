@@ -42,8 +42,10 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
     var passiveServo: Servo? = null
     var autoServo: Servo? = null
     var rotateMotor: DcMotor? = null
+    var firstTime = true
     abstract val startingPose: Pose2d?
     fun drive(startingPos: Pose2d) {
+        firstTime = true
         initMotorsSecondBot()
         initVision(Variables.VisionProcessors.TFOD)
         telemetry.addLine("Motors and TFOD were ignited (same as inited)")
@@ -69,6 +71,7 @@ abstract class AutoBoilerplateMultiSequences : DriveMethods() {
     }
 
     fun detect(): Variables.Detection {
+        val isFirstTime = if(firstTime) {firstTime = false; true} else false
         return getDetectionsSingleTFOD()
     }
 
