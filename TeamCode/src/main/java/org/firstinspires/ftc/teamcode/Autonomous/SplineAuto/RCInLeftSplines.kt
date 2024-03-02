@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
 import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
 
 @Config
-@Autonomous(name = "RCInLeftSplines (Main)", group = "Linear OpMode")
+@Autonomous(name = "RC_In_Left_Splines", group = "Linear OpMode")
 class RCInLeftSplines : AutoBoilerplate() {
     override val defaultColour = BlinkinPattern.RED
     override val startingPose = Pose2d(15.01, -62.69, Math.toRadians(270.00))

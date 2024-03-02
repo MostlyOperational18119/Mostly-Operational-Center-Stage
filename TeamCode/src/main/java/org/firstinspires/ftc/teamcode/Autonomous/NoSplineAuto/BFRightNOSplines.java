@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "BFRightNOOOO", group = "Linear OpMode")
+@Autonomous(name = "BF_SPIKE", group = "Linear OpMode")
 public class BFRightNOSplines extends MeepMeepBoilerplate {
     @Override
     public void runOpMode() {
