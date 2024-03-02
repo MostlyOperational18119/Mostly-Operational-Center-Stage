@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
 import java.util.Arrays
 
 @Config
-@Autonomous(name = "BFRightSplines (Main)", group = "Linear OpMode")
+@Autonomous(name = "BF_Right_Splines", group = "Linear OpMode")
 class BFRightSplines : AutoBoilerplateMultiSequences() {
     override val startingPose = Pose2d(-36.67, 62.45, Math.toRadians(90.00))
     override val defaultColour = RevBlinkinLedDriver.BlinkinPattern.BLUE

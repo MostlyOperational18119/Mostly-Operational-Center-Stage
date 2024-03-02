@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.Variables.VisionProcessors
 import java.util.Arrays
 
 @Config
-@Autonomous(name = "RFRightNOOOO", group = "LinearOpmode")
+@Autonomous(name = "RF_SPIKE", group = "LinearOpmode")
 class RFRightNOSplines : AutoBoilerplate() {
     override val defaultColour = RevBlinkinLedDriver.BlinkinPattern.RED
     override val startingPose = Pose2d(-36.0, 61.5, Math.toRadians(-90.0))

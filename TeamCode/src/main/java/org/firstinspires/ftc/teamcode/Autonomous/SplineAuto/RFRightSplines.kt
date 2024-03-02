@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
 import java.util.Arrays
 
 @Config
-@Autonomous(name = "RFRightSplines (Main)", group = "Linear OpMode")
+@Autonomous(name = "RF_Right_Splines", group = "Linear OpMode")
 class RFRightSplines : AutoBoilerplateMultiSequences() {
     override val defaultColour = RevBlinkinLedDriver.BlinkinPattern.RED
     override val startingPose = Pose2d(-34.96, -62.69, Math.toRadians(-90.00))

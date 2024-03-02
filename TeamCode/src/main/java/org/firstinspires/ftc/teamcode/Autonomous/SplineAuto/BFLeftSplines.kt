@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
 
 
 @Config
-@Autonomous(name = "BFLeftSplines", group = "Linear OpMode")
+@Autonomous(name = "BF_Left_Splines", group = "Linear OpMode")
 class BFLeftSplines : AutoBoilerplateMultiSequences() {
 
     override val startingPose = Pose2d(-36.67, 62.45, Math.toRadians(90.00))
