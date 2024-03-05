@@ -35,13 +35,13 @@ class RCInRightSplines : AutoBoilerplate() {
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
                 .waitSeconds(.5)
                 .lineToLinearHeading(Pose2d(52.29, -26.60, Math.toRadians(180.00)))
-                .waitSeconds(.25)
+                .waitSeconds(.5)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(2.0)
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
-                .lineToConstantHeading(Vector2d(47.41, -10.3))
-                .lineToConstantHeading(Vector2d(58.0, -10.3))
+                .lineToConstantHeading(Vector2d(47.41, -12.3))
+                .lineToConstantHeading(Vector2d(58.0, -12.3))
                 .build()
 
             Variables.Detection.CENTER -> drive!!.trajectorySequenceBuilder(startingPose)
@@ -50,13 +50,13 @@ class RCInRightSplines : AutoBoilerplate() {
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
                 .waitSeconds(.5)
                 .splineToLinearHeading(Pose2d(52.29, -33.09, Math.toRadians(180.00)), Math.toRadians(0.00))
-                .waitSeconds(.25)
+                .waitSeconds(.5)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(2.0)
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
-                .lineToConstantHeading(Vector2d(47.41, -10.3))
-                .lineToConstantHeading(Vector2d(58.0, -10.3))
+                .lineToConstantHeading(Vector2d(47.41, -12.3))
+                .lineToConstantHeading(Vector2d(58.0, -12.3))
                 .build()
 
             Variables.Detection.RIGHT -> drive!!.trajectorySequenceBuilder(startingPose)
@@ -64,15 +64,15 @@ class RCInRightSplines : AutoBoilerplate() {
                 .waitSeconds(.25)
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
                 .waitSeconds(.5)
-                .lineToConstantHeading(Vector2d(24.18, -38.99))
+                .lineToConstantHeading(Vector2d(24.18, -40.99))
                 .splineToLinearHeading(Pose2d(52.29, -39.49, Math.toRadians(180.00)), Math.toRadians(360.00))
-                .waitSeconds(.25)
+                .waitSeconds(.5)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(2.0)
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
-                .lineToConstantHeading(Vector2d(47.41, -10.3))
-                .lineToConstantHeading(Vector2d(58.0, -10.3))
+                .lineToConstantHeading(Vector2d(47.41, -12.3))
+                .lineToConstantHeading(Vector2d(58.0, -12.3))
                 .build()
 
             else -> {

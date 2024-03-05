@@ -64,9 +64,9 @@ class RCOutLeftSplines : AutoBoilerplate() {
                 .waitSeconds(.25)
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
                 .waitSeconds(.5)
-                .lineToConstantHeading(Vector2d(24.18, -38.99))
-                .splineToLinearHeading(Pose2d(52.29, -38.99, Math.toRadians(180.00)), Math.toRadians(360.00))
-                .waitSeconds(.25)
+                .lineToConstantHeading(Vector2d(24.18, -40.99))
+                .splineToLinearHeading(Pose2d(52.29, -35.99, Math.toRadians(180.00)), Math.toRadians(360.00))
+                .waitSeconds(.5)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(2.0)
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
