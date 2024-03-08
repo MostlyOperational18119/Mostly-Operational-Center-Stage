@@ -3,25 +3,14 @@ package org.firstinspires.ftc.teamcode.Autonomous.SplineAuto
 import com.acmerobotics.dashboard.config.Config
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.geometry.Vector2d
-import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.Autonomous.AutoBoilerplate
 import org.firstinspires.ftc.teamcode.Autonomous.AutoBoilerplateMultiSequences
-import org.firstinspires.ftc.teamcode.Autonomous.MeepMeepBoilerplate
 import org.firstinspires.ftc.teamcode.Autonomous.TrajectorySequenceWithCallback
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
-import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence
 import org.firstinspires.ftc.teamcode.Variables
-import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
-import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
 import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
-import java.util.Arrays
+import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
 
 @Config
 @Autonomous(name = "BF_Right_Splines", group = "Linear OpMode")

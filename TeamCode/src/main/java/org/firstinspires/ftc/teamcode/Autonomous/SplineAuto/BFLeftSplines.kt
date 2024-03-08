@@ -8,11 +8,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.teamcode.Autonomous.AutoBoilerplateMultiSequences
 import org.firstinspires.ftc.teamcode.Autonomous.TrajectorySequenceWithCallback
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive
-import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.TrajectorySequence
 import org.firstinspires.ftc.teamcode.Variables
-import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
-import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
 import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
+import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
 
 
 @Config
