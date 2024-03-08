@@ -57,8 +57,6 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
 import org.firstinspires.ftc.vision.tfod.TfodProcessor
 import java.io.BufferedReader
 import java.io.FileReader
-import java.util.concurrent.Executors
-import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 import kotlin.math.atan

@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.RoadRunner.util.trajectorysequence.Traject
 import org.firstinspires.ftc.teamcode.Variables
 import org.firstinspires.ftc.teamcode.Variables.passiveServoPlacePosition
 import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
-import org.firstinspires.ftc.teamcode.Variables.servoRestPosition
 import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
 
 @Config
