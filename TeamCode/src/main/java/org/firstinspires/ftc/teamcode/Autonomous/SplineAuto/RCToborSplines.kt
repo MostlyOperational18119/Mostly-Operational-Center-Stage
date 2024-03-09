@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
 import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
 
 @Config
-@Autonomous(name = "BC_Out_Left_Splines", group = "Linear OpMode")
-class BCOutLeftSplines : AutoBoilerplate() {
-    override val defaultColour = BlinkinPattern.BLUE
-    override val startingPose = Pose2d(15.01, 62.69, Math.toRadians(90.00))
+@Autonomous(name = "RC_TOBOR_Splines", group = "Linear OpMode")
+class RCToborSplines : AutoBoilerplate() {
+    override val defaultColour = BlinkinPattern.RED
+    override val startingPose = Pose2d(15.01, -62.69, Math.toRadians(270.00))
 
     override fun getTrajectorySequence(
         detection: Variables.Detection?,
@@ -25,51 +25,53 @@ class BCOutLeftSplines : AutoBoilerplate() {
     ): TrajectorySequence? {
         return when (detection) {
             Variables.Detection.LEFT -> drive!!.trajectorySequenceBuilder(startingPose)
-                .lineToConstantHeading(Vector2d(27.18, 36.85))
-                .waitSeconds(.25)
-                .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
-                .waitSeconds(.25)
-                .splineToLinearHeading(Pose2d(56.0, 48.07, Math.toRadians(180.00)), Math.toRadians(0.0))
-                .waitSeconds(.5)
-                .addTemporalMarker { autoServo!!.position = servoPlacePosition}
-                .waitSeconds(1.0)
-                .addTemporalMarker { autoServo!!.position = servoMidPosition}
-                .waitSeconds(.1)
-                .lineToConstantHeading(Vector2d(52.41, 59.31))
-                .lineToConstantHeading(Vector2d(58.0, 59.31))
-                .build()
-
-            Variables.Detection.CENTER -> drive!!.trajectorySequenceBuilder(startingPose)
-                .lineToConstantHeading(Vector2d(16.35, 30.0))
-                .waitSeconds(.25)
-                .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
-                .waitSeconds(.25)
-                .splineToLinearHeading(Pose2d(56.0, 42.16, Math.toRadians(180.00)), Math.toRadians(0.00))
-                .waitSeconds(.5)
-                .addTemporalMarker { autoServo!!.position = servoPlacePosition }
-                .waitSeconds(1.0)
-                .addTemporalMarker { autoServo!!.position = servoMidPosition }
-                .waitSeconds(.1)
-                .lineToConstantHeading(Vector2d(52.41, 59.31))
-                .lineToConstantHeading(Vector2d(58.0, 59.31))
-                .build()
-
-            Variables.Detection.RIGHT -> drive!!.trajectorySequenceBuilder(startingPose)
                 .setReversed(true)
-                .splineToLinearHeading(Pose2d(15.75, 45.61, Math.toRadians(90.00)), Math.toRadians(-90.00))
-                .splineToLinearHeading(Pose2d(10.95, 35.39, Math.toRadians(0.00)), Math.toRadians(180.00))
+                .splineToLinearHeading(Pose2d(18.98, -44.59, Math.toRadians(-90.00)), Math.toRadians(90.00))
+                .splineToLinearHeading(Pose2d(13.0, -34.0, Math.toRadians(0.00)), Math.toRadians(180.00))
+                .splineToLinearHeading(Pose2d(7.0, -34.0, Math.toRadians(0.00)), Math.toRadians(180.00))
                 .setReversed(false)
                 .waitSeconds(.25)
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
                 .waitSeconds(.25)
-                .lineToLinearHeading(Pose2d(56.0, 35.39, Math.toRadians(180.00)))
+                .lineToLinearHeading(Pose2d(52.29, -23.60, Math.toRadians(180.00)))
+                .waitSeconds(.25)
+                .addTemporalMarker { autoServo!!.position = servoPlacePosition }
+                .waitSeconds(1.0)
+                .addTemporalMarker { autoServo!!.position = servoMidPosition }
+                .waitSeconds(.1)
+                .lineToConstantHeading(Vector2d(47.41, -59.3))
+                .lineToConstantHeading(Vector2d(58.0, -59.3))
+                .build()
+
+            Variables.Detection.CENTER -> drive!!.trajectorySequenceBuilder(startingPose)
+                .lineToConstantHeading(Vector2d(12.16, -30.68))
+                .waitSeconds(.25)
+                .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
+                .waitSeconds(.25)
+                .splineToLinearHeading(Pose2d(52.29, -33.09, Math.toRadians(180.00)), Math.toRadians(0.00))
                 .waitSeconds(.5)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(1.0)
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
-                .lineToConstantHeading(Vector2d(52.41, 59.31))
-                .lineToConstantHeading(Vector2d(58.0, 59.31))
+                .lineToConstantHeading(Vector2d(47.41, -59.3))
+                .lineToConstantHeading(Vector2d(58.0, -59.3))
+                .build()
+
+            Variables.Detection.RIGHT -> drive!!.trajectorySequenceBuilder(startingPose)
+                .lineToConstantHeading(Vector2d(24.18, -37.99))
+                .waitSeconds(.25)
+                .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
+                .waitSeconds(.25)
+                .lineToConstantHeading(Vector2d(24.18, -40.99))
+                .splineToLinearHeading(Pose2d(52.29, -39.49, Math.toRadians(180.00)), Math.toRadians(360.00))
+                .waitSeconds(.5)
+                .addTemporalMarker { autoServo!!.position = servoPlacePosition }
+                .waitSeconds(1.0)
+                .addTemporalMarker { autoServo!!.position = servoMidPosition }
+                .waitSeconds(.1)
+                .lineToConstantHeading(Vector2d(47.41, -59.3))
+                .lineToConstantHeading(Vector2d(58.0, -59.3))
                 .build()
 
             else -> {
