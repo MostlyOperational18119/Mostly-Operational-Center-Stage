@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.Variables.servoMidPosition
 import org.firstinspires.ftc.teamcode.Variables.servoPlacePosition
 
 @Config
-@Autonomous(name = "BC_Out_Right_Splines", group = "Linear OpMode")
-class BCOutRightSplines : AutoBoilerplate() {
+@Autonomous(name = "BC_MAGES_Splines", group = "Linear OpMode")
+class BC_Mages : AutoBoilerplate() {
     override val defaultColour = BlinkinPattern.BLUE
     override val startingPose = Pose2d(15.01, 62.69, Math.toRadians(90.00))
 
@@ -63,9 +63,9 @@ class BCOutRightSplines : AutoBoilerplate() {
                 .waitSeconds(.25)
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
                 .waitSeconds(.25)
-                .lineToLinearHeading(Pose2d(56.0, 32.49, Math.toRadians(180.00)))
+                .lineToLinearHeading(Pose2d(56.0, 35.39, Math.toRadians(180.00)))
                 .waitSeconds(.5)
-                .addTemporalMarker { autoServo!!.position = servoPlacePosition}
+                .addTemporalMarker { autoServo!!.position = servoPlacePosition }
                 .waitSeconds(1.0)
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)

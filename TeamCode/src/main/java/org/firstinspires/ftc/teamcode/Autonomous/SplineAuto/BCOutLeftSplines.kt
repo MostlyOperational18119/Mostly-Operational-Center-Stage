@@ -36,7 +36,7 @@ class BCOutLeftSplines : AutoBoilerplate() {
                 .addTemporalMarker { autoServo!!.position = servoMidPosition}
                 .waitSeconds(.1)
                 .lineToConstantHeading(Vector2d(52.41, 59.31))
-                .lineToConstantHeading(Vector2d(58.0, 59.31))
+                .lineToConstantHeading(Vector2d(62.0, 59.31))
                 .build()
 
             Variables.Detection.CENTER -> drive!!.trajectorySequenceBuilder(startingPose)
@@ -51,7 +51,7 @@ class BCOutLeftSplines : AutoBoilerplate() {
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
                 .lineToConstantHeading(Vector2d(52.41, 59.31))
-                .lineToConstantHeading(Vector2d(58.0, 59.31))
+                .lineToConstantHeading(Vector2d(62.0, 59.31))
                 .build()
 
             Variables.Detection.RIGHT -> drive!!.trajectorySequenceBuilder(startingPose)
@@ -69,7 +69,7 @@ class BCOutLeftSplines : AutoBoilerplate() {
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
                 .lineToConstantHeading(Vector2d(52.41, 59.31))
-                .lineToConstantHeading(Vector2d(58.0, 59.31))
+                .lineToConstantHeading(Vector2d(62.0, 59.31))
                 .build()
 
             else -> {

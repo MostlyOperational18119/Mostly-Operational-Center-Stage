@@ -28,30 +28,30 @@ class BCInRightSplines : AutoBoilerplate() {
                 .lineToConstantHeading(Vector2d(27.18, 36.85))
                 .waitSeconds(.25)
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
-                .waitSeconds(.5)
+                .waitSeconds(.25)
                 .splineToLinearHeading(Pose2d(56.0, 44.9, Math.toRadians(180.00)), Math.toRadians(0.0))
                 .waitSeconds(0.5)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition }
-                .waitSeconds(2.0)
+                .waitSeconds(1.0)
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
                 .lineToConstantHeading(Vector2d(52.41, 10.83))
-                .lineToConstantHeading(Vector2d(58.0, 10.83))
+                .lineToConstantHeading(Vector2d(62.0, 10.83))
                 .build()
 
             Variables.Detection.CENTER -> drive!!.trajectorySequenceBuilder(startingPose)
                 .lineToConstantHeading(Vector2d(16.35, 30.0))
                 .waitSeconds(.25)
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
-                .waitSeconds(.5)
+                .waitSeconds(.25)
                 .splineToLinearHeading(Pose2d(56.0, 39.15, Math.toRadians(180.00)), Math.toRadians(0.00))
                 .waitSeconds(0.5)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition }
-                .waitSeconds(2.0)
+                .waitSeconds(1.0)
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
                 .lineToConstantHeading(Vector2d(52.41, 10.83))
-                .lineToConstantHeading(Vector2d(58.0, 10.83))
+                .lineToConstantHeading(Vector2d(62.0, 10.83))
                 .build()
 
             Variables.Detection.RIGHT -> drive!!.trajectorySequenceBuilder(startingPose)
@@ -61,15 +61,15 @@ class BCInRightSplines : AutoBoilerplate() {
                 .setReversed(false)
                 .waitSeconds(.25)
                 .addTemporalMarker { passiveServo!!.position = passiveServoPlacePosition }
-                .waitSeconds(.5)
+                .waitSeconds(.25)
                 .lineToLinearHeading(Pose2d(56.0, 32.49, Math.toRadians(180.00)))
                 .waitSeconds(0.5)
                 .addTemporalMarker { autoServo!!.position = servoPlacePosition}
-                .waitSeconds(2.0)
+                .waitSeconds(1.0)
                 .addTemporalMarker { autoServo!!.position = servoMidPosition }
                 .waitSeconds(.1)
                 .lineToConstantHeading(Vector2d(52.41, 10.83))
-                .lineToConstantHeading(Vector2d(58.0, 10.83))
+                .lineToConstantHeading(Vector2d(62.0, 10.83))
                 .build()
 
             else -> {
